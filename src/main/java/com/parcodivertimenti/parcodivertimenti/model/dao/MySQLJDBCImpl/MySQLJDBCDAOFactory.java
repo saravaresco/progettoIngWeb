@@ -75,11 +75,53 @@ public class MySQLJDBCDAOFactory extends DaoFactory {
 
     @Override
     public addettoGiostreDAO getAddettoGiostreDAO() {
-        return new AddettoGiostreDAOMySQLJDBCImpl(connection);
+        return (addettoGiostreDAO) new AddettoGiostreDAOMySQLJDBCImpl(connection);
+    }
+
+
+
+    @Override
+    public addettoRistoranteDAO getAddettoRistoranteDAO() {
+        return new AddettoRistoranteDAOMySQLJDBCImpl(connection);
     }
 
     @Override
-    public addettoRistoranteDAO getContactDAO() {
-        return new AddettoRistoranteDAOMySQLJDBCImpl(connection);
+    public attoreDAO getAttoreDAO() {
+        return new AttoreDAOMySQLJDBCImpl(connection);
+    }
+
+    @Override
+    public attrazioneDAO getAttrazioneDAO() {
+        return new AttrazioneDAOMySQLJDBCImpl(connection);
+    }
+
+    @Override
+    public bigliettoDAO getBigliettoDAO() {
+        return new BigliettoDAOMySQLJDBCImpl(connection);
+    }
+
+    @Override
+    public dipendenteDAO getDipendenteDAO() {
+        return new DipendenteDAOMySQLJDBCImpl(connection);
+    }
+
+    @Override
+    public manutentoreDAO getManutentoreDAO() {
+        return new ManutentoreDAOMySQLJDBCImpl(connection);
+    }
+
+    @Override
+    public puntoRistoroDAO getPuntoRistoroDAO() {
+        return new PuntoRistoroDAOMySQLJDBCImpl(connection);
+    }
+
+    @Override
+    public spettacoloDAO getSpettacoloDAO() {
+        return new SpettacoloDAOMySQLJDBCImpl(connection);
+    }
+
+    @Override
+    public visitatoreDAO getVisitatoreDAO() {
+        return new VisitatoreDAOMySQLJDBCImpl(connection);
     }
 }

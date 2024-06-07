@@ -1,51 +1,49 @@
 package com.parcodivertimenti.parcodivertimenti.model.dao.MySQLJDBCImpl;
 
-import com.parcodivertimenti.parcodivertimenti.model.dao.addettoRistoranteDAO;
-import com.parcodivertimenti.parcodivertimenti.model.mo.addettoRistorante;
+import com.parcodivertimenti.parcodivertimenti.model.mo.manutentore;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
-import static java.lang.module.ModuleDescriptor.read;
+public class ManutentoreDAOMySQLJDBCImpl {
 
-public class AddettoRistoranteDAOMySQLJDBCImpl {
-
-    private final String COUNTER_ID = "addettoRistoranteId";
+    private final String COUNTER_ID = "manutentoreId";
     Connection conn;
 
-    public AddettoRistoranteDAOMySQLJDBCImpl(Connection conn){this.conn = conn;}
+    public ManutentoreDAOMySQLJDBCImpl(Connection conn){this.conn = conn;}
 
     @Override
-    public addettoRistorante create(String codice_fiscale, String posizione, Long ID_punto_ristoro){
+    public manutentore create(String codice_fiscale, Long numero_interventi){
         throw new UnsupportedOperationException("Not supported yet");
     }
 
     @Override
-    public void update(addettoRistorante addettoristorante){
+    public void update(manutentore manut){
         throw new UnsupportedOperationException("Not supported yet");
     }
 
     @Override
-    public void delete(addettoRistorante addettoristorante){
+    public void delete(manutentore manut){
         throw new UnsupportedOperationException("Not supported yet");
     }
 
     @Override
-    public addettoRistorante findLoggedUser(){
+    public manutentore findLoggedUser(){
         throw new UnsupportedOperationException("Not supported yet");
     }
 
     @Override
-    public addettoRistorante findByUserCF(String codice_fiscale){
+    public manutentore findByCF(String codice_fiscale){
         PreparedStatement ps;
-        addettoRistorante ad = null;
+        manutentore m = null;
 
         try{
             String sql
                     = "SELECT *"
-                    + "FROM ad"
+                    + "FROM m"
                     + "WHERE"
                     + "codice_fiscale = ?";
 
@@ -55,7 +53,7 @@ public class AddettoRistoranteDAOMySQLJDBCImpl {
             ResultSet resultSet = ps.executeQuery();
 
             if(resultSet.next()){
-                ad = read(resultSet);
+                m = read(resultSet);
             }
             resultSet.close();
             ps.close();
@@ -64,28 +62,28 @@ public class AddettoRistoranteDAOMySQLJDBCImpl {
             throw new RuntimeException(e);
         }
 
-        return ad;
+        return m;
     }
 
     @Override
-    public addettoRistorante findByPuntoRistoro(Long ID_punto_ristoro){
+    public manutentore findByNumeroInt(Long numero_interventi){
         PreparedStatement ps;
-        addettoRistorante ad = null;
+        manutentore m = null;
 
         try{
             String sql
                     = "SELECT *"
-                    + "FROM ag"
+                    + "FROM m"
                     + "WHERE"
-                    + "ID_punto_ristoro = ?";
+                    + "numero_interventi = ?";
 
             ps = conn.prepareStatement(sql);
-            ps.setLong(1, ID_punto_ristoro);
+            ps.setLong(1, numero_interventi);
 
             ResultSet resultSet = ps.executeQuery();
 
             if(resultSet.next()){
-                ad = read(resultSet);
+                m = read(resultSet);
             }
             resultSet.close();
             ps.close();
@@ -94,24 +92,21 @@ public class AddettoRistoranteDAOMySQLJDBCImpl {
             throw new RuntimeException(e);
         }
 
-        return ad;
+        return m;
     }
 
 
-    addettoRistorante read(ResultSet rs){
-        addettoRistorante ad = new addettoRistorante();
+    manutentore read(ResultSet rs){
+        manutentore m = new manutentore();
         try{
-            ad.setCodice_fiscale(rs.getString("codice_fiscale"));
+            m.setCodice_fiscale(rs.getString("codice_fiscale"));
         }catch (SQLException sqle){
         }
         try{
-            ad.setPosizione(rs.getString("posizione"));
+            m.setNumero_interventi(rs.getLong("numero_interventi"));
         }catch (SQLException sqle){
         }
-        try{
-            ad.setID_punto_ristoro(rs.getLong("ID_punto_ristoro"));
-        }catch (SQLException sqle){
-        }
-        return ad;
+
+        return m;
     }
 }
