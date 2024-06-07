@@ -1,5 +1,6 @@
 package com.parcodivertimenti.parcodivertimenti.model.dao;
 
+import com.parcodivertimenti.parcodivertimenti.model.mo.addettoGiostre;
 import com.parcodivertimenti.parcodivertimenti.model.mo.attrazione;
 
 import java.util.Date;
@@ -12,8 +13,18 @@ public interface attrazioneDAO {
             String tipologia,
             Date data_ultima_manutenzione);
 
-    public void update(attrazione user);
+    public void update(attrazione attraz);
 
-    public void delete(attrazione user);
+    public void delete(attrazione attraz);
+
+
+    public attrazione findByCodice(Long codice);/*serve a recuperare attrazione dato il codice*/
+
+    public attrazione findByNome(String nome);
+
+    public attrazione findByTipologia(String tipologia);
+
+    public attrazione findByDate(Date data_ultima_manutenzione);
+
 
 }

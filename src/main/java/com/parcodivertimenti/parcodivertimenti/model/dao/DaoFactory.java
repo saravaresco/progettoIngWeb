@@ -1,5 +1,8 @@
 package com.parcodivertimenti.parcodivertimenti.model.dao;
 
+import com.parcodivertimenti.parcodivertimenti.model.dao.CookieImpl.CookieDAOFactory;
+import com.parcodivertimenti.parcodivertimenti.model.dao.MySQLJDBCImpl.MySQLJDBCDAOFactory;
+
 import java.util.Map;
 
 public abstract class DaoFactory {
@@ -13,11 +16,27 @@ public abstract class DaoFactory {
     public abstract void rollbackTransaction();
     public abstract void closeTransaction();
 
-    public abstract UserDAO getUserDAO();
+    public abstract addettoGiostreDAO getAddettoGiostreDAO();
 
-    public abstract ContactDAO getContactDAO();
+    public abstract addettoRistoranteDAO getAddettoRistoranteDAO();
 
-    public static DAOFactory getDAOFactory(String whichFactory, Map factoryParameters) {
+    public abstract attoreDAO getAttoreDAO();
+
+    public abstract attrazioneDAO getAttrazioneDAO();
+
+    public abstract bigliettoDAO getBigliettoDAO();
+
+    public abstract dipendenteDAO getDipendenteDAO();
+
+    public abstract manutentoreDAO getManutentoreDAO();
+
+    public abstract puntoRistoroDAO getPuntoRistoroDAO();
+
+    public abstract spettacoloDAO getSpettacoloDAO();
+
+    public abstract visitatoreDAO getVisitatoreDAO();
+
+    public static CookieDAOFactory getDaoFactory(String whichFactory, Map factoryParameters) {
 
         if (whichFactory.equals(MYSQLJDBCIMPL)) {
             return new MySQLJDBCDAOFactory(factoryParameters);

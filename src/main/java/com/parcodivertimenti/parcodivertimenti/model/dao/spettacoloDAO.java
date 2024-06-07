@@ -1,5 +1,6 @@
 package com.parcodivertimenti.parcodivertimenti.model.dao;
 
+import com.parcodivertimenti.parcodivertimenti.model.mo.biglietto;
 import com.parcodivertimenti.parcodivertimenti.model.mo.spettacolo;
 
 import java.sql.Time;
@@ -15,7 +16,17 @@ public interface spettacoloDAO {
             Time orario_inizio,
             Time durata);
 
-    public void update(spettacolo user);
+    public void update(spettacolo spett);
 
-    public void delete(spettacolo user);
+    public void delete(spettacolo spett);
+
+    public spettacolo findByNome(String nome);
+
+    public spettacolo findByTipologia(String tipologia);
+
+    public spettacolo findByData(Date data);
+
+    public spettacolo findByLuogo(String luogo);
+
+    public spettacolo findByOrarioI(Time orario_inizio);
 }

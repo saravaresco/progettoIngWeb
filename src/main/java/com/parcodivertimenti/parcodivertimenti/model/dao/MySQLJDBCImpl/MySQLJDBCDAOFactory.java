@@ -5,13 +5,21 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
 
-import com.isw.es_07_rubrica.services.config.Configuration;
+import com.parcodivertimenti.parcodivertimenti.services.config.Configuration;
 
-import com.isw.es_07_rubrica.model.dao.DAOFactory;
-import com.isw.es_07_rubrica.model.dao.UserDAO;
-import com.isw.es_07_rubrica.model.dao.ContactDAO;
+import com.parcodivertimenti.parcodivertimenti.model.dao.DaoFactory;
+import com.parcodivertimenti.parcodivertimenti.model.dao.visitatoreDAO;
+import com.parcodivertimenti.parcodivertimenti.model.dao.spettacoloDAO;
+import com.parcodivertimenti.parcodivertimenti.model.dao.puntoRistoroDAO;
+import com.parcodivertimenti.parcodivertimenti.model.dao.manutentoreDAO;
+import com.parcodivertimenti.parcodivertimenti.model.dao.dipendenteDAO;
+import com.parcodivertimenti.parcodivertimenti.model.dao.bigliettoDAO;
+import com.parcodivertimenti.parcodivertimenti.model.dao.attrazioneDAO;
+import com.parcodivertimenti.parcodivertimenti.model.dao.attoreDAO;
+import com.parcodivertimenti.parcodivertimenti.model.dao.addettoRistoranteDAO;
+import com.parcodivertimenti.parcodivertimenti.model.dao.addettoGiostreDAO;
 
-public class MySQLJDBCDAOFactory extends DAOFactory {
+public class MySQLJDBCDAOFactory extends DaoFactory {
 
     private Map factoryParameters;
 
@@ -66,12 +74,12 @@ public class MySQLJDBCDAOFactory extends DAOFactory {
     }
 
     @Override
-    public UserDAO getUserDAO() {
-        return new UserDAOMySQLJDBCImpl(connection);
+    public addettoGiostreDAO getAddettoGiostreDAO() {
+        return new AddettoGiostreDAOMySQLJDBCImpl(connection);
     }
 
     @Override
-    public ContactDAO getContactDAO() {
-        return new ContactDAOMySQLJDBCImpl(connection);
+    public addettoRistoranteDAO getContactDAO() {
+        return new AddettoRistoranteDAOMySQLJDBCImpl(connection);
     }
 }
