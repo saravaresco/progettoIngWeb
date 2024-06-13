@@ -1,5 +1,6 @@
 package com.parcodivertimenti.parcodivertimenti.model.dao;
 
+import com.parcodivertimenti.parcodivertimenti.model.mo.addettoGiostre;
 import com.parcodivertimenti.parcodivertimenti.model.mo.biglietto;
 import com.parcodivertimenti.parcodivertimenti.model.mo.visitatore;
 
@@ -12,7 +13,9 @@ public interface visitatoreDAO {
             String nome,
             String cognome,
             Date data_nascita,
-            String sesso);
+            String sesso,
+            String username,
+            String password);
 
     public void update(visitatore visit);
 
@@ -27,5 +30,7 @@ public interface visitatoreDAO {
     public visitatore findByCognome(String cognome);
 
     public visitatore findByDataNascita(Date data_nascita);
+
+    public visitatore findByUsername(String username);
 
 }

@@ -1,6 +1,7 @@
 package com.parcodivertimenti.parcodivertimenti.model.dao.MySQLJDBCImpl;
 
 import com.parcodivertimenti.parcodivertimenti.model.dao.addettoRistoranteDAO;
+import com.parcodivertimenti.parcodivertimenti.model.mo.addettoGiostre;
 import com.parcodivertimenti.parcodivertimenti.model.mo.addettoRistorante;
 
 import java.sql.Connection;
@@ -95,6 +96,39 @@ public class AddettoRistoranteDAOMySQLJDBCImpl {
         }
 
         return ad;
+    }
+
+    @Override
+    public addettoRistorante findByUsername(String username) {
+
+        PreparedStatement ps;
+        addettoRistorante ar = null;
+
+        try {
+
+            String sql
+                    = " SELECT * "
+                    + "   FROM ar "
+                    + " WHERE "
+                    + "   username = ?";
+
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, username);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            if (resultSet.next()) {
+                ar = read(resultSet);
+            }
+            resultSet.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return ar;
+
     }
 
 

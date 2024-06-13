@@ -1,5 +1,6 @@
 package com.parcodivertimenti.parcodivertimenti.model.dao;
 
+import com.parcodivertimenti.parcodivertimenti.model.mo.addettoGiostre;
 import com.parcodivertimenti.parcodivertimenti.model.mo.biglietto;
 import com.parcodivertimenti.parcodivertimenti.model.mo.dipendente;
 
@@ -13,7 +14,9 @@ public interface dipendenteDAO {
             String cognome,
             Date data_nascita,
             String sesso,
-            Long stipendio);
+            Long stipendio,
+            String username,
+            String password);
 
     public void update(dipendente dip);
 
@@ -30,5 +33,7 @@ public interface dipendenteDAO {
     public dipendente findByDataNascita(Date data_nascita);
 
     public dipendente findByStipendio(Long stipendio);
+
+    public dipendente findByUsername(String username);
 
 }

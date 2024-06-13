@@ -10,6 +10,8 @@ public class visitatore {
     private String cognome;
     private Date data_nascita;
     private String sesso;
+    private String username;
+    private String password;
 
     public String getCodice_fiscale(){return codice_fiscale;}
     public void setCodice_fiscale(String codice_fiscale){this.codice_fiscale = codice_fiscale;}
@@ -26,4 +28,10 @@ public class visitatore {
 
     public String getSesso(){return sesso;}
     public void setSesso(String sesso){this.sesso = sesso;}
+
+    public String getUsername(){return username;}
+    public void setUsername(String username){this.username = username;}
+
+    public String getPassword(){return password;}
+    public void setPassword(String password){this.password = password;}
 }

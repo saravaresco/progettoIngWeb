@@ -1,5 +1,6 @@
 package com.parcodivertimenti.parcodivertimenti.model.dao.MySQLJDBCImpl;
 
+import com.parcodivertimenti.parcodivertimenti.model.mo.addettoGiostre;
 import com.parcodivertimenti.parcodivertimenti.model.mo.manutentore;
 
 import java.sql.Connection;
@@ -93,6 +94,39 @@ public class ManutentoreDAOMySQLJDBCImpl {
         }
 
         return m;
+    }
+
+    @Override
+    public manutentore findByUsername(String username) {
+
+        PreparedStatement ps;
+        manutentore m = null;
+
+        try {
+
+            String sql
+                    = " SELECT * "
+                    + "   FROM m "
+                    + " WHERE "
+                    + "   username = ?";
+
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, username);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            if (resultSet.next()) {
+                m = read(resultSet);
+            }
+            resultSet.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return m;
+
     }
 
 

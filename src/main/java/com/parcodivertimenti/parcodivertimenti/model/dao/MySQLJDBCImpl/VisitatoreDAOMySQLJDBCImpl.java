@@ -1,5 +1,6 @@
 package com.parcodivertimenti.parcodivertimenti.model.dao.MySQLJDBCImpl;
 
+import com.parcodivertimenti.parcodivertimenti.model.mo.addettoGiostre;
 import com.parcodivertimenti.parcodivertimenti.model.mo.visitatore;
 
 import java.sql.Connection;
@@ -153,6 +154,39 @@ public class VisitatoreDAOMySQLJDBCImpl {
         }
 
         return v;
+    }
+
+    @Override
+    public visitatore findByUsername(String username) {
+
+        PreparedStatement ps;
+        visitatore v = null;
+
+        try {
+
+            String sql
+                    = " SELECT * "
+                    + "   FROM v "
+                    + " WHERE "
+                    + "   username = ?";
+
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, username);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            if (resultSet.next()) {
+                v = read(resultSet);
+            }
+            resultSet.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return v;
+
     }
 
     visitatore read(ResultSet rs){

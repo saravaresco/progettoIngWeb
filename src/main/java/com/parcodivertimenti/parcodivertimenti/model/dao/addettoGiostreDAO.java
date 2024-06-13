@@ -4,7 +4,9 @@ public interface addettoGiostreDAO {
     public addettoGiostre create(
             String codice_fiscale,
             String mansione,
-            Long codice_giostra);
+            Long codice_giostra,
+            String username,
+            String password);
 
     public void update(addettoGiostre addettogiostre);
 
@@ -15,6 +17,8 @@ public interface addettoGiostreDAO {
     public addettoGiostre findByUserCF(String codice_fiscale);/*serve a recuperare utente dato il suo CF*/
 
     public addettoGiostre findByMansione(String mansione);
+
+    public addettoGiostre findByUsername(String username);
 
 
 }

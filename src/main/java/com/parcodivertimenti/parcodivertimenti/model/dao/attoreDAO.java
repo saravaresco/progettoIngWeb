@@ -7,7 +7,9 @@ public interface attoreDAO {
 
     public attore create(
             String codice_fiscale,
-            String ruolo);
+            String ruolo,
+            String username,
+            String password);
 
     public void update(attore att);
 
@@ -18,6 +20,8 @@ public interface attoreDAO {
     public attore findByUserCF(String codice_fiscale);/*serve a recuperare utente dato il suo CF*/
 
     public attore findByRuolo(String ruolo);/*serve a recuperare utente dato il suo CF*/
+
+    public attore findByUsername(String username);
 
 
 }

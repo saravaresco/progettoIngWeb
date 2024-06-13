@@ -97,6 +97,39 @@ public class AddettoGiostreDAOMySQLJDBCImpl {
         return ag;
     }
 
+    @Override
+    public addettoGiostre findByUsername(String username) {
+
+        PreparedStatement ps;
+        addettoGiostre ag = null;
+
+        try {
+
+            String sql
+                    = " SELECT * "
+                    + "   FROM ag "
+                    + " WHERE "
+                    + "   username = ?";
+
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, username);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            if (resultSet.next()) {
+                ag = read(resultSet);
+            }
+            resultSet.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return ag;
+
+    }
+
     addettoGiostre read(ResultSet rs){
         addettoGiostre ag = new addettoGiostre();
         try{
@@ -113,4 +146,6 @@ public class AddettoGiostreDAOMySQLJDBCImpl {
         }
         return ag;
     }
+
+
 }

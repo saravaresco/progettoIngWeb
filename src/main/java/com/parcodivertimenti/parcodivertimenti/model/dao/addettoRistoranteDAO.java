@@ -1,5 +1,6 @@
 package com.parcodivertimenti.parcodivertimenti.model.dao;
 
+import com.parcodivertimenti.parcodivertimenti.model.mo.addettoGiostre;
 import com.parcodivertimenti.parcodivertimenti.model.mo.addettoRistorante;
 
 public interface addettoRistoranteDAO {
@@ -7,7 +8,9 @@ public interface addettoRistoranteDAO {
     public addettoRistorante create(
             String codice_fiscale,
             String posizione,
-            Long ID_punto_ristoro);
+            Long ID_punto_ristoro,
+            String username,
+            String password);
 
     public void update(addettoRistorante addettoristorante);
 
@@ -18,4 +21,6 @@ public interface addettoRistoranteDAO {
     public addettoRistorante findByUserCF(String codice_fiscale);/*serve a recuperare utente dato il suo CF*/
 
     public addettoRistorante findByPuntoRistoro(String ID_punto_ristoro);
+
+    public addettoRistorante findByUsername(String username);
 }

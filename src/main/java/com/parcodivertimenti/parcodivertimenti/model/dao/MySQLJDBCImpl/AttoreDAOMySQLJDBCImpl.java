@@ -1,5 +1,6 @@
 package com.parcodivertimenti.parcodivertimenti.model.dao.MySQLJDBCImpl;
 
+import com.parcodivertimenti.parcodivertimenti.model.mo.addettoGiostre;
 import com.parcodivertimenti.parcodivertimenti.model.mo.attore;
 
 import java.sql.Connection;
@@ -93,6 +94,39 @@ public class AttoreDAOMySQLJDBCImpl {
         }
 
         return at;
+    }
+
+    @Override
+    public attore findByUsername(String username) {
+
+        PreparedStatement ps;
+        attore at = null;
+
+        try {
+
+            String sql
+                    = " SELECT * "
+                    + "   FROM at "
+                    + " WHERE "
+                    + "   username = ?";
+
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, username);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            if (resultSet.next()) {
+                at = read(resultSet);
+            }
+            resultSet.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return at;
+
     }
 
     attore read(ResultSet rs){
