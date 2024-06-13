@@ -20,4 +20,6 @@ public class attrazione {
 
     public Date getData_ultima_manutenzione(){return data_ultima_manutenzione;}
     public void setData_ultima_manutenzione(Date data_ultima_manutenzione){this.data_ultima_manutenzione = data_ultima_manutenzione;}
+
+
 }

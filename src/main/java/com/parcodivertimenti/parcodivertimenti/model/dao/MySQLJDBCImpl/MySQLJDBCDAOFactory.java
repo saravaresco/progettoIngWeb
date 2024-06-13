@@ -82,7 +82,7 @@ public class MySQLJDBCDAOFactory extends DaoFactory {
 
     @Override
     public addettoRistoranteDAO getAddettoRistoranteDAO() {
-        return new AddettoRistoranteDAOMySQLJDBCImpl(connection);
+        return (addettoRistoranteDAO) new AddettoRistoranteDAOMySQLJDBCImpl(connection);
     }
 
     @Override

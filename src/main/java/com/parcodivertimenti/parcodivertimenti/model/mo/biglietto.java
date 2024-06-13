@@ -8,7 +8,7 @@ public class biglietto {
     private String codice_fiscale;
     private Long prezzo;
     private Date data_acquisto;
-    private Long tipologia;
+    private String tipologia;
 
     public Long getID(){return ID;}
     public void setID(Long ID){this.ID = ID;}
@@ -22,7 +22,7 @@ public class biglietto {
     public Date getData_acquisto(){return data_acquisto;}
     public void setData_acquisto(Date data_acquisto){this.data_acquisto = data_acquisto;}
 
-    public Long getTipologia(){return tipologia;}
-    public void setTipologia(Long tipologia){this.tipologia = tipologia;}
+    public String getTipologia(){return tipologia;}
+    public void setTipologia(String tipologia){this.tipologia = tipologia;}
 
 }

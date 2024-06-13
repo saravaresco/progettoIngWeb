@@ -126,7 +126,7 @@ public class BigliettoDAOMySQLJDBCImpl {
     }
 
     @Override
-    public biglietto findByTipologia(Long tipologia){
+    public biglietto findByTipologia(String tipologia){
         PreparedStatement ps;
         biglietto b = null;
 
@@ -138,7 +138,7 @@ public class BigliettoDAOMySQLJDBCImpl {
                     + "tipologia = ?";
 
             ps = conn.prepareStatement(sql);
-            ps.setLong(1, tipologia);
+            ps.setString(1, tipologia);
 
             ResultSet resultSet = ps.executeQuery();
 
@@ -175,7 +175,7 @@ public class BigliettoDAOMySQLJDBCImpl {
         }
 
         try{
-            b.setTipologia(rs.getLong("tipologia"));
+            b.setTipologia(rs.getString("tipologia"));
         }catch (SQLException sqle){
         }
 
