@@ -10,14 +10,15 @@ import java.sql.SQLException;
 
 import static java.lang.module.ModuleDescriptor.read;
 
-public class AddettoGiostreDAOMySQLJDBCImpl {
+/*implementazione su come si accede al db da AddettoGiostreDao*/
+public class AddettoGiostreDAOMySQLJDBCImpl implements addettoGiostreDAO {
 
     private final String COUNTER_ID = "addettoGiostreId";
     Connection conn;
 
     public AddettoGiostreDAOMySQLJDBCImpl(Connection conn){this.conn = conn;}
 
-    @Override
+    @Override /*da implementare se sito prevede di potersi registrare (stessa cosa per update e delete)*/
     public addettoGiostre create(String codice_fiscale, String mansione, Long codice_giostra){
         throw new UnsupportedOperationException("Not supported yet");
     }
@@ -32,7 +33,7 @@ public class AddettoGiostreDAOMySQLJDBCImpl {
         throw new UnsupportedOperationException("Not supported yet");
     }
 
-    @Override
+    @Override /*ci serve solo per i cookie*/
     public addettoGiostre findLoggedUser(){
         throw new UnsupportedOperationException("Not supported yet");
     }
@@ -50,7 +51,7 @@ public class AddettoGiostreDAOMySQLJDBCImpl {
                     + "codice_fiscale = ?";
 
             ps = conn.prepareStatement(sql);
-            ps.setString(1,codice_fiscale);
+            ps.setString(1,codice_fiscale); /* 1 è l'indice del punto di domanda*/
 
             ResultSet resultSet = ps.executeQuery();
 
@@ -144,6 +145,15 @@ public class AddettoGiostreDAOMySQLJDBCImpl {
             ag.setCodice_giostra(rs.getLong("codice_giostra"));
         }catch (SQLException sqle){
         }
+        try{
+            ag.setUsername(rs.getString("username"));
+        }catch (SQLException sqle){
+        }
+        try{
+            ag.setPassword(rs.getString("password"));
+        }catch (SQLException sqle){
+        }
+
         return ag;
     }
 

@@ -108,19 +108,19 @@ public class HomeManagement {
             addettoGiostreDAO userDAO = daoFactory.getAddettoGiostreDAO();
             addettoGiostre addettoGiostre = addettoGiostreDAO.findByUsername(username);
 
-            if (user == null || !user.getPassword().equals(password)) {
-                sessionUserDAO.delete(null);
+            if (addettoGiostre == null || !addettoGiostre.getPassword().equals(password)) {
+                sessionAddettoGiostreDAO.delete(null);
                 applicationMessage = "Username e password errati!";
-                loggedUser=null;
+                loggedAddettoGiostre=null;
             } else {
-                loggedUser = sessionUserDAO.create(user.getUserId(), null,null, user.getFirstname(), user.getSurname(),null);
+                loggedAddettoGiostre = sessionAddettoGiostreDAO.create(addettoGiostre.getCodice_fiscale(), null,null, addettoGiostre.getUsername(), addettoGiostre.getPassword());
             }
 
             daoFactory.commitTransaction();
             sessionDAOFactory.commitTransaction();
 
-            request.setAttribute("loggedOn",loggedUser!=null);
-            request.setAttribute("loggedUser", loggedUser);
+            request.setAttribute("loggedOn",loggedAddettoGiostre!=null);
+            request.setAttribute("loggedUser", loggedAddettoGiostre);
             request.setAttribute("applicationMessage", applicationMessage);
             request.setAttribute("viewUrl", "homeManagement/view");
 
@@ -145,7 +145,7 @@ public class HomeManagement {
 
     public static void logout(HttpServletRequest request, HttpServletResponse response) {
 
-        DAOFactory sessionDAOFactory= null;
+        DaoFactory sessionDAOFactory= null;
 
         Logger logger = LogService.getApplicationLogger();
 
@@ -154,11 +154,11 @@ public class HomeManagement {
             Map sessionFactoryParameters=new HashMap<String,Object>();
             sessionFactoryParameters.put("request",request);
             sessionFactoryParameters.put("response",response);
-            sessionDAOFactory = DAOFactory.getDAOFactory(Configuration.COOKIE_IMPL,sessionFactoryParameters);
+            sessionDAOFactory = DaoFactory.getDaoFactory(Configuration.COOKIE_IMPL,sessionFactoryParameters);
             sessionDAOFactory.beginTransaction();
 
-            UserDAO sessionUserDAO = sessionDAOFactory.getUserDAO();
-            sessionUserDAO.delete(null);
+            addettoGiostreDAO sessionAddettoGiostreDAO = sessionDAOFactory.getAddettoGiostreDAO();
+            sessionAddettoGiostreDAO.delete(null);
 
             sessionDAOFactory.commitTransaction();
 

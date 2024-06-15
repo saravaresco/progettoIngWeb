@@ -26,8 +26,7 @@ public class BigliettoCookieImpl implements bigliettoDAO{
             String codice_fiscale,
             Long prezzo,
             Date data_acquisto,
-            String tipologia,
-            String languageCode) {
+            String tipologia) {
 
         biglietto loggedBiglietto = new biglietto();
         loggedBiglietto.setID(ID);

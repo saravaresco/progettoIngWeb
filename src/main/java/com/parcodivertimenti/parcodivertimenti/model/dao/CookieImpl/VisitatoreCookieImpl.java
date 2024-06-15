@@ -27,8 +27,7 @@ public class VisitatoreCookieImpl implements visitatoreDAO{
             Date data_nascita,
             String sesso,
             String username,
-            String password,
-            String languageCode) {
+            String password) {
 
         visitatore loggedVisitatore = new visitatore();
         loggedVisitatore.setCodice_fiscale(codice_fiscale);
@@ -52,7 +51,7 @@ public class VisitatoreCookieImpl implements visitatoreDAO{
     public void update(visitatore loggedVisitatore) {
 
         Cookie cookie;
-        cookie = new Cookie("loggedVisitatore", encode(loggedVisitatore);
+        cookie = new Cookie("loggedVisitatore", encode(loggedVisitatore));
         cookie.setPath("/");
         response.addCookie(cookie);
 
@@ -116,7 +115,7 @@ public class VisitatoreCookieImpl implements visitatoreDAO{
     private String encode(visitatore loggedDipendente) {
 
         String encodedLoggedUser;
-        encodedLoggedUser = loggedDipendente.getCodice_fiscale() + "#" + loggedDipendente.getNome() + "#" + loggedDipendente.getCognome() + "#" + loggedDipendente.getData_nascita() + "#" + loggedDipendente.getSesso() + "#" + loggedDipendente.getStipendio();
+        encodedLoggedUser = loggedDipendente.getCodice_fiscale() + "#" + loggedDipendente.getNome() + "#" + loggedDipendente.getCognome() + "#" + loggedDipendente.getData_nascita() + "#" + loggedDipendente.getSesso();
         return encodedLoggedUser;
 
     }

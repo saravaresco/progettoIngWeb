@@ -1,7 +1,6 @@
 package com.parcodivertimenti.parcodivertimenti.model.dao.MySQLJDBCImpl;
 
 import com.parcodivertimenti.parcodivertimenti.model.dao.addettoRistoranteDAO;
-import com.parcodivertimenti.parcodivertimenti.model.mo.addettoGiostre;
 import com.parcodivertimenti.parcodivertimenti.model.mo.addettoRistorante;
 
 import java.sql.Connection;
@@ -11,7 +10,7 @@ import java.sql.SQLException;
 
 import static java.lang.module.ModuleDescriptor.read;
 
-public class AddettoRistoranteDAOMySQLJDBCImpl {
+public class AddettoRistoranteDAOMySQLJDBCImpl implements addettoRistoranteDAO{
 
     private final String COUNTER_ID = "addettoRistoranteId";
     Connection conn;
@@ -19,7 +18,11 @@ public class AddettoRistoranteDAOMySQLJDBCImpl {
     public AddettoRistoranteDAOMySQLJDBCImpl(Connection conn){this.conn = conn;}
 
     @Override
-    public addettoRistorante create(String codice_fiscale, String posizione, Long ID_punto_ristoro){
+    public addettoRistorante create(String codice_fiscale,
+                                    String posizione,
+                                    Long ID_punto_ristoro,
+                                    String username,
+                                    String password){
         throw new UnsupportedOperationException("Not supported yet");
     }
 
@@ -144,6 +147,14 @@ public class AddettoRistoranteDAOMySQLJDBCImpl {
         }
         try{
             ad.setID_punto_ristoro(rs.getLong("ID_punto_ristoro"));
+        }catch (SQLException sqle){
+        }
+        try{
+            ad.setUsername(rs.getString("username"));
+        }catch (SQLException sqle){
+        }
+        try{
+            ad.setPassword(rs.getString("password"));
         }catch (SQLException sqle){
         }
         return ad;

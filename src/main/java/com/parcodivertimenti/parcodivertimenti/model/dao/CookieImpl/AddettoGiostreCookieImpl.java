@@ -23,14 +23,16 @@ public class AddettoGiostreCookieImpl implements addettoGiostreDAO{
             String mansione,
             Long codice_giostra,
             String username,
-            String password,
-            String languageCode) {
+            String password) {
 
+        /*creo nuovo addettoGiostre*/
         addettoGiostre loggedAddettoGiostre = new addettoGiostre();
+        /*setto i vari parametri in base a quello che ricevo*/
         loggedAddettoGiostre.setCodice_fiscale(codice_fiscale);
         loggedAddettoGiostre.setMansione(mansione);
         loggedAddettoGiostre.setCodice_giostra(codice_giostra);
 
+        /*creo cookie*/
         Cookie cookie;
         cookie = new Cookie("loggedAddettoGiostre", encode(loggedAddettoGiostre));
         cookie.setPath("/");
@@ -83,7 +85,7 @@ public class AddettoGiostreCookieImpl implements addettoGiostreDAO{
     @Override
     public addettoGiostre findByUserCF(String codice_fiscale) {
         throw new UnsupportedOperationException("Not supported yet.");
-    }
+    } /* sollevo un'eccezione perchè non lo posso fare dai cookie*/
 
     @Override
     public addettoGiostre findByMansione(String mansione) {

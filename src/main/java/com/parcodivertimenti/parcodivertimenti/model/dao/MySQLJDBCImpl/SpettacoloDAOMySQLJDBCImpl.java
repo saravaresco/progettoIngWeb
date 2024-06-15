@@ -1,11 +1,12 @@
 package com.parcodivertimenti.parcodivertimenti.model.dao.MySQLJDBCImpl;
 
 import com.parcodivertimenti.parcodivertimenti.model.mo.spettacolo;
+import com.parcodivertimenti.parcodivertimenti.model.dao.spettacoloDAO;
 
 import java.sql.*;
 import java.util.Date;
 
-public class SpettacoloDAOMySQLJDBCImpl {
+public class SpettacoloDAOMySQLJDBCImpl implements spettacoloDAO {
 
     private final String COUNTER_ID = "spettacoloId";
     Connection conn;
@@ -27,10 +28,6 @@ public class SpettacoloDAOMySQLJDBCImpl {
         throw new UnsupportedOperationException("Not supported yet");
     }
 
-    @Override
-    public spettacolo findLoggedUser(){
-        throw new UnsupportedOperationException("Not supported yet");
-    }
 
     @Override
     public spettacolo findByNome(String nome){
@@ -105,7 +102,7 @@ public class SpettacoloDAOMySQLJDBCImpl {
                     + "data = ?";
 
             ps = conn.prepareStatement(sql);
-            ps.setDate(1, data);
+            ps.setDate(1, (java.sql.Date) data);
 
             ResultSet resultSet = ps.executeQuery();
 

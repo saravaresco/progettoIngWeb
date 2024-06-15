@@ -1,6 +1,7 @@
 package com.parcodivertimenti.parcodivertimenti.model.dao.MySQLJDBCImpl;
 
 import com.parcodivertimenti.parcodivertimenti.model.mo.biglietto;
+import com.parcodivertimenti.parcodivertimenti.model.dao.bigliettoDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
-public class BigliettoDAOMySQLJDBCImpl {
+public class BigliettoDAOMySQLJDBCImpl implements bigliettoDAO {
 
     private final String COUNTER_ID = "bigliettoId";
     Connection conn;
@@ -16,7 +17,7 @@ public class BigliettoDAOMySQLJDBCImpl {
     public BigliettoDAOMySQLJDBCImpl(Connection conn){this.conn = conn;}
 
     @Override
-    public biglietto create(Long ID, String codice_fiscale, Long prezzo, Date data_acquisto, Long tipoligia){
+    public biglietto create(Long ID, String codice_fiscale, Long prezzo, Date data_acquisto, String tipoligia){
         throw new UnsupportedOperationException("Not supported yet");
     }
 
@@ -30,13 +31,9 @@ public class BigliettoDAOMySQLJDBCImpl {
         throw new UnsupportedOperationException("Not supported yet");
     }
 
-    @Override
-    public biglietto findLoggedUser(){
-        throw new UnsupportedOperationException("Not supported yet");
-    }
 
     @Override
-    public biglietto findByID(Long ID){
+    public biglietto findById(Long ID){
         PreparedStatement ps;
         biglietto b = null;
 
@@ -108,7 +105,7 @@ public class BigliettoDAOMySQLJDBCImpl {
                     + "data_acquisto = ?";
 
             ps = conn.prepareStatement(sql);
-            ps.setDate(1, data_acquisto);
+            ps.setDate(1, (java.sql.Date) data_acquisto);
 
             ResultSet resultSet = ps.executeQuery();
 

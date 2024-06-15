@@ -22,8 +22,7 @@ public class AttoreCookieImpl implements attoreDAO{
             String codice_fiscale,
             String ruolo,
             String username,
-            String password,
-            String languageCode) {
+            String password) {
 
         attore loggedAttore = new attore();
         loggedAttore.setCodice_fiscale(codice_fiscale);

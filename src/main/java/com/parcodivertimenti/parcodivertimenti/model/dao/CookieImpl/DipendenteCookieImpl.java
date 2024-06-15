@@ -28,8 +28,7 @@ public class DipendenteCookieImpl implements dipendenteDAO{
             String sesso,
             Long stipendio,
             String username,
-            String password,
-            String languageCode) {
+            String password) {
 
         dipendente loggedDipendente = new dipendente();
         loggedDipendente.setCodice_fiscale(codice_fiscale);

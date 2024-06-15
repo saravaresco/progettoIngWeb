@@ -20,7 +20,7 @@ public interface addettoRistoranteDAO {
 
     public addettoRistorante findByUserCF(String codice_fiscale);/*serve a recuperare utente dato il suo CF*/
 
-    public addettoRistorante findByPuntoRistoro(String ID_punto_ristoro);
+    public addettoRistorante findByPuntoRistoro(Long ID_punto_ristoro);
 
     public addettoRistorante findByUsername(String username);
 }

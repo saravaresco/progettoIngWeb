@@ -1,6 +1,5 @@
 package com.parcodivertimenti.parcodivertimenti.model.mo;
 
-import java.sql.Time;
 import java.util.Date;
 
 public class visitatore {
@@ -23,7 +22,7 @@ public class visitatore {
     public String getCognome(){return cognome;}
     public void setCognome(String cognome){this.cognome = cognome;}
 
-    public Date getData_nascita(){return data_nascita;}
+    public java.sql.Date getData_nascita(){return data_nascita;}
     public void setData_nascita(Date data_nascita){this.data_nascita = data_nascita;}
 
     public String getSesso(){return sesso;}

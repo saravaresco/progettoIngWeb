@@ -24,8 +24,7 @@ public class AttrazioneCookieImpl implements attrazioneDAO{
             Long codice,
             String nome,
             String tipologia,
-            Date data_ultima_manutenzione,
-            String languageCode) {
+            Date data_ultima_manutenzione) {
 
         attrazione loggedAttrazione = new attrazione();
         loggedAttrazione.setCodice(codice);
@@ -77,6 +76,11 @@ public class AttrazioneCookieImpl implements attrazioneDAO{
 
     @Override
     public attrazione findByTipologia(String tipologia) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public attrazione findByDateM(Date data_ultima_manutenzione) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

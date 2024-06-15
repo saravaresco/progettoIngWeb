@@ -1,6 +1,6 @@
 package com.parcodivertimenti.parcodivertimenti.model.dao.MySQLJDBCImpl;
 
-import com.parcodivertimenti.parcodivertimenti.model.mo.addettoGiostre;
+import com.parcodivertimenti.parcodivertimenti.model.dao.manutentoreDAO;
 import com.parcodivertimenti.parcodivertimenti.model.mo.manutentore;
 
 import java.sql.Connection;
@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
-public class ManutentoreDAOMySQLJDBCImpl {
+public class ManutentoreDAOMySQLJDBCImpl implements manutentoreDAO{
 
     private final String COUNTER_ID = "manutentoreId";
     Connection conn;
@@ -17,7 +17,7 @@ public class ManutentoreDAOMySQLJDBCImpl {
     public ManutentoreDAOMySQLJDBCImpl(Connection conn){this.conn = conn;}
 
     @Override
-    public manutentore create(String codice_fiscale, Long numero_interventi){
+    public manutentore create(String codice_fiscale, Long numero_interventi, String username, String password){
         throw new UnsupportedOperationException("Not supported yet");
     }
 
@@ -138,6 +138,14 @@ public class ManutentoreDAOMySQLJDBCImpl {
         }
         try{
             m.setNumero_interventi(rs.getLong("numero_interventi"));
+        }catch (SQLException sqle){
+        }
+        try{
+            m.setUsername(rs.getString("username"));
+        }catch (SQLException sqle){
+        }
+        try{
+            m.setPassword(rs.getString("password"));
         }catch (SQLException sqle){
         }
 

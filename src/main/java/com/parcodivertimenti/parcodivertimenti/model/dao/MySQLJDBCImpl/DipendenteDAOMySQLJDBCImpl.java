@@ -1,7 +1,7 @@
 package com.parcodivertimenti.parcodivertimenti.model.dao.MySQLJDBCImpl;
 
-import com.parcodivertimenti.parcodivertimenti.model.mo.addettoGiostre;
 import com.parcodivertimenti.parcodivertimenti.model.mo.dipendente;
+import com.parcodivertimenti.parcodivertimenti.model.dao.dipendenteDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
-public class DipendenteDAOMySQLJDBCImpl {
+public class DipendenteDAOMySQLJDBCImpl implements dipendenteDAO{
 
     private final String COUNTER_ID = "dipendenteId";
     Connection conn;
@@ -17,7 +17,7 @@ public class DipendenteDAOMySQLJDBCImpl {
     public DipendenteDAOMySQLJDBCImpl(Connection conn){this.conn = conn;}
 
     @Override
-    public dipendente create(String codice_fiscale, String nome, String cognome, Date data_nascita, String sesso, Long stipendio){
+    public dipendente create(String codice_fiscale, String nome, String cognome, Date data_nascita, String sesso, Long stipendio, String username, String password){
         throw new UnsupportedOperationException("Not supported yet");
     }
 
@@ -127,7 +127,7 @@ public class DipendenteDAOMySQLJDBCImpl {
     }
 
     @Override
-    public dipendente findByDate(Date data_nascita){
+    public dipendente findByDataNascita(Date data_nascita){
         PreparedStatement ps;
         dipendente dip = null;
 
@@ -139,7 +139,7 @@ public class DipendenteDAOMySQLJDBCImpl {
                     + "data_nascita = ?";
 
             ps = conn.prepareStatement(sql);
-            ps.setDate(1, data_nascita);
+            ps.setDate(1, (java.sql.Date) data_nascita);
 
             ResultSet resultSet = ps.executeQuery();
 
@@ -243,6 +243,14 @@ public class DipendenteDAOMySQLJDBCImpl {
         }
         try{
             dip.setStipendio(rs.getLong("stipendio"));
+        }catch (SQLException sqle){
+        }
+        try{
+            dip.setUsername(rs.getString("username"));
+        }catch (SQLException sqle){
+        }
+        try{
+            dip.setPassword(rs.getString("password"));
         }catch (SQLException sqle){
         }
 

@@ -1,6 +1,6 @@
 package com.parcodivertimenti.parcodivertimenti.model.dao.MySQLJDBCImpl;
 
-import com.parcodivertimenti.parcodivertimenti.model.mo.addettoGiostre;
+import com.parcodivertimenti.parcodivertimenti.model.dao.attoreDAO;
 import com.parcodivertimenti.parcodivertimenti.model.mo.attore;
 
 import java.sql.Connection;
@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import static java.lang.module.ModuleDescriptor.read;
-public class AttoreDAOMySQLJDBCImpl {
+public class AttoreDAOMySQLJDBCImpl implements attoreDAO {
 
     private final String COUNTER_ID = "attoreId";
     Connection conn;
@@ -137,6 +137,14 @@ public class AttoreDAOMySQLJDBCImpl {
         }
         try{
             at.setRuolo(rs.getString("ruolo"));
+        }catch (SQLException sqle){
+        }
+        try{
+            at.setUsername(rs.getString("username"));
+        }catch (SQLException sqle){
+        }
+        try{
+            at.setPassword(rs.getString("password"));
         }catch (SQLException sqle){
         }
 

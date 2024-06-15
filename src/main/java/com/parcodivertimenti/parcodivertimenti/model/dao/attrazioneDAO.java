@@ -24,7 +24,7 @@ public interface attrazioneDAO {
 
     public attrazione findByTipologia(String tipologia);
 
-    public attrazione findByDate(Date data_ultima_manutenzione);
+    public attrazione findByDateM(Date data_ultima_manutenzione);
 
 
 }

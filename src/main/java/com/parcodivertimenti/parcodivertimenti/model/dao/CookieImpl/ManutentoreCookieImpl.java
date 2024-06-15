@@ -24,8 +24,7 @@ public class ManutentoreCookieImpl implements manutentoreDAO{
             String codice_fiscale,
             Long numero_interventi,
             String username,
-            String password,
-            String languageCode) {
+            String password) {
 
         manutentore loggedManutentore = new manutentore();
         loggedManutentore.setCodice_fiscale(codice_fiscale);

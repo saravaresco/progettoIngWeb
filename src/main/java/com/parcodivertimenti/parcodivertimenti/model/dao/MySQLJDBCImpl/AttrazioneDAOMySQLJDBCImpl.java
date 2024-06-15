@@ -1,6 +1,7 @@
 package com.parcodivertimenti.parcodivertimenti.model.dao.MySQLJDBCImpl;
 
 import com.parcodivertimenti.parcodivertimenti.model.mo.attrazione;
+import com.parcodivertimenti.parcodivertimenti.model.dao.attrazioneDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
-public class AttrazioneDAOMySQLJDBCImpl {
+public class AttrazioneDAOMySQLJDBCImpl implements attrazioneDAO {
 
     private final String COUNTER_ID = "attrazioneId";
     Connection conn;
@@ -30,10 +31,6 @@ public class AttrazioneDAOMySQLJDBCImpl {
         throw new UnsupportedOperationException("Not supported yet");
     }
 
-    @Override
-    public attrazione findLoggedUser(){
-        throw new UnsupportedOperationException("Not supported yet");
-    }
 
     @Override
     public attrazione findByCodice(Long codice){
@@ -126,7 +123,7 @@ public class AttrazioneDAOMySQLJDBCImpl {
     }
 
     @Override
-    public attrazione findByDate(Date data_ultima_manutenzione){
+    public attrazione findByDateM(Date data_ultima_manutenzione){
         PreparedStatement ps;
         attrazione at = null;
 
@@ -138,7 +135,7 @@ public class AttrazioneDAOMySQLJDBCImpl {
                     + "data_ultima_manutenzione = ?";
 
             ps = conn.prepareStatement(sql);
-            ps.setDate(1, data_ultima_manutenzione);
+            ps.setDate(1, (java.sql.Date) data_ultima_manutenzione);
 
             ResultSet resultSet = ps.executeQuery();
 

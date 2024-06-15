@@ -1,11 +1,12 @@
 package com.parcodivertimenti.parcodivertimenti.model.dao.MySQLJDBCImpl;
 
 import com.parcodivertimenti.parcodivertimenti.model.mo.puntoRistoro;
+import com.parcodivertimenti.parcodivertimenti.model.dao.puntoRistoroDAO;
 
 import java.sql.*;
 import java.util.Date;
 
-public class PuntoRistoroDAOMySQLJDBCImpl {
+public class PuntoRistoroDAOMySQLJDBCImpl implements puntoRistoroDAO{
 
     private final String COUNTER_ID = "puntoRistoroId";
     Connection conn;
@@ -27,10 +28,6 @@ public class PuntoRistoroDAOMySQLJDBCImpl {
         throw new UnsupportedOperationException("Not supported yet");
     }
 
-    @Override
-    public puntoRistoro findLoggedUser(){
-        throw new UnsupportedOperationException("Not supported yet");
-    }
 
     @Override
     public puntoRistoro findById(Long ID){

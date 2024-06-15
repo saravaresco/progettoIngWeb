@@ -23,8 +23,7 @@ public class AddettoRistoranteCookieImpl implements addettoRistoranteDAO {
             String posizione,
             Long ID_punto_ristoro,
             String username,
-            String password,
-            String languageCode) {
+            String password) {
 
         addettoRistorante loggedAddettoRistorante = new addettoRistorante();
         loggedAddettoRistorante.setCodice_fiscale(codice_fiscale);
@@ -86,7 +85,7 @@ public class AddettoRistoranteCookieImpl implements addettoRistoranteDAO {
     }
 
     @Override
-    public addettoRistorante findByPuntoRistoro(String ID_punto_ristoro) {
+    public addettoRistorante findByPuntoRistoro(Long ID_punto_ristoro) {
         return null;
     }
 
