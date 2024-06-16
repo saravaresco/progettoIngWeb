@@ -18,7 +18,7 @@ public class VisitatoreDAOMySQLJDBCImpl implements visitatoreDAO {
     public VisitatoreDAOMySQLJDBCImpl(Connection conn){this.conn = conn;}
 
     @Override /*in questo caso lo implemento percè l'utente visitatore posso crearlo*/
-    public visitatore create(String codice_fiscale, String nome, String cognome, Date data_nascita, String sesso, String username, String password) {
+    public visitatore create(String codice_fiscale, String nome, String cognome, String data_nascita, String sesso, String username, String password) {
         PreparedStatement ps;
         visitatore visitatore = new visitatore();
         visitatore.setCodice_fiscale(codice_fiscale);
@@ -87,7 +87,7 @@ public class VisitatoreDAOMySQLJDBCImpl implements visitatoreDAO {
             ps.setString(i++, visitatore.getCodice_fiscale());
             ps.setString(i++, visitatore.getNome());
             ps.setString(i++, visitatore.getCognome());
-            ps.setDate(i++, visitatore.getData_nascita());
+            ps.setString(i++, visitatore.getData_nascita());
             ps.setString(i++, visitatore.getSesso());
             ps.setString(i++, visitatore.getUsername());
             ps.setString(i++, visitatore.getPassword());
@@ -124,7 +124,7 @@ public class VisitatoreDAOMySQLJDBCImpl implements visitatoreDAO {
             int i = 1;
             ps.setString(i++, visit.getNome());
             ps.setString(i++, visit.getCognome());
-            ps.setDate(i++, visit.getData_nascita());
+            ps.setString(i++, visit.getData_nascita());
             ps.setString(i++, visit.getCodice_fiscale());
 
             ResultSet resultSet = ps.executeQuery();
@@ -153,7 +153,7 @@ public class VisitatoreDAOMySQLJDBCImpl implements visitatoreDAO {
             i = 1;
             ps.setString(i++,visit.getNome());
             ps.setString(i++, visit.getCognome());
-            ps.setDate(i++, visit.getData_nascita());
+            ps.setString(i++, visit.getData_nascita());
             ps.setString(i++, visit.getSesso());
             ps.setString(i++, visit.getUsername());
             ps.setString(i++, visit.getPassword());
@@ -282,7 +282,7 @@ public class VisitatoreDAOMySQLJDBCImpl implements visitatoreDAO {
     }
 
     @Override
-    public visitatore findByDataNascita(Date data_nascita){
+    public visitatore findByDataNascita(String data_nascita){
         PreparedStatement ps;
         visitatore v = null;
 
@@ -294,7 +294,7 @@ public class VisitatoreDAOMySQLJDBCImpl implements visitatoreDAO {
                     + "data_nascita = ?";
 
             ps = conn.prepareStatement(sql);
-            ps.setDate(1, data_nascita);
+            ps.setString(1, data_nascita);
 
             ResultSet resultSet = ps.executeQuery();
 
@@ -359,7 +359,7 @@ public class VisitatoreDAOMySQLJDBCImpl implements visitatoreDAO {
         }catch (SQLException sqle){
         }
         try{
-            v.setData_nascita(rs.getDate("data_nascita"));
+            v.setData_nascita(rs.getString("data_nascita"));
         }catch (SQLException sqle){
         }
         try{

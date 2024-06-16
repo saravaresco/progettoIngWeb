@@ -12,7 +12,7 @@ public interface dipendenteDAO {
             String codice_fiscale,
             String nome,
             String cognome,
-            Date data_nascita,
+            String data_nascita,
             String sesso,
             Long stipendio,
             String username,
@@ -30,7 +30,7 @@ public interface dipendenteDAO {
 
     public dipendente findByCognome(String cognome);
 
-    public dipendente findByDataNascita(Date data_nascita);
+    public dipendente findByDataNascita(String data_nascita);
 
     public dipendente findByStipendio(Long stipendio);
 

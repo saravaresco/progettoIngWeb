@@ -7,7 +7,7 @@ public class visitatore {
     private String codice_fiscale;
     private String nome;
     private String cognome;
-    private Date data_nascita;
+    private String data_nascita;
     private String sesso;
     private String username;
     private String password;
@@ -22,8 +22,8 @@ public class visitatore {
     public String getCognome(){return cognome;}
     public void setCognome(String cognome){this.cognome = cognome;}
 
-    public java.sql.Date getData_nascita(){return data_nascita;}
-    public void setData_nascita(Date data_nascita){this.data_nascita = data_nascita;}
+    public String getData_nascita(){return data_nascita;}
+    public void setData_nascita(String data_nascita){this.data_nascita = data_nascita;}
 
     public String getSesso(){return sesso;}
     public void setSesso(String sesso){this.sesso = sesso;}

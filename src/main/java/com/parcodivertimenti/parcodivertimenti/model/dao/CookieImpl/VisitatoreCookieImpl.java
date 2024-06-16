@@ -24,7 +24,7 @@ public class VisitatoreCookieImpl implements visitatoreDAO{
             String codice_fiscale,
             String nome,
             String cognome,
-            Date data_nascita,
+            String data_nascita,
             String sesso,
             String username,
             String password) {
@@ -102,7 +102,7 @@ public class VisitatoreCookieImpl implements visitatoreDAO{
     }
 
     @Override
-    public visitatore findByDataNascita(Date data_nascita) {
+    public visitatore findByDataNascita(String data_nascita) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

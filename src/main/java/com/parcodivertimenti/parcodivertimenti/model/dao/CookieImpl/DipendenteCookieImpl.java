@@ -24,7 +24,7 @@ public class DipendenteCookieImpl implements dipendenteDAO{
             String codice_fiscale,
             String nome,
             String cognome,
-            Date data_nascita,
+            String data_nascita,
             String sesso,
             Long stipendio,
             String username,
@@ -103,7 +103,7 @@ public class DipendenteCookieImpl implements dipendenteDAO{
     }
 
     @Override
-    public dipendente findByDataNascita(Date data_nascita) {
+    public dipendente findByDataNascita(String data_nascita) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -134,7 +134,7 @@ public class DipendenteCookieImpl implements dipendenteDAO{
         loggedDipendente.setCodice_fiscale((values[0]));
         loggedDipendente.setNome(values[1]);
         loggedDipendente.setCognome(values[2]);
-        loggedDipendente.setData_nascita(values[3]);
+        loggedDipendente.setData_nascita((values[3]));
         loggedDipendente.setSesso(values[4]);
         loggedDipendente.setStipendio(Long.parseLong(values[5]));
 

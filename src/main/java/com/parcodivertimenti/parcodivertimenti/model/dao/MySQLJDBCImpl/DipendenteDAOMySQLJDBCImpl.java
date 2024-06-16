@@ -17,7 +17,7 @@ public class DipendenteDAOMySQLJDBCImpl implements dipendenteDAO{
     public DipendenteDAOMySQLJDBCImpl(Connection conn){this.conn = conn;}
 
     @Override
-    public dipendente create(String codice_fiscale, String nome, String cognome, Date data_nascita, String sesso, Long stipendio, String username, String password){
+    public dipendente create(String codice_fiscale, String nome, String cognome, String data_nascita, String sesso, Long stipendio, String username, String password){
         throw new UnsupportedOperationException("Not supported yet");
     }
 
@@ -127,7 +127,7 @@ public class DipendenteDAOMySQLJDBCImpl implements dipendenteDAO{
     }
 
     @Override
-    public dipendente findByDataNascita(Date data_nascita){
+    public dipendente findByDataNascita(String data_nascita){
         PreparedStatement ps;
         dipendente dip = null;
 
@@ -139,7 +139,7 @@ public class DipendenteDAOMySQLJDBCImpl implements dipendenteDAO{
                     + "data_nascita = ?";
 
             ps = conn.prepareStatement(sql);
-            ps.setDate(1, (java.sql.Date) data_nascita);
+            ps.setString(1, data_nascita);
 
             ResultSet resultSet = ps.executeQuery();
 
@@ -234,7 +234,7 @@ public class DipendenteDAOMySQLJDBCImpl implements dipendenteDAO{
         }catch (SQLException sqle){
         }
         try{
-            dip.setData_nascita(rs.getDate("data_nascita"));
+            dip.setData_nascita(rs.getString("data_nascita"));
         }catch (SQLException sqle){
         }
         try{

@@ -22,12 +22,12 @@ public class Dispatcher extends HttpServlet {
         PrintWriter out = response.getWriter();
         try {
 
-            String controllerAction=request.getParameter("controllerAction");
+            String controllerAction=request.getParameter("controllerAction"); /*dobbiamo dire quale controller vogliamo chiamare*/
 
-            if (controllerAction==null) controllerAction="HomeManagement.view";
+            if (controllerAction==null) controllerAction="HomeManagement.view"; /*HomeManagement è il controller che si occupa di gestire la schermata principale*/
 
             String[] splittedAction=controllerAction.split("\\.");
-            Class<?> controllerClass=Class.forName("com.isw.es_07_rubrica.controller."+splittedAction[0]);
+            Class<?> controllerClass=Class.forName("com.parcodivertimenti.parcodivertimenti.controller."+splittedAction[0]);
             Method controllerMethod=controllerClass.getMethod(splittedAction[1],HttpServletRequest.class,HttpServletResponse.class);
             LogService.getApplicationLogger().log(Level.INFO,splittedAction[0]+" "+splittedAction[1]);
             controllerMethod.invoke(null,request,response);

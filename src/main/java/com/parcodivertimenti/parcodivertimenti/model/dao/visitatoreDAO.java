@@ -12,7 +12,7 @@ public interface visitatoreDAO {
             String codice_fiscale,
             String nome,
             String cognome,
-            Date data_nascita,
+            String data_nascita,
             String sesso,
             String username,
             String password);
@@ -29,7 +29,7 @@ public interface visitatoreDAO {
 
     public visitatore findByCognome(String cognome);
 
-    public visitatore findByDataNascita(Date data_nascita);
+    public visitatore findByDataNascita(String data_nascita);
 
     public visitatore findByUsername(String username);
 

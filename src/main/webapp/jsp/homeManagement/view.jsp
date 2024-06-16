@@ -5,15 +5,34 @@
   Time: 23:07
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page session="false" %>
+<%@page import="com.parcodivertimenti.parcodivertimenti.model.mo.visitatore" %>
+
+<%
+    boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
+    visitatore loggedVisitatore = (visitatore) request.getAttribute("loggedVisitatore");
+    String applicationMessage = (String) request.getAttribute("applicationMessage");
+    String menuActiveLink = "Home";
+%>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Title</title>
+    <%@include file="/include/htmlHead.inc"%>
 </head>
 <body>
-
-</body>
+<%@include file="/include/header.inc"%>
+<main>
+    <%if (loggedOn) {%>
+    Benvenuto <%=loggedVisitatore.getNome()%> <%=loggedVisitatore.getCognome()%>!<br/>
+    Clicca sulla voce "Rubrica" del men&ugrave; per gestire i tuoi contatti.
+    <%} else {%>
+    Benvenuto.
+    Fai il logon per gestire la tua rubrica.
+    <%}%>
+</main>
+<%@include file="/include/footer.inc"%>
 </html>
 
 
-/*è la view principale del sito*/
+
+<%-- è la view principale del sito*/ --%>

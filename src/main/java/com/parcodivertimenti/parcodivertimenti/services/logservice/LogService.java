@@ -3,7 +3,8 @@ package com.parcodivertimenti.parcodivertimenti.services.logservice;
 import java.io.IOException;
 import java.util.logging.*;
 
-import com.isw.es_07_rubrica.services.config.Configuration;
+import  com.parcodivertimenti.parcodivertimenti.services.config.Configuration;
+
 
 public class LogService {
 
