@@ -36,12 +36,12 @@ public abstract class DaoFactory {
 
     public abstract visitatoreDAO getVisitatoreDAO();
 
-    public static CookieDAOFactory getDaoFactory(String whichFactory, Map factoryParameters) {
+    public static MySQLJDBCDAOFactory getDaoFactory(String whichFactory, Map factoryParameters) {
 
         if (whichFactory.equals(MYSQLJDBCIMPL)) {
             return new MySQLJDBCDAOFactory(factoryParameters);
         } else if (whichFactory.equals(COOKIEIMPL)) {
-            return new CookieDAOFactory(factoryParameters);
+            return new MySQLJDBCDAOFactory(factoryParameters);
         } else {
             return null;
         }

@@ -19,7 +19,7 @@ public class AddettoGiostreDAOMySQLJDBCImpl implements addettoGiostreDAO {
     public AddettoGiostreDAOMySQLJDBCImpl(Connection conn){this.conn = conn;}
 
     @Override /*da implementare se sito prevede di potersi registrare (stessa cosa per update e delete)*/
-    public addettoGiostre create(String codice_fiscale, String mansione, Long codice_giostra){
+    public addettoGiostre create(String codice_fiscale, String mansione, Long codice_giostra, String username, String password){
         throw new UnsupportedOperationException("Not supported yet");
     }
 

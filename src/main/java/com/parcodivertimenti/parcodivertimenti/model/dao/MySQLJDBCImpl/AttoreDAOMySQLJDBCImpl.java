@@ -17,7 +17,7 @@ public class AttoreDAOMySQLJDBCImpl implements attoreDAO {
     public AttoreDAOMySQLJDBCImpl(Connection conn){this.conn = conn;}
 
     @Override
-    public attore create(String codice_fiscale, String ruolo){
+    public attore create(String codice_fiscale, String ruolo, String username, String password){
         throw new UnsupportedOperationException("Not supported yet");
     }
 

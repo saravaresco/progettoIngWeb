@@ -20,7 +20,7 @@ public class Configuration {
 
     /* Logger Configuration */
     public static final String GLOBAL_LOGGER_NAME="parco_web";
-    public static final String GLOBAL_LOGGER_FILE="/Users/217347/OneDrive-unife.it/Desktop/parco_web_log.%g.%u.txt";
+    public static final String GLOBAL_LOGGER_FILE="/Utenti/217347/Documents/parco_web_log.%g.%u.txt";
     public static final Level GLOBAL_LOGGER_LEVEL=Level.ALL; /*lasciare così*/
 
 }

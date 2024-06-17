@@ -106,7 +106,7 @@ public class HomeManagement {
             String password = request.getParameter("password");
 
             addettoGiostreDAO userDAO = daoFactory.getAddettoGiostreDAO();
-            addettoGiostre addettoGiostre = addettoGiostreDAO.findByUsername(username);
+            addettoGiostre addettoGiostre = userDAO.findByUsername(username);
 
             if (addettoGiostre == null || !addettoGiostre.getPassword().equals(password)) {
                 sessionAddettoGiostreDAO.delete(null);
