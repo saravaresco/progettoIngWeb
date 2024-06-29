@@ -5,15 +5,7 @@
   Time: 23:07
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page session="false" %>
-<%@page import="com.parcodivertimenti.parcodivertimenti.model.mo.visitatore" %>
 
-<%
-    boolean loggedOn = (Boolean) request.getAttribute("loggedOn");
-    visitatore loggedVisitatore = (visitatore) request.getAttribute("loggedVisitatore");
-    String applicationMessage = (String) request.getAttribute("applicationMessage");
-    String menuActiveLink = "Home";
-%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
@@ -64,9 +56,12 @@
 </div>
 <div class="menu">
     <a href="attrazioni.jsp">Attrazioni</a>
-    <a href="eventi.jsp">Eventi</a>
+    <%--<a href="eventi.jsp">Eventi</a>--%>
     <a href="puntiRistoro.jsp">Punti Ristoro</a>
-    <a href="mappa.jsp">Mappa</a>
+    <%--<a href="mappa.jsp">Mappa</a>--%>
+    <%--<a href="login.jsp">Login</a>--%>
+    <a href="eventi.jsp">Eventi</a>
+    <a href="mappa">Mappa</a>
     <a href="login.jsp">Login</a>
 </div>
 <div class="main-content">
@@ -75,6 +70,7 @@
 </div>
 </body>
 </html>
+
 
 
 

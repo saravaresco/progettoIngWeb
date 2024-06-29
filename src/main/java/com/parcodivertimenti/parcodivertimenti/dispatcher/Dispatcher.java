@@ -24,7 +24,7 @@ public class Dispatcher extends HttpServlet {
 
             String controllerAction=request.getParameter("controllerAction"); /*dobbiamo dire quale controller vogliamo chiamare*/
 
-            if (controllerAction==null) controllerAction="HomeManagement.view"; /*HomeManagement è il controller che si occupa di gestire la schermata principale*/
+            if (controllerAction==null) controllerAction="ParkController.homePage"; /*HomeManagement è il controller che si occupa di gestire la schermata principale*/
 
             String[] splittedAction=controllerAction.split("\\.");
             Class<?> controllerClass=Class.forName("com.parcodivertimenti.parcodivertimenti.controller."+splittedAction[0]);
@@ -57,7 +57,7 @@ public class Dispatcher extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -72,7 +72,7 @@ public class Dispatcher extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }

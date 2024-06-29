@@ -4,6 +4,7 @@
     <option name="state">
       <map>
         <entry key="file://$PROJECT_DIR$/src/main/webapp/jsp/attrazioni/view.jsp" value="file://$PROJECT_DIR$/src/main/webapp/jsp/attrazioni" />
+        <entry key="file://$PROJECT_DIR$/src/main/webapp/jsp/homeManagement/eventi.jsp" value="file://$PROJECT_DIR$/src/main/webapp/jsp/homeManagement" />
         <entry key="file://$PROJECT_DIR$/src/main/webapp/jsp/homeManagement/view.jsp" value="file://$PROJECT_DIR$/src/main/webapp/jsp/homeManagement" />
       </map>
     </option>
