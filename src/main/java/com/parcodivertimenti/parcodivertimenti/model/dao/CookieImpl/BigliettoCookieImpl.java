@@ -26,14 +26,18 @@ public class BigliettoCookieImpl implements bigliettoDAO{
             String codice_fiscale,
             Long prezzo,
             Date data_acquisto,
-            String tipologia) {
+            String tipologia1,
+            String tipologia2,
+            String mail) {
 
         biglietto loggedBiglietto = new biglietto();
         loggedBiglietto.setID(ID);
         loggedBiglietto.setCodice_fiscale(codice_fiscale);
         loggedBiglietto.setPrezzo(prezzo);
         loggedBiglietto.setData_acquisto(data_acquisto);
-        loggedBiglietto.setTipologia(tipologia);
+        loggedBiglietto.setTipologia1(tipologia1);
+        loggedBiglietto.setTipologia2(tipologia2);
+        loggedBiglietto.setMail(mail);
 
 
         Cookie cookie;
@@ -83,7 +87,17 @@ public class BigliettoCookieImpl implements bigliettoDAO{
     }
 
     @Override
-    public biglietto findByTipologia(String tipologia) {
+    public biglietto findByTipologia1(String tipologia1) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public biglietto findByTipologia2(String tipologia2) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public biglietto findByMail(String mail) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -92,7 +106,7 @@ public class BigliettoCookieImpl implements bigliettoDAO{
     private String encode(biglietto loggedBiglietto) {
 
         String encodedLoggedUser;
-        encodedLoggedUser = loggedBiglietto.getID() + "#" + loggedBiglietto.getCodice_fiscale() + "#" + loggedBiglietto.getPrezzo() + "#" + loggedBiglietto.getData_acquisto() + "#" + loggedBiglietto.getTipologia();
+        encodedLoggedUser = loggedBiglietto.getID() + "#" + loggedBiglietto.getCodice_fiscale() + "#" + loggedBiglietto.getPrezzo() + "#" + loggedBiglietto.getData_acquisto() + "#" + loggedBiglietto.getTipologia1() + "#" + loggedBiglietto.getTipologia2() + "#" + loggedBiglietto.getMail();
         return encodedLoggedUser;
 
     }

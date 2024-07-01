@@ -17,7 +17,7 @@ public class BigliettoDAOMySQLJDBCImpl implements bigliettoDAO {
     public BigliettoDAOMySQLJDBCImpl(Connection conn){this.conn = conn;}
 
     @Override
-    public biglietto create(Long ID, String codice_fiscale, Long prezzo, Date data_acquisto, String tipoligia){
+    public biglietto create(Long ID, String codice_fiscale, Long prezzo, Date data_acquisto, String tipoligia1, String tipologia2, String mail){
         throw new UnsupportedOperationException("Not supported yet");
     }
 
@@ -123,7 +123,7 @@ public class BigliettoDAOMySQLJDBCImpl implements bigliettoDAO {
     }
 
     @Override
-    public biglietto findByTipologia(String tipologia){
+    public biglietto findByTipologia1(String tipologia1){
         PreparedStatement ps;
         biglietto b = null;
 
@@ -132,10 +132,70 @@ public class BigliettoDAOMySQLJDBCImpl implements bigliettoDAO {
                     = "SELECT *"
                     + "FROM b"
                     + "WHERE"
-                    + "tipologia = ?";
+                    + "tipologia1 = ?";
 
             ps = conn.prepareStatement(sql);
-            ps.setString(1, tipologia);
+            ps.setString(1, tipologia1);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            if(resultSet.next()){
+                b = read(resultSet);
+            }
+            resultSet.close();
+            ps.close();
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+
+        return b;
+    }
+
+    @Override
+    public biglietto findByTipologia2(String tipologia2){
+        PreparedStatement ps;
+        biglietto b = null;
+
+        try{
+            String sql
+                    = "SELECT *"
+                    + "FROM b"
+                    + "WHERE"
+                    + "tipologia2 = ?";
+
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, tipologia2);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            if(resultSet.next()){
+                b = read(resultSet);
+            }
+            resultSet.close();
+            ps.close();
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+
+        return b;
+    }
+
+    @Override
+    public biglietto findByMail(String mail){
+        PreparedStatement ps;
+        biglietto b = null;
+
+        try{
+            String sql
+                    = "SELECT *"
+                    + "FROM b"
+                    + "WHERE"
+                    + "mail = ?";
+
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, mail);
 
             ResultSet resultSet = ps.executeQuery();
 
@@ -172,7 +232,17 @@ public class BigliettoDAOMySQLJDBCImpl implements bigliettoDAO {
         }
 
         try{
-            b.setTipologia(rs.getString("tipologia"));
+            b.setTipologia1(rs.getString("tipologia1"));
+        }catch (SQLException sqle){
+        }
+
+        try{
+            b.setTipologia2(rs.getString("tipologia2"));
+        }catch (SQLException sqle){
+        }
+
+        try{
+            b.setMail(rs.getString("mail"));
         }catch (SQLException sqle){
         }
 

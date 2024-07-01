@@ -12,7 +12,9 @@ public interface bigliettoDAO {
             String codice_fiscale,
             Long prezzo,
             Date data_acquisto,
-            String tipologia);
+            String tipologia1,
+            String tipologia2,
+            String mail);
 
     public void update(biglietto bigl);
 
@@ -24,7 +26,11 @@ public interface bigliettoDAO {
 
     public biglietto findByData(Date data_acquisto);
 
-    public biglietto findByTipologia(String tipologia);
+    public biglietto findByTipologia1(String tipologia1);
 
+    public biglietto findByTipologia2(String tipologia2);
+
+
+    public biglietto findByMail(String mail);
 
 }
