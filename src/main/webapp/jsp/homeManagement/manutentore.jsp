@@ -41,7 +41,7 @@
 </ul>
 
 <h2>Nuovo Intervento</h2>
-<form action="manutenzione" method="post">
+<form action="manutentore.jsp" method="post">
     <input type="hidden" name="codice_attrazione" value="<%= attrazione.getInt("CODICE") %>" />
     <p>
         <label for="cf_manutentore">Codice Fiscale Manutentore:</label>

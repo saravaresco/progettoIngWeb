@@ -138,7 +138,7 @@ public class ParkController extends HttpServlet {
     }
 
     public void showLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/views/login.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("webapp/jsp/homeManagement/login.jsp");
         dispatcher.forward(request, response);
     }
 

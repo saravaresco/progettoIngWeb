@@ -58,35 +58,35 @@ public class ManutenzioneController extends HttpServlet {
             }
         }
 
-        request.getRequestDispatcher("/manutentore.jsp").forward(request, response);
+        request.getRequestDispatcher("/manutentore2.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String codiceAttrazione = request.getParameter("codice_attrazione");
-        String cfManutentore = request.getParameter("cf_manutentore");
-        String descrizione = request.getParameter("descrizione");
+        String codiceAttrazione = request.getParameter("CODICE_ATTRAZIONE");
+        String cfManutentore = request.getParameter("CF_MANUTENTORE");
+        String descrizione = request.getParameter("DESCRRIZIONE");
 
         if (codiceAttrazione != null && cfManutentore != null && descrizione != null) {
             try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
-                String query = "INSERT INTO ripara (CODICE_ATTRAZIONE, CF_MANUTENTORE, DESCRIZIONE, DATA) VALUES (?, ?, ?, NOW())";
+                String query = "INSERT INTO ripara (CF_MANUTENTORE, CODICE_ATTRAZIONE, DESCRIZIONE) VALUES (?, ?, ?)";
                 PreparedStatement ps = conn.prepareStatement(query);
-                ps.setInt(1, Integer.parseInt(codiceAttrazione));
-                ps.setString(2, cfManutentore);
+                ps.setString(1, cfManutentore);
+                ps.setLong(2, Long.parseLong(codiceAttrazione));
                 ps.setString(3, descrizione);
                 ps.executeUpdate();
 
                 // Update the last maintenance date in attrazione table
-                String updateQuery = "UPDATE attrazione SET DATA_ULTIMA_MANUTENZIONE = NOW() WHERE CODICE = ?";
+                String updateQuery = "UPDATE manutentore SET NUMERO_INTERVENTI = NUMERO_INTERVENTI + 1 WHERE CODICE_FISCALE = ?";
                 PreparedStatement psUpdate = conn.prepareStatement(updateQuery);
-                psUpdate.setInt(1, Integer.parseInt(codiceAttrazione));
+                psUpdate.setString(1, cfManutentore);
                 psUpdate.executeUpdate();
             } catch (SQLException e) {
                 throw new ServletException(e);
             }
         }
 
-        response.sendRedirect("manutenzione?id=" + codiceAttrazione);
+        response.sendRedirect("manutenzione?codice=" + codiceAttrazione);
     }
 }
 
