@@ -26,7 +26,7 @@ public class ParkController extends HttpServlet {
     public void init() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            connection = DriverManager.getConnection("jdbc:mysql://localhost/parco_divertimenti", "root", "sarA2002");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost/parco_web", "root", "sarA2002");
             System.out.println("Database connected successfully");
         } catch (Exception e) {
             e.printStackTrace();
@@ -138,7 +138,7 @@ public class ParkController extends HttpServlet {
     }
 
     public void showLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("webapp/jsp/homeManagement/login.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("webapp/jsp/homeManagement/login2.jsp");
         dispatcher.forward(request, response);
     }
 

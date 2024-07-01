@@ -59,14 +59,14 @@
     <%--<a href="eventi.jsp">Eventi</a>--%>
     <a href="puntiRistoro.jsp">Punti Ristoro</a>
     <%--<a href="mappa.jsp">Mappa</a>--%>
-    <%--<a href="login.jsp">Login</a>--%>
+    <%--<a href="login2.jsp">Login</a>--%>
     <a href="eventi.jsp">Eventi</a>
     <a href="mappa">Mappa</a>
     <a href="login.jsp">Login</a>
 </div>
 <div class="main-content">
     <h2>Benvenuti al nostro Parco Divertimenti!</h2>
-    <img src="images/foto_parco.jpg">
+    <img src="jsp/homeManagement/images/foto_parco.jpg">
 </div>
 </body>
 </html>

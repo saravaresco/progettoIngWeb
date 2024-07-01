@@ -71,9 +71,9 @@
 <div class="content">
     <div class="puntiRistoro">
         <h2>La Pergola - cucina italiana</h2>
-        <img src="images/pizzeria.jpg" alt="Ristorante italiano">
+        <img src="jsp/homeManagement/images/pizzeria.jpg" alt="Ristorante italiano">
         <p>Il ristorante "La Pergola" vi saprà degustare con i piatti tipici della cucina italiana.</p>
-        <form action="menuItaliano.jsp" method="get">
+        <form action="jsp/homeManagement/menuItaliano.jsp" method="get">
             <input type="hidden">
             <button type="submit">Consultare il menù</button>
         </form>
@@ -83,9 +83,9 @@
 <div class="content">
     <div class="puntiRistoro">
         <h2>Burger Kingdom</h2>
-        <img src="images/burger.jpg" alt="Chiosco gelati">
+        <img src="jsp/homeManagement/images/burger.jpg" alt="Chiosco gelati">
         <p>Burger Kingdom vi saprà deliziare con degli ottimi hambuerg in stile americano. Ottimo per chi non vuole perdere nemmeno un'istante del divertimento offerto dal parco</p>
-        <form action="menuHamburger.jsp" method="get">
+        <form action="jsp/homeManagement/menuHamburger.jsp" method="get">
             <input type="hidden">
             <button type="submit">Consultare il menù</button>
         </form>
@@ -95,9 +95,9 @@
 <div class="content">
     <div class="puntiRistoro">
         <h2>Gelato Mania</h2>
-        <img src="images/gelato.jpg" alt="Ristorante americano">
+        <img src="jsp/homeManagement/images/gelato.jpg" alt="Ristorante americano">
         <p>Per una pausa rinfrescante Gelato Mania è il posto perfetto! Freschi e gustosi gelati artigianali saranno un'ottima merenda in qualsiasi momento della giornata</p>
-        <form action="menuGelato.jsp" method="get">
+        <form action="jsp/homeManagement/menuGelato.jsp" method="get">
             <input type="hidden">
             <button type="submit">Consultare il menù</button>
         </form>
@@ -107,9 +107,9 @@
 <div class="content">
     <div class="puntiRistoro">
         <h2>Drink Haven</h2>
-        <img src="images/bibite.jpg" alt="Chiosco bibite">
+        <img src="jsp/homeManagement/images/bibite.jpg" alt="Chiosco bibite">
         <p></p>
-        <form action="menuBibite.jsp" method="get">
+        <form action="jsp/homeManagement/menuBibite.jsp" method="get">
             <input type="hidden">
             <button type="submit">Consultare il menù</button>
         </form>
@@ -119,9 +119,9 @@
 <div class="content">
     <div class="puntiRistoro">
         <h2>Waffle World</h2>
-        <img src="images/waffle.jpg" alt="Waffle">
+        <img src="jsp/homeManagement/images/waffle.jpg" alt="Waffle">
         <p>Cocediti una dolce pausa gustando uno delizioni Waffle di Waffle World.</p>
-        <form action="menuWaffle.jsp" method="get">
+        <form action="jsp/homeManagement/menuWaffle.jsp" method="get">
             <input type="hidden">
             <button type="submit">Consultare il menù</button>
         </form>
@@ -131,9 +131,9 @@
 <div class="content">
     <div class="puntiRistoro">
         <h2>Fry Frenzy</h2>
-        <img src="images/fritti.jpg" alt="Friggitoria">
+        <img src="jsp/homeManagement/images/fritti.jpg" alt="Friggitoria">
         <p></p>
-        <form action="menuFritto.jsp" method="get">
+        <form action="jsp/homeManagement/menuFritto.jsp" method="get">
             <input type="hidden">
             <button type="submit">Consultare il menù</button>
         </form>

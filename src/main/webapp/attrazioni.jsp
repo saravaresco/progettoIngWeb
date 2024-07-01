@@ -70,32 +70,32 @@
 
 <div class="content">
     <div class="attraction">
-        <img src="images/attrazione1.jpg" alt="Montagne russe">
+        <img src="jsp/homeManagement/images/attrazione1.jpg" alt="Montagne russe">
         <h3>Montagne Russe</h3>
         <p>Questa attrazione è perfetta per chi cerca adrenalina e divertimento.</p>
     </div>
     <div class="attraction">
-        <img src="images/attrazione3.jpg" alt="Giostre per i più piccoli">
+        <img src="jsp/homeManagement/images/attrazione3.jpg" alt="Giostre per i più piccoli">
         <h3>Giosta cavalli</h3>
         <p>Un'esperienza unica per tutta la famiglia, con tante attività da fare insieme.</p>
     </div>
     <div class="attraction">
-        <img src="images/attrazione2.jpg" alt="Attrazioni acquatiche">
+        <img src="jsp/homeManagement/images/attrazione2.jpg" alt="Attrazioni acquatiche">
         <h3>Attrazioni acquatiche</h3>
         <p>Per chi vuole rinfrescarsi nelle giornate più calde.</p>
     </div>
     <div class="attraction">
-        <img src="images/navePirati.jpg" alt="Nave dei Pirati">
+        <img src="jsp/homeManagement/images/navePirati.jpg" alt="Nave dei Pirati">
         <h3>Nave dei pirati</h3>
         <p>Sei pronto a scovare il tesoro dei pirati? All'arrembaggio!</p>
     </div>
     <div class="attraction">
-        <img src="images/casaOrrori.jpg" alt="Casa deglo Orrori">
+        <img src="jsp/homeManagement/images/casaOrrori.jpg" alt="Casa deglo Orrori">
         <h3>Casa degli orrori</h3>
         <p>Preparati a tremare nella nostra spaventosa casa stregata. Sei abbastanza coraggioso?</p>
     </div>
     <div class="attraction">
-        <img src="images/giostraPanoramica.jpg" alt="Ruota panoramica">
+        <img src="jsp/homeManagement/images/giostraPanoramica.jpg" alt="Ruota panoramica">
         <h3>Ruota Panoramica</h3>
         <p>Un classico senza tempo. Goditi un giro rilassante sulla nostra affascinante giostra.</p>
     </div>

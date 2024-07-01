@@ -2,11 +2,11 @@ package com.parcodivertimenti.parcodivertimenti.controller;
 
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import javax.servlet.annotation.WebServlet;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,6 +14,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@WebServlet("/login")
 public class LoginController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -38,18 +39,19 @@ public class LoginController extends HttpServlet {
 
             boolean isValid = authenticateEmployee(category, username, password);
             if (isValid) {
+
                 switch (category) {
                     case "addetto_giostre":
                         response.sendRedirect("giostre.jsp");
                         break;
                     case "addetto_ristorante":
-                        response.sendRedirect("jsp/homeManagement/employee/ristorante.jsp");
+                        response.sendRedirect("ristorante.jsp");
                         break;
                     case "manutentore":
-                        response.sendRedirect("jsp/homeManagement/employee/manutentore2.jsp");
+                        response.sendRedirect("manutentore.jsp");
                         break;
                     case "attore":
-                        response.sendRedirect("jsp/homeManagement/employee/attore.jsp");
+                        response.sendRedirect("attore.jsp");
                         break;
                 }
             } else {
