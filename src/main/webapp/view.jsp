@@ -52,7 +52,7 @@
 </head>
 <body>
 <div class="header">
-    <h1>Nome del Parco Divertimenti</h1>
+    <h1>Fantasia Park</h1>
 </div>
 <div class="menu">
     <a href="attrazioni.jsp">Attrazioni</a>
@@ -66,8 +66,9 @@
 </div>
 <div class="main-content">
     <h2>Benvenuti al nostro Parco Divertimenti!</h2>
-    <img src="jsp/homeManagement/images/foto_parco.jpg">
+    <img src="parcho.jpg">
 </div>
+<%@include file="/include/footer.inc"%>
 </body>
 </html>
 

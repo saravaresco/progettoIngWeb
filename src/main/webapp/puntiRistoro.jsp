@@ -108,7 +108,7 @@
     <div class="puntiRistoro">
         <h2>Drink Haven</h2>
         <img src="jsp/homeManagement/images/bibite.jpg" alt="Chiosco bibite">
-        <p></p>
+        <p>Accaldato? Nessun problema, da Drink Haven potrai trovare qualsiasi tipo di bevanda per combattere anche le giornate più calde</p>
         <form action="jsp/homeManagement/menuBibite.jsp" method="get">
             <input type="hidden">
             <button type="submit">Consultare il menù</button>
@@ -120,7 +120,7 @@
     <div class="puntiRistoro">
         <h2>Waffle World</h2>
         <img src="jsp/homeManagement/images/waffle.jpg" alt="Waffle">
-        <p>Cocediti una dolce pausa gustando uno delizioni Waffle di Waffle World.</p>
+        <p>Concediti una dolce pausa gustando uno delizioni Waffle di Waffle World.</p>
         <form action="jsp/homeManagement/menuWaffle.jsp" method="get">
             <input type="hidden">
             <button type="submit">Consultare il menù</button>
@@ -132,7 +132,7 @@
     <div class="puntiRistoro">
         <h2>Fry Frenzy</h2>
         <img src="jsp/homeManagement/images/fritti.jpg" alt="Friggitoria">
-        <p></p>
+        <p>Fame improvvisa? Da noi potrai trovare molte sfiziosità per una pausa tra una giostra e l'altra</p>
         <form action="jsp/homeManagement/menuFritto.jsp" method="get">
             <input type="hidden">
             <button type="submit">Consultare il menù</button>

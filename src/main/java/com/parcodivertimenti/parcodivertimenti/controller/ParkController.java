@@ -83,7 +83,7 @@ public class ParkController extends HttpServlet {
         }
 
         request.setAttribute("attrazioni", attrazioni);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("webapp/jsp/homeManagement/attrazioni.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("attrazioni.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -104,7 +104,7 @@ public class ParkController extends HttpServlet {
         }
 
         request.setAttribute("food", foodList);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("webapp/jsp/homeManagement/puntiRistoro.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("puntiRistoro.jsp");
         dispatcher.forward(request, response);
     }
 
@@ -128,17 +128,17 @@ public class ParkController extends HttpServlet {
         }
 
         request.setAttribute("shows", shows);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("webapp/jsp/homeManagement/eventi.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("eventi.jsp");
         dispatcher.forward(request, response);
     }
 
     public void showMap(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/views/map.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("map.jsp");
         dispatcher.forward(request, response);
     }
 
     public void showLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("webapp/jsp/homeManagement/login2.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
         dispatcher.forward(request, response);
     }
 
