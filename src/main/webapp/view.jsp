@@ -24,21 +24,34 @@
             padding: 10px 0;
             text-align: center;
         }
-        .menu {
-            overflow: hidden;
-            background-color: #333;
+        header h1 {
+            font-size: 2em;
+            margin: 0;
         }
-        .menu a {
-            float: left;
-            display: block;
-            color: white;
+        nav {
             text-align: center;
-            padding: 14px 16px;
-            text-decoration: none;
+            background-color: #333;
+            padding: 10px 0;
         }
-        .menu a:hover {
-            background-color: #ddd;
-            color: black;
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 10px;
+            transition: background-color 0.3s;
+        }
+        nav ul li a:hover {
+            background-color: #555;
+            border-radius: 5px;
         }
         .main-content {
             padding: 20px;
@@ -54,16 +67,18 @@
 <div class="header">
     <h1>Fantasia Park</h1>
 </div>
-<div class="menu">
-    <a href="attrazioni.jsp">Attrazioni</a>
-    <%--<a href="eventi.jsp">Eventi</a>--%>
-    <a href="puntiRistoro.jsp">Punti Ristoro</a>
-    <%--<a href="mappa.jsp">Mappa</a>--%>
-    <%--<a href="login2.jsp">Login</a>--%>
-    <a href="eventi.jsp">Eventi</a>
-    <a href="mappa">Mappa</a>
-    <a href="login.jsp">Login</a>
-</div>
+
+
+<nav>
+    <ul>
+        <li><a href="attrazioni.jsp">Attrazioni</a></li>
+        <li><a href="puntiRistoro.jsp">Punti Ristoro</a></li>
+        <li><a href="eventi.jsp">Eventi</a></li>
+        <li><a href="map.jsp">Mappa</a></li>
+        <li><a href="login.jsp">Login</a></li>
+    </ul>
+</nav>
+
 <div class="main-content">
     <h2>Benvenuti al nostro Parco Divertimenti!</h2>
     <img src="parcho.jpg">

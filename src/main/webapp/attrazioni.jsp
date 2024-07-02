@@ -19,10 +19,18 @@
             padding: 0;
         }
         header {
-            text-align: center;
+            /*text-align: center;
             margin: 20px 0;
             background-color: #4CAF50;
+            color: white;*/
+            background-color: #4CAF50;
             color: white;
+            text-align: center;
+            padding: 20px 0;
+        }
+        header h1 {
+            font-size: 2em;
+            margin: 0;
         }
         nav {
             text-align: center;
