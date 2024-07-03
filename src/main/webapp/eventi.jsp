@@ -4,19 +4,89 @@
 <html>
 <head>
     <title>Eventi</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        h1 {
+            text-align: center;
+            color: #ffffff;
+            background-color: #4CAF50;
+            padding: 20px;
+            margin: 0;
+        }
+        nav {
+            text-align: center;
+            background-color: #333;
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            /*display: flex;
+            justify-content: center;
+            background-color: #333;*/
+            text-align: center;
+        }
+        nav ul li {
+            /*margin: 0 15px;*/
+            display: inline-block;
+        }
+        nav ul li a {
+            text-decoration: none;
+            color: #ffffff;
+            padding: 10px 20px;
+            display: block;
+        }
+        nav ul li a:hover {
+            background-color: #575757;
+            /*border-radius: 5px;*/
+        }
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+        .event {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 20px 0;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .event h3 {
+            color: #4CAF50;
+        }
+        .event p {
+            color: #555;
+        }
+        footer {
+            background-color: #4CAF50;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
 <h1>Eventi del Parco Divertimenti</h1>
 <nav>
     <ul>
-        <li><a href="view.jsp">Home</a></li>
-        <li><a href="eventi.jsp">Eventi</a></li>
-        <li><a href="attrazioni.jsp">Attrazioni</a></li>
-        <li><a href="mappa.jsp">Contatti</a></li>
+        <li><a href="view.jsp"><strong>Home</strong></a></li>
+        <li><a href="attrazioni.jsp"><strong>Attrazioni</strong></a></li>
+        <li><a href="mappa.jsp"><strong>Mappa</strong></a></li>
+        <li><a href="login.jsp"><strong>Login</strong></a></li>
     </ul>
 </nav>
 
-<div>
+<div class="content">
     <h2>Lista degli eventi:</h2>
     <%
         Connection conn = null;
@@ -46,13 +116,13 @@
                 String orarioInizio = rs.getString("ORARIO_INIZIO");
                 String durata = rs.getString("DURATA");
     %>
-    <div>
+    <div class="event">
         <h3><%= nome %></h3>
-        <p>Tipologia: <%= tipologia %></p>
-        <p>Data: <%= data %></p>
-        <p>Luogo: <%= luogo %></p>
-        <p>Orario Inizio: <%= orarioInizio %></p>
-        <p>Durata: <%= durata %> minuti</p>
+        <p><strong>Tipologia:</strong> <%= tipologia %></p>
+        <p><strong>Data:</strong>Data: <%= data %></p>
+        <p><strong>Luogo:</strong> <%= luogo %></p>
+        <p><strong>Orario Inizio:</strong> <%= orarioInizio %></p>
+        <p><strong>Durata:</strong> <%= durata %> </p>
     </div>
     <%
             }
@@ -66,6 +136,9 @@
         }
     %>
 </div>
+<footer>
+    <p>&copy; 2024 Fantasia Park. Tutti i diritti riservati.</p>
+</footer>
 </body>
 </html>
 

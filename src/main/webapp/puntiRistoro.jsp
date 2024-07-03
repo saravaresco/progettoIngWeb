@@ -51,10 +51,10 @@
             text-decoration: none;
             font-weight: bold;*/
             display: block;
-            padding: 14px 20px;
+            padding: 10px 20px;
             color: white;
             text-decoration: none;
-            font-weight: bold;
+            /*font-weight: bold;*/
         }
         nav ul li a:hover {
             background-color: #575757;
@@ -131,11 +131,11 @@
 
 <nav>
     <ul>
-        <li><a href="view.jsp">Home</a></li>
-        <li><a href="attrazioni.jsp">Attrazioni</a></li>
-        <li><a href="eventi.jsp">Eventi</a></li>
-        <li><a href="map.jsp">Mappa</a></li>
-        <li><a href="login.jsp">Login</a></li>
+        <li><a href="view.jsp"><strong>Home</strong></a></li>
+        <li><a href="attrazioni.jsp"><strong>Attrazioni</strong></a></li>
+        <li><a href="eventi.jsp"><strong>Eventi</strong></a></li>
+        <li><a href="map.jsp"><strong>Mappa</strong></a></li>
+        <li><a href="login.jsp"><strong>Login</strong></a></li>
     </ul>
 </nav>
 
@@ -192,7 +192,7 @@
         <h2>Waffle World</h2>
         <img src="jsp/homeManagement/images/waffle.jpg" alt="Waffle">
         <p>Concediti una dolce pausa gustando uno delizioni Waffle di Waffle World.</p>
-        <form action="jsp/homeManagement/menuWaffle.jsp" method="get">
+        <form action="menuWaffle.jsp" method="get">
             <input type="hidden">
             <button type="submit">Consultare il menù</button>
         </form>

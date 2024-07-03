@@ -18,6 +18,9 @@
             margin: 0;
             padding: 0;
             color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
 
         }
         header {
@@ -55,34 +58,36 @@
         }
         .menu-item::before {
             content: '•';
-            color: #FFB6C1; /* Rosa chiaro */
+            color: #FFB6C1;
             margin-right: 10px;
         }
         ul {
             list-style-type: none;
             padding: 0;
         }
-        .back-button {
-            display: inline-block;
-            background-color: #FFB6C1; /* Rosa chiaro */
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            margin-top: 20px;
-        }
-        .back-button:hover {
-            background-color: #FF98B4; /* Tonalità più scura di rosa */
-        }
         footer {
-            background-color: #FFB6C1; /* Rosa chiaro */
+            background-color: #FFB6C1;
             color: white;
             text-align: center;
             padding: 10px 0;
             width: 100%;
-            position: absolute;
-            bottom: 0;
         }
+        .back-button {
+            display: block;
+            background-color: #FFB6C1;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 1.2em;
+            width: 200px;
+            margin: 20px auto;
+            padding: 10px 20px;
+        }
+        .back-button:hover {
+            background-color: #FF98B4;
+        }
+
     </style>
 </head>
 <body>
@@ -117,10 +122,11 @@
             <li class="menu-item">Grande <span style="float: right;">€4</span></li>
         </ul>
     </div>
+    <a href="puntiRistoro.jsp" class="back-button">Indietro</a>
 </div>
 
 
-    <a href="puntiRistoro.jsp" class="back-button">Indietro</a>
+
 
 <footer>
     <p>&copy; 2024 Gelato Mania. Tutti i diritti riservati.</p>

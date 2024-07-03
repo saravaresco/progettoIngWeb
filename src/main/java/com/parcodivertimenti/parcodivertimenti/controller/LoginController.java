@@ -14,74 +14,85 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.logging.Logger;
+
+
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    private static final Logger logger = Logger.getLogger(LoginController.class.getName());
 
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/parco_web";
-    private static final String JDBC_USERNAME = "root";
-    private static final String JDBC_PASSWORD = "sarA2002";
+    // Configura le informazioni del tuo database MySQL
+    private static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/parco_web";
+    private static final String DB_USER = "root"; // Sostituisci con il tuo username del database
+    private static final String DB_PASS = "sarA2002"; // Sostituisci con la tua password del database
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String userType = request.getParameter("userType");
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         String action = request.getParameter("action");
 
-        if ("visitatore".equals(userType)) {
-            if ("register".equals(action)) {
-                response.sendRedirect("register.jsp");
-            } else if ("login".equals(action)) {
-                response.sendRedirect("visitorArea.jsp");
-            }
-        } else if ("dipendente".equals(userType)) {
-            String category = request.getParameter("category");
+        if (action != null && action.equals("existing")) {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
 
-            boolean isValid = authenticateEmployee(category, username, password);
-            if (isValid) {
+            // Verifica le credenziali nel database
+            boolean isAuthenticated = verifyVisitorCredentials(username, password);
 
-                switch (category) {
-                    case "addetto_giostre":
-                        response.sendRedirect("giostre.jsp");
-                        break;
-                    case "addetto_ristorante":
-                        response.sendRedirect("ristorante.jsp");
-                        break;
-                    case "manutentore":
-                        response.sendRedirect("manutentore.jsp");
-                        break;
-                    case "attore":
-                        response.sendRedirect("attore.jsp");
-                        break;
-                }
+            if (isAuthenticated) {
+                response.sendRedirect("register.jsp"); // Reindirizza alla pagina personale del visitatore
             } else {
-                request.setAttribute("errorMessage", "Username o password non corretti");
-                RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
-                dispatcher.forward(request, response);
+                response.sendRedirect("login.jsp"); // Reindirizza di nuovo alla pagina di login
             }
         }
     }
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doPost(request, response);
-    }
+    // Verifica le credenziali del visitatore nel database
+    private boolean verifyVisitorCredentials(String username, String password) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
 
+        try {
+            // Carica il driver JDBC
+            Class.forName(JDBC_DRIVER);
 
-    private boolean authenticateEmployee(String category, String username, String password) {
-        String query = "SELECT * FROM " + category + " WHERE USERNAME = ? AND PASSWORD = ?";
-        try (Connection conn = DriverManager.getConnection(JDBC_URL, JDBC_USERNAME, JDBC_PASSWORD);
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+            // Crea la connessione al database
+            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+
+            // Query per verificare le credenziali nel database visitatore
+            String query = "SELECT * FROM visitatore WHERE USERNAME = ? AND PASSWORD = ?";
+            stmt = conn.prepareStatement(query);
             stmt.setString(1, username);
             stmt.setString(2, password);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return true;
-                }
+
+            // Esegui la query
+            rs = stmt.executeQuery();
+
+
+            // Se trova almeno una riga, le credenziali sono valide
+            if (rs.next()) {
+                logger.info("Credenziali valide per l'utente: " + username + password);
+                return true;
+            }else {
+                logger.warning("Credenziali non valide per l'utente: " + username);
+                return false;
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
+        } finally {
+            // Chiudi le risorse
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
+
         return false;
     }
+
+
 }

@@ -18,6 +18,10 @@
             margin: 0;
             padding: 0;
             color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+
         }
         header {
             background-color: #3498db; /* Rosa chiaro */
@@ -53,13 +57,16 @@
             padding: 0;
         }
         .back-button {
-            display: inline-block;
-            background-color: #e74c3c; /* Rosso */
+            display: block;
+            background-color: #e74c3c;
             color: white;
+            width: 200px;
+            margin: 20px auto;
             padding: 10px 20px;
+            text-align: center;
             text-decoration: none;
             border-radius: 5px;
-            margin-top: 20px;
+            font-size: 1.2em;
         }
         .back-button:hover {
             background-color: #c0392b; /* Tonalità più scura di rosso */
@@ -70,8 +77,7 @@
             text-align: center;
             padding: 20px 0;
             width: 100%;
-            position: absolute;
-            bottom: 0;
+
         }
     </style>
 </head>
@@ -95,7 +101,7 @@
     </div>
 
     <div class="menu-section">
-        <h3></h3>
+        <h3>Burger</h3>
         <ul>
             <li class="menu-item">Classic Burger <span style="float: right;">€12</span></li>
             <li class="menu-item">CheeseBurger <span style="float: right;">€14</span></li>
@@ -116,8 +122,9 @@
             <li class="menu-item">Acqua naturale o frizzante <span style="float: right;">€2</span></li>
         </ul>
     </div>
-</div>
     <a href="puntiRistoro.jsp" class="back-button">Indietro</a>
+</div>
+
 
 <footer>
     <p>&copy; 2024 Burger Kingdom. Tutti i diritti riservati.</p>
