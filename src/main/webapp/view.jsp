@@ -81,7 +81,7 @@
 
 <div class="main-content">
     <h2>Benvenuti al nostro Parco Divertimenti!</h2>
-    <img src="parcho.jpg">
+    <img src="parcho.jpg"/>
 </div>
 <%@include file="/include/footer.inc"%>
 </body>

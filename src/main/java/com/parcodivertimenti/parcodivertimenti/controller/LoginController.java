@@ -32,6 +32,7 @@ public class LoginController extends HttpServlet {
             throws ServletException, IOException {
         String action = request.getParameter("action");
 
+
         if (action != null && action.equals("existing")) {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
@@ -45,10 +46,61 @@ public class LoginController extends HttpServlet {
                 response.sendRedirect("login.jsp"); // Reindirizza di nuovo alla pagina di login
             }
         }
+        else if (action.equals("employee")) {
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            String category = request.getParameter("category");
+
+            // Verifica le credenziali nel database per i dipendenti
+            String redirectPage = verifyEmployeeCredentials(username, password, category);
+
+            if (redirectPage != null) {
+                response.sendRedirect(redirectPage); // Reindirizza alla pagina specifica del dipendente
+            } else {
+                response.sendRedirect("login.jsp"); // Reindirizza di nuovo alla pagina di login
+            }
+        }
+
     }
 
     // Verifica le credenziali del visitatore nel database
     private boolean verifyVisitorCredentials(String username, String password) {
+        return verifyCredentials(username, password, "visitatore");
+    }
+
+    // Verifica le credenziali del dipendente nel database in base alla categoria
+    private String verifyEmployeeCredentials(String username, String password, String category) {
+        String tableName = "";
+        String redirectPage = "";
+
+        switch (category) {
+            case "attore":
+                tableName = "attore";
+                redirectPage = "attore.jsp";
+                break;
+            case "manutentore":
+                tableName = "manutentore";
+                redirectPage = "manutentore.jsp";
+                break;
+            case "addetto_giostre":
+                tableName = "addetto_giostre";
+                redirectPage = "giostre.jsp";
+                break;
+            case "addetto_ristorante":
+                tableName = "addetto_ristorante";
+                redirectPage = "ristorante.jsp";
+                break;
+            default:
+                logger.warning("Categoria non valida: " + category);
+                return null;
+        }
+
+        boolean isAuthenticated = verifyCredentials(username, password, tableName);
+        return isAuthenticated ? redirectPage : null;
+    }
+
+    // Metodo generico per verificare le credenziali nel database
+    private boolean verifyCredentials(String username, String password, String tableName) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -60,8 +112,8 @@ public class LoginController extends HttpServlet {
             // Crea la connessione al database
             conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
 
-            // Query per verificare le credenziali nel database visitatore
-            String query = "SELECT * FROM visitatore WHERE USERNAME = ? AND PASSWORD = ?";
+            // Query per verificare le credenziali nel database
+            String query = "SELECT * FROM " + tableName + " WHERE USERNAME = ? AND PASSWORD = ?";
             stmt = conn.prepareStatement(query);
             stmt.setString(1, username);
             stmt.setString(2, password);
@@ -69,17 +121,17 @@ public class LoginController extends HttpServlet {
             // Esegui la query
             rs = stmt.executeQuery();
 
-
             // Se trova almeno una riga, le credenziali sono valide
             if (rs.next()) {
-                logger.info("Credenziali valide per l'utente: " + username + password);
+                logger.info("Credenziali valide per l'utente: " + username);
                 return true;
-            }else {
+            } else {
                 logger.warning("Credenziali non valide per l'utente: " + username);
                 return false;
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
+            return false;
         } finally {
             // Chiudi le risorse
             try {
@@ -90,8 +142,6 @@ public class LoginController extends HttpServlet {
                 e.printStackTrace();
             }
         }
-
-        return false;
     }
 
 

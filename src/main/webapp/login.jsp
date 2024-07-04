@@ -96,7 +96,8 @@
     </form>
 
     <!-- Form per il login del dipendente -->
-    <form id="employeeLoginForm" class="login-form" action="employee-login.jsp" method="post">
+    <form id="employeeLoginForm" class="login-form" action="login" method="post">
+        <input type="hidden" name="action" value="existing">
         <label for="employeeRole">Ruolo:</label>
         <select id="employeeRole" name="employeeRole">
             <option value="manutentore">Manutentore</option>
