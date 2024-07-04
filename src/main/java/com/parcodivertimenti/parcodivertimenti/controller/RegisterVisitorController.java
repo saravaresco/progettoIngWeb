@@ -1,10 +1,11 @@
 package com.parcodivertimenti.parcodivertimenti.controller;
 
+import com.parcodivertimenti.parcodivertimenti.model.mo.biglietto;
+
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,9 +36,11 @@ public class RegisterVisitorController extends HttpServlet {
         boolean success = registerVisitor(nome, cognome, codiceFiscale, dataNascita, sesso, username, password);
 
         if (success) {
-            response.sendRedirect("login.jsp"); // Reindirizza alla pagina di login dopo la registrazione
+            // Salva il codice fiscale nella sessione
+            request.getSession().setAttribute("codiceFiscale", codiceFiscale);
+            response.sendRedirect("register.jsp"); // Reindirizza alla pagina persona la registrazione
         } else {
-            response.sendRedirect("newVisitor.jsp"); // Reindirizza di nuovo alla pagina di registrazione in caso di errore
+            response.sendRedirect("login.jsp"); // Reindirizza di nuovo alla pagina di registrazione in caso di errore
         }
     }
 
@@ -87,4 +90,53 @@ public class RegisterVisitorController extends HttpServlet {
 
         return false;
     }
+
+    // Metodo per ottenere i biglietti acquistati da un utente
+    public List<biglietto> getUserTickets(String codiceFiscale) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<biglietto> tickets = new ArrayList<>();
+
+        try {
+            // Carica il driver JDBC
+            Class.forName(JDBC_DRIVER);
+
+            // Crea la connessione al database
+            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+
+            // Query per ottenere i biglietti acquistati dall'utente
+            String query = "SELECT * FROM biglietto WHERE CODICE_FISCALE_V = ?";
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1, codiceFiscale);
+
+            // Esegui la query
+            rs = stmt.executeQuery();
+
+            // Processa i risultati
+            while (rs.next()) {
+                biglietto ticket = new biglietto();
+                ticket.setID(rs.getLong("ID"));
+                ticket.setData_acquisto(rs.getDate("DATA_ACQUISTO"));
+                ticket.setTipologia1(rs.getString("TIPOLOGIA1"));
+                ticket.setTipologia2(rs.getString("TIPOLOGIA2"));
+                ticket.setPrezzo(rs.getLong("PREZZO"));
+                tickets.add(ticket);
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            // Chiudi le risorse
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return tickets;
+    }
 }
+
