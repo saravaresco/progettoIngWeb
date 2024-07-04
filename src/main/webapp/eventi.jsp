@@ -81,7 +81,7 @@
     <ul>
         <li><a href="view.jsp"><strong>Home</strong></a></li>
         <li><a href="attrazioni.jsp"><strong>Attrazioni</strong></a></li>
-        <li><a href="mappa.jsp"><strong>Mappa</strong></a></li>
+        <li><a href="map.jsp"><strong>Mappa</strong></a></li>
         <li><a href="login.jsp"><strong>Login</strong></a></li>
     </ul>
 </nav>
