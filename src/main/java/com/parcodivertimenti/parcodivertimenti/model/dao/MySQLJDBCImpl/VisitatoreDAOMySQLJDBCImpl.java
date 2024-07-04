@@ -238,7 +238,7 @@ public class VisitatoreDAOMySQLJDBCImpl implements visitatoreDAO {
 
             ResultSet resultSet = ps.executeQuery();
 
-            if(resultSet.next()){
+            while(resultSet.next()){
                 v = read(resultSet);
             }
             resultSet.close();
@@ -268,7 +268,7 @@ public class VisitatoreDAOMySQLJDBCImpl implements visitatoreDAO {
 
             ResultSet resultSet = ps.executeQuery();
 
-            if(resultSet.next()){
+            while(resultSet.next()){
                 v = read(resultSet);
             }
             resultSet.close();
@@ -298,7 +298,7 @@ public class VisitatoreDAOMySQLJDBCImpl implements visitatoreDAO {
 
             ResultSet resultSet = ps.executeQuery();
 
-            if(resultSet.next()){
+            while(resultSet.next()){
                 v = read(resultSet);
             }
             resultSet.close();

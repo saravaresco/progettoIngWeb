@@ -83,7 +83,7 @@ public class DipendenteDAOMySQLJDBCImpl implements dipendenteDAO{
 
             ResultSet resultSet = ps.executeQuery();
 
-            if(resultSet.next()){
+            while(resultSet.next()){
                 dip = read(resultSet);
             }
             resultSet.close();
@@ -113,7 +113,7 @@ public class DipendenteDAOMySQLJDBCImpl implements dipendenteDAO{
 
             ResultSet resultSet = ps.executeQuery();
 
-            if(resultSet.next()){
+            while(resultSet.next()){
                 dip = read(resultSet);
             }
             resultSet.close();
@@ -143,7 +143,7 @@ public class DipendenteDAOMySQLJDBCImpl implements dipendenteDAO{
 
             ResultSet resultSet = ps.executeQuery();
 
-            if(resultSet.next()){
+            while(resultSet.next()){
                 dip = read(resultSet);
             }
             resultSet.close();
@@ -173,7 +173,7 @@ public class DipendenteDAOMySQLJDBCImpl implements dipendenteDAO{
 
             ResultSet resultSet = ps.executeQuery();
 
-            if(resultSet.next()){
+            while(resultSet.next()){
                 dip = read(resultSet);
             }
             resultSet.close();

@@ -83,7 +83,7 @@ public class AttoreDAOMySQLJDBCImpl implements attoreDAO {
 
             ResultSet resultSet = ps.executeQuery();
 
-            if(resultSet.next()){
+            while(resultSet.next()){
                 at = read(resultSet);
             }
             resultSet.close();

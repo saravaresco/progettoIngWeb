@@ -79,7 +79,7 @@ public class BigliettoDAOMySQLJDBCImpl implements bigliettoDAO {
 
             ResultSet resultSet = ps.executeQuery();
 
-            if(resultSet.next()){
+            while(resultSet.next()){
                 b = read(resultSet);
             }
             resultSet.close();
@@ -109,7 +109,7 @@ public class BigliettoDAOMySQLJDBCImpl implements bigliettoDAO {
 
             ResultSet resultSet = ps.executeQuery();
 
-            if(resultSet.next()){
+            while(resultSet.next()){
                 b = read(resultSet);
             }
             resultSet.close();
@@ -139,7 +139,7 @@ public class BigliettoDAOMySQLJDBCImpl implements bigliettoDAO {
 
             ResultSet resultSet = ps.executeQuery();
 
-            if(resultSet.next()){
+            while(resultSet.next()){
                 b = read(resultSet);
             }
             resultSet.close();
@@ -169,7 +169,7 @@ public class BigliettoDAOMySQLJDBCImpl implements bigliettoDAO {
 
             ResultSet resultSet = ps.executeQuery();
 
-            if(resultSet.next()){
+            while(resultSet.next()){
                 b = read(resultSet);
             }
             resultSet.close();
@@ -199,7 +199,7 @@ public class BigliettoDAOMySQLJDBCImpl implements bigliettoDAO {
 
             ResultSet resultSet = ps.executeQuery();
 
-            if(resultSet.next()){
+            while(resultSet.next()){
                 b = read(resultSet);
             }
             resultSet.close();

@@ -15,7 +15,7 @@ public class addettoRistorante {
     public void setPosizione(String posizione){this.posizione = posizione;}
 
     public Long getID_punto_ristoro(){return ID_punto_ristoro;}
-    public void setID_punto_ristoro(Long codice_giostra){this.ID_punto_ristoro = ID_punto_ristoro;}
+    public void setID_punto_ristoro(Long ID_punto_ristoro){this.ID_punto_ristoro = ID_punto_ristoro;}
 
     public String getUsername(){return username;}
     public void setUsername(String username){this.username = username;}

@@ -81,6 +81,9 @@ public class CookieDAOFactory extends DaoFactory {
     }
 
     @Override
+    public riparaDAO getRiparaDAO() { return new RiparaCookieImpl(request,response); }
+
+    @Override
     public spettacoloDAO getSpettacoloDAO() {
         throw new UnsupportedOperationException("Not supported yet.");
     }

@@ -10,6 +10,7 @@ import com.parcodivertimenti.parcodivertimenti.services.config.Configuration;
 import com.parcodivertimenti.parcodivertimenti.model.dao.DaoFactory;
 import com.parcodivertimenti.parcodivertimenti.model.dao.visitatoreDAO;
 import com.parcodivertimenti.parcodivertimenti.model.dao.spettacoloDAO;
+import com.parcodivertimenti.parcodivertimenti.model.dao.riparaDAO;
 import com.parcodivertimenti.parcodivertimenti.model.dao.puntoRistoroDAO;
 import com.parcodivertimenti.parcodivertimenti.model.dao.manutentoreDAO;
 import com.parcodivertimenti.parcodivertimenti.model.dao.dipendenteDAO;
@@ -114,6 +115,9 @@ public class MySQLJDBCDAOFactory extends DaoFactory {
     public puntoRistoroDAO getPuntoRistoroDAO() {
         return new PuntoRistoroDAOMySQLJDBCImpl(connection);
     }
+
+    @Override
+    public riparaDAO getRiparaDAO() { return new RiparaDAOMySQLJDBCImpl(connection); }
 
     @Override
     public spettacoloDAO getSpettacoloDAO() {

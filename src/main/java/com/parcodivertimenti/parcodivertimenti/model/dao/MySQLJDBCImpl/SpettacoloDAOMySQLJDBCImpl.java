@@ -76,7 +76,7 @@ public class SpettacoloDAOMySQLJDBCImpl implements spettacoloDAO {
 
             ResultSet resultSet = ps.executeQuery();
 
-            if(resultSet.next()){
+            while(resultSet.next()){
                 s = read(resultSet);
             }
             resultSet.close();
@@ -106,7 +106,7 @@ public class SpettacoloDAOMySQLJDBCImpl implements spettacoloDAO {
 
             ResultSet resultSet = ps.executeQuery();
 
-            if(resultSet.next()){
+            while(resultSet.next()){
                 s = read(resultSet);
             }
             resultSet.close();
@@ -136,7 +136,7 @@ public class SpettacoloDAOMySQLJDBCImpl implements spettacoloDAO {
 
             ResultSet resultSet = ps.executeQuery();
 
-            if(resultSet.next()){
+            while(resultSet.next()){
                 s = read(resultSet);
             }
             resultSet.close();
@@ -166,7 +166,7 @@ public class SpettacoloDAOMySQLJDBCImpl implements spettacoloDAO {
 
             ResultSet resultSet = ps.executeQuery();
 
-            if(resultSet.next()){
+            while(resultSet.next()){
                 s = read(resultSet);
             }
             resultSet.close();

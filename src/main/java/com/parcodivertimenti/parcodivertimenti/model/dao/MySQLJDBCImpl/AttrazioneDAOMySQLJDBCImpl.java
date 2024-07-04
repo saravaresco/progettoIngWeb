@@ -109,7 +109,7 @@ public class AttrazioneDAOMySQLJDBCImpl implements attrazioneDAO {
 
             ResultSet resultSet = ps.executeQuery();
 
-            if(resultSet.next()){
+            while(resultSet.next()){
                 at = read(resultSet);
             }
             resultSet.close();
@@ -139,7 +139,7 @@ public class AttrazioneDAOMySQLJDBCImpl implements attrazioneDAO {
 
             ResultSet resultSet = ps.executeQuery();
 
-            if(resultSet.next()){
+            while(resultSet.next()){
                 at = read(resultSet);
             }
             resultSet.close();

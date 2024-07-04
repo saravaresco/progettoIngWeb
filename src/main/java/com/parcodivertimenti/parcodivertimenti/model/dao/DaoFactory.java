@@ -32,6 +32,8 @@ public abstract class DaoFactory {
 
     public abstract puntoRistoroDAO getPuntoRistoroDAO();
 
+    public abstract riparaDAO getRiparaDAO();
+
     public abstract spettacoloDAO getSpettacoloDAO();
 
     public abstract visitatoreDAO getVisitatoreDAO();

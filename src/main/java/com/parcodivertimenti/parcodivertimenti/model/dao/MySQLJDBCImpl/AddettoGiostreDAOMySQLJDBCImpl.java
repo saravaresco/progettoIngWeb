@@ -85,7 +85,7 @@ public class AddettoGiostreDAOMySQLJDBCImpl implements addettoGiostreDAO {
 
             ResultSet resultSet = ps.executeQuery();
 
-            if(resultSet.next()){
+            while(resultSet.next()){
                 ag = read(resultSet);
             }
             resultSet.close();

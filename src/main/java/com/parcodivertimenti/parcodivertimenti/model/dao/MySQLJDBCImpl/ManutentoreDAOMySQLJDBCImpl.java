@@ -83,7 +83,7 @@ public class ManutentoreDAOMySQLJDBCImpl implements manutentoreDAO{
 
             ResultSet resultSet = ps.executeQuery();
 
-            if(resultSet.next()){
+            while(resultSet.next()){
                 m = read(resultSet);
             }
             resultSet.close();

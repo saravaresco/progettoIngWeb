@@ -88,7 +88,7 @@ public class AddettoRistoranteDAOMySQLJDBCImpl implements addettoRistoranteDAO{
 
             ResultSet resultSet = ps.executeQuery();
 
-            if(resultSet.next()){
+            while(resultSet.next()){
                 ad = read(resultSet);
             }
             resultSet.close();
