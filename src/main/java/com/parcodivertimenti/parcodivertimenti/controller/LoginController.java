@@ -1,5 +1,7 @@
 package com.parcodivertimenti.parcodivertimenti.controller;
 
+import com.parcodivertimenti.parcodivertimenti.model.dao.CookieImpl.VisitatoreCookieImpl;
+import com.parcodivertimenti.parcodivertimenti.model.mo.visitatore;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -41,6 +43,18 @@ public class LoginController extends HttpServlet {
             boolean isAuthenticated = verifyVisitorCredentials(username, password);
 
             if (isAuthenticated) {
+                // Crea e salva il visitatore nei cookie
+                VisitatoreCookieImpl visitatoreCookie = new VisitatoreCookieImpl(request, response);
+                visitatore loggedVisitatore = getVisitatoreByUsername(username);
+                visitatoreCookie.create(
+                        loggedVisitatore.getCodice_fiscale(),
+                        loggedVisitatore.getNome(),
+                        loggedVisitatore.getCognome(),
+                        loggedVisitatore.getData_nascita(),
+                        loggedVisitatore.getSesso(),
+                        loggedVisitatore.getUsername(),
+                        loggedVisitatore.getPassword()
+                );
                 response.sendRedirect("register.jsp"); // Reindirizza alla pagina personale del visitatore
             } else {
                 response.sendRedirect("login.jsp"); // Reindirizza di nuovo alla pagina di login
@@ -144,5 +158,52 @@ public class LoginController extends HttpServlet {
         }
     }
 
+    // Metodo per ottenere le informazioni del visitatore dal database
+    private visitatore getVisitatoreByUsername(String username) {
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        visitatore loggedVisitatore = null;
+
+        try {
+            // Carica il driver JDBC
+            Class.forName(JDBC_DRIVER);
+
+            // Crea la connessione al database
+            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+
+            // Query per ottenere il visitatore dal database
+            String query = "SELECT * FROM visitatore WHERE USERNAME = ?";
+            stmt = conn.prepareStatement(query);
+            stmt.setString(1, username);
+
+            // Esegui la query
+            rs = stmt.executeQuery();
+
+            // Se trova almeno una riga, crea un oggetto visitatore
+            if (rs.next()) {
+                loggedVisitatore = new visitatore();
+                loggedVisitatore.setCodice_fiscale(rs.getString("codice_fiscale"));
+                loggedVisitatore.setNome(rs.getString("nome"));
+                loggedVisitatore.setCognome(rs.getString("cognome"));
+                loggedVisitatore.setData_nascita(rs.getString("data_nascita"));
+                loggedVisitatore.setSesso(rs.getString("sesso"));
+                loggedVisitatore.setUsername(rs.getString("username"));
+                loggedVisitatore.setPassword(rs.getString("password"));
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        } finally {
+            // Chiudi le risorse
+            try {
+                if (rs != null) rs.close();
+                if (stmt != null) stmt.close();
+                if (conn != null) conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return loggedVisitatore;
+    }
 
 }

@@ -1,4 +1,3 @@
-
 <%@ page import="com.parcodivertimenti.parcodivertimenti.model.mo.biglietto" %>
 <!DOCTYPE html>
 <html>
@@ -37,3 +36,5 @@
 </div>
 </body>
 </html>
+
+

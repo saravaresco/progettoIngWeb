@@ -38,9 +38,9 @@ public class RegisterVisitorController extends HttpServlet {
         if (success) {
             // Salva il codice fiscale nella sessione
             request.getSession().setAttribute("codiceFiscale", codiceFiscale);
-            response.sendRedirect("register.jsp"); // Reindirizza alla pagina persona la registrazione
+            response.sendRedirect("confermaIscrizione.jsp"); // Reindirizza alla pagina persona la registrazione
         } else {
-            response.sendRedirect("login.jsp"); // Reindirizza di nuovo alla pagina di registrazione in caso di errore
+            response.sendRedirect("newVisitor.jsp"); // Reindirizza di nuovo alla pagina di registrazione in caso di errore
         }
     }
 
