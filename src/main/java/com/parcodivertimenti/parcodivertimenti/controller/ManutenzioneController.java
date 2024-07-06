@@ -1,92 +1,99 @@
 package com.parcodivertimenti.parcodivertimenti.controller;
 
-
 import com.parcodivertimenti.parcodivertimenti.model.mo.ripara;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import com.parcodivertimenti.parcodivertimenti.model.dao.riparaDAO;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import com.parcodivertimenti.parcodivertimenti.model.dao.MySQLJDBCImpl.RiparaDAOMySQLJDBCImpl;
+import com.parcodivertimenti.parcodivertimenti.model.mo.ripara;
 
-@WebServlet("/manutentore")
+@WebServlet("/ManutentoreController")
 public class ManutenzioneController extends HttpServlet {
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/parco_web";
-    private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "sarA2002";
+    private static final long serialVersionUID = 1L;
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String codiceAttrazione = request.getParameter("codice");
-        if (codiceAttrazione != null) {
-            try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
-                String queryAttrazione = "SELECT * FROM attrazione WHERE CODICE = ?";
-                PreparedStatement psAttrazione = conn.prepareStatement(queryAttrazione);
-                psAttrazione.setInt(1, Integer.parseInt(codiceAttrazione));
-                ResultSet rsAttrazione = psAttrazione.executeQuery();
-
-                if (rsAttrazione.next()) {
-                    request.setAttribute("attrazione", rsAttrazione);
-                }
-
-                String queryInterventi = "SELECT * FROM ripara WHERE CODICE_ATTRAZIONE = ?";
-                PreparedStatement psInterventi = conn.prepareStatement(queryInterventi);
-                psInterventi.setInt(1, Integer.parseInt(codiceAttrazione));
-                ResultSet rsInterventi = psInterventi.executeQuery();
-
-                List<ripara> interventi = new ArrayList<>();
-                while (rsInterventi.next()) {
-                    ripara intervento = new ripara();
-                    intervento.setCf_manutentore(rsInterventi.getString("CF_MANUTENTORE"));
-                    intervento.setCodice_attrazione(rsInterventi.getLong("CODICE_ATTRAZIONE"));
-                    intervento.setDescrizione(rsInterventi.getString("DESCRIZIONE"));
-                    interventi.add(intervento);
-                }
-
-                request.setAttribute("interventi", interventi);
-            } catch (SQLException e) {
-                throw new ServletException(e);
-            }
-        }
-
-        request.getRequestDispatcher("/manutentore2.jsp").forward(request, response);
-    }
-
-    @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String codiceAttrazione = request.getParameter("CODICE_ATTRAZIONE");
-        String cfManutentore = request.getParameter("CF_MANUTENTORE");
-        String descrizione = request.getParameter("DESCRRIZIONE");
+        String action = request.getParameter("action");
 
-        if (codiceAttrazione != null && cfManutentore != null && descrizione != null) {
-            try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
-                String query = "INSERT INTO ripara (CF_MANUTENTORE, CODICE_ATTRAZIONE, DESCRIZIONE) VALUES (?, ?, ?)";
-                PreparedStatement ps = conn.prepareStatement(query);
-                ps.setString(1, cfManutentore);
-                ps.setLong(2, Long.parseLong(codiceAttrazione));
-                ps.setString(3, descrizione);
-                ps.executeUpdate();
+        String dbUrl = "jdbc:mysql://localhost:3306/parco_web";
+        String dbUser = "root";
+        String dbPassword = "sarA2002";
+        Connection conn = null;
 
-                // Update the last maintenance date in attrazione table
-                String updateQuery = "UPDATE manutentore SET NUMERO_INTERVENTI = NUMERO_INTERVENTI + 1 WHERE CODICE_FISCALE = ?";
-                PreparedStatement psUpdate = conn.prepareStatement(updateQuery);
-                psUpdate.setString(1, cfManutentore);
-                psUpdate.executeUpdate();
-            } catch (SQLException e) {
-                throw new ServletException(e);
+        try {
+            conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+            RiparaDAOMySQLJDBCImpl riparaDAO = new RiparaDAOMySQLJDBCImpl(conn);
+
+            if ("visualizza".equals(action)) {
+                Long codiceAttrazione = Long.parseLong(request.getParameter("codiceAttrazioneVisualizza"));
+                List<ripara> interventi = (List<ripara>) riparaDAO.findByCodiceAttrazione(codiceAttrazione);
+                request.setAttribute("interventi", interventi);
+                request.getRequestDispatcher("manutentore.jsp").forward(request, response);
+            } else if ("inserisci".equals(action)) {
+                String codiceAttrazione = request.getParameter("codiceAttrazioneInserisci");
+                String descrizione = request.getParameter("descrizione");
+                String cfManutentore = (String) request.getSession().getAttribute("cfManutentore"); // Assuming the CF_MANUTENTORE is stored in session
+                ripara intervento = new ripara();
+                riparaDAO.create(intervento.getCf_manutentore(), intervento.getCodice_attrazione(), intervento.getDescrizione());
+                response.sendRedirect("manutentore.jsp");
+            }
+        } catch (SQLException e) {
+            throw new ServletException(e);
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
-
-        response.sendRedirect("manutenzione?codice=" + codiceAttrazione);
     }
-}
 
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Implementazione del metodo doGet per gestire le richieste GET
+
+        String action = request.getParameter("action");
+
+        if ("visualizza".equals(action)) {
+            // Codice per gestire la visualizzazione degli interventi
+            String dbUrl = "jdbc:mysql://localhost:3306/parco_web";
+            String dbUser = "root";
+            String dbPassword = "sarA2002";
+            Connection conn = null;
+
+            try {
+                conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword);
+                RiparaDAOMySQLJDBCImpl riparaDAO = new RiparaDAOMySQLJDBCImpl(conn);
+
+                Long codiceAttrazione = Long.parseLong(request.getParameter("codiceAttrazioneVisualizza"));
+                List<ripara> interventi = (List<ripara>) riparaDAO.findByCodiceAttrazione(codiceAttrazione);
+                request.setAttribute("interventi", interventi);
+                request.getRequestDispatcher("manutentore.jsp").forward(request, response);
+            } catch (SQLException e) {
+                throw new ServletException(e);
+            } finally {
+                if (conn != null) {
+                    try {
+                        conn.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        } else {
+            // Gestione di altre operazioni GET, se necessario
+            response.sendRedirect("manutentore.jsp"); // Esempio di redirect a una pagina JSP
+        }
+    }
+
+}
