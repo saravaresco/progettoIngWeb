@@ -1,23 +1,23 @@
 package com.parcodivertimenti.parcodivertimenti.controller;
 
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+//import com.mysql.cj.Session;
+import com.parcodivertimenti.parcodivertimenti.model.mo.biglietto;
 
+import jakarta.mail.*;
+import jakarta.mail.Session;
+import jakarta.mail.internet.*;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.parcodivertimenti.parcodivertimenti.model.mo.biglietto;
+import java.io.IOException;
+import java.sql.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Properties;
 
 @WebServlet("/purchaseTicket")
 public class PurchaseTicketController extends HttpServlet {
@@ -114,8 +114,62 @@ public class PurchaseTicketController extends HttpServlet {
         }
     }
 
+
+
     private void inviaMailConBiglietti(List<biglietto> biglietti) {
-        // Simulazione dell'invio della mail con i dettagli del biglietto (da implementare)
+        // Simulazione dell'invio della mail con i dettagli del biglietto
+        //indirizzo email del mittente
+        String from = "parcoDivertimenti2024@gmail.com";
+        // SMTP server
+        String host = "smtp.gmail.com";
+        final String username = "parcoDivertimenti2024@gmail.com";
+        final String password = "Pippo1234";
+
+        // Proprietà per la configurazione del server SMTP
+        Properties properties = new Properties();
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", host);
+        properties.put("mail.smtp.port", "587");
+
+        // Ottieni la sessione
+        Session session = Session.getInstance(properties, new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        });
+
+
+        try {
+            //crea oggetto MimeMessage
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+
+            // Aggiungi destinatario
+            String to = biglietti.get(0).getMail();
+            message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+
+            // Oggetto della mail
+            message.setSubject("Conferma acquisto biglietto");
+
+            // Costruisci il corpo del messaggio
+            StringBuilder content = new StringBuilder();
+            content.append("Grazie per l'acquisto dei biglietti. Di seguito i dettagli:\n\n");
+            for (biglietto b : biglietti) {
+                content.append("Tipo: ").append(b.getTipologia1()).append(" - ").append(b.getTipologia2()).append("\n");
+                content.append("Prezzo: ").append(b.getPrezzo()).append("\n\n");
+            }
+            message.setText(content.toString());
+
+            // Invia il messaggio
+            Transport.send(message);
+            System.out.println("Mail inviata con successo.");
+
+        } catch (MessagingException mex) {
+            mex.printStackTrace();
+        }
+
 
     }
 }

@@ -24,6 +24,15 @@
       <version>5.0.0</version>
       <scope>provided</scope>
     </dependency>
+
+      <dependency>
+          <groupId>com.sun.mail</groupId>
+          <artifactId>jakarta.mail</artifactId>
+          <version>2.0.1</version>
+      </dependency>
+
+
+
 <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
@@ -35,6 +44,7 @@
         <artifactId>junit-jupiter-engine</artifactId>
         <version>${junit.version}</version>
         <scope>test</scope>
+
       </dependency>
 
       <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
@@ -51,12 +61,19 @@
 
   </dependencies>
 
+
+
   <build>
     <plugins>
 <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-war-plugin</artifactId>
         <version>3.3.2</version>
+    <configuration>
+        <packagingExcludes>WEB-INF/lib/javax.mail-*.jar</packagingExcludes>
+    </configuration>
       </plugin>    </plugins>
   </build>
 </project>
+
+
