@@ -25,18 +25,20 @@ public class ModifyTicketController extends HttpServlet {
         String ticketId = request.getParameter("ticketId");
 
         // Ottieni i dettagli del biglietto
-        biglietto ticket = getTicketById(ticketId);
+        //biglietto ticket = getTicketById(ticketId);
+        request.setAttribute("ticket", ticketId);
+        request.getRequestDispatcher("modifyTicket.jsp").forward(request, response);
 
-        if (ticket != null) {
+        /*if (ticket != null) {
             request.setAttribute("ticket", ticket);
             request.getRequestDispatcher("modifyTicket.jsp").forward(request, response);
         } else {
             response.sendRedirect("register.jsp"); // Gestire il caso in cui il biglietto non esista
-        }
+        }*/
     }
 
     // Metodo per ottenere i dettagli di un biglietto dato l'ID
-    private biglietto getTicketById(String ticketId) {
+    /*private biglietto getTicketById(String ticketId) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -80,11 +82,11 @@ public class ModifyTicketController extends HttpServlet {
         }
 
         return ticket;
-    }
+    }*/
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    /*protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         doPost(request, response);
-    }
+    }*/
 }
 

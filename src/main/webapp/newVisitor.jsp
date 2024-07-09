@@ -113,7 +113,7 @@
 <body>
 <div class="container">
     <h1>Registrazione Visitatore</h1>
-    <form action="register-visitor" method="post">
+    <form action="newVisitor" method="post">
         <label for="nome">Nome:</label>
         <input type="text" id="nome" name="nome" required><br>
 

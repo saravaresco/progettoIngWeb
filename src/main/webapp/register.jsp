@@ -63,13 +63,21 @@
 
     <div id="ticketsSection" class="section">
         <h2>Biglietti Acquistati</h2>
-        <div class="mb-4">
+        <form action="register-visitor" method="post">
+            <div class="form-group">
+                <label for="codiceFiscale">Inserisci il tuo codice fiscale:</label>
+                <input type="text" class="form-control" id="codiceFiscaleInput" name="codiceFiscale" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Visualizza Biglietti</button>
+        </form>
+        <div class="mt-4">
             <%
-                String codiceFiscale = (String) session.getAttribute("codiceFiscale");
-                RegisterVisitorController controller = new RegisterVisitorController();
-                List<biglietto> userTickets = controller.getUserTickets(codiceFiscale);
-                if (userTickets != null && !userTickets.isEmpty()) {
-                    for (biglietto ticket : userTickets) {
+                String codiceFiscale = request.getParameter("codiceFiscale");
+                if (codiceFiscale != null && !codiceFiscale.isEmpty()) {
+                    RegisterVisitorController controller = new RegisterVisitorController();
+                    List<biglietto> userTickets = controller.getUserTickets(codiceFiscale);
+                    if (userTickets != null && !userTickets.isEmpty()) {
+                        for (biglietto ticket : userTickets) {
             %>
             <div class="ticket">
                 <p><strong>ID Biglietto:</strong> <%= ticket.getID() %></p>
@@ -84,6 +92,7 @@
             %>
             <p>Nessun biglietto acquistato.</p>
             <%
+                }
                 }
             %>
         </div>

@@ -19,7 +19,7 @@ import java.sql.SQLException;
 import java.util.logging.Logger;
 
 
-@WebServlet("/login")
+@WebServlet(name = "login", urlPatterns = {"/login"})
 public class LoginController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private static final Logger logger = Logger.getLogger(LoginController.class.getName());
@@ -35,7 +35,7 @@ public class LoginController extends HttpServlet {
         String action = request.getParameter("action");
 
 
-        if (action != null && action.equals("existing")) {
+        if (action != null && action.equals("visitor")) {
             String username = request.getParameter("username");
             String password = request.getParameter("password");
 
@@ -74,6 +74,9 @@ public class LoginController extends HttpServlet {
                 response.sendRedirect("login.jsp"); // Reindirizza di nuovo alla pagina di login
             }
         }
+        else {
+            response.sendRedirect("login.jsp"); // Reindirizza di nuovo alla pagina di login
+        }
 
     }
 
@@ -83,7 +86,7 @@ public class LoginController extends HttpServlet {
     }
 
     // Verifica le credenziali del dipendente nel database in base alla categoria
-    private String verifyEmployeeCredentials(String username, String password, String category) {
+    private String verifyEmployeeCredentials(String category, String username, String password) {
         String tableName = "";
         String redirectPage = "";
 
@@ -94,7 +97,7 @@ public class LoginController extends HttpServlet {
                 break;
             case "manutentore":
                 tableName = "manutentore";
-                redirectPage = "manutentore.jsp";
+                redirectPage = "/manutentore.jsp";
                 break;
             case "addetto_giostre":
                 tableName = "addetto_giostre";

@@ -24,16 +24,16 @@ public class RegisterVisitorController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String nome = request.getParameter("nome");
-        String cognome = request.getParameter("cognome");
         String codiceFiscale = request.getParameter("codiceFiscale");
-        String dataNascita = request.getParameter("dataNascita");
-        String sesso = request.getParameter("sesso");
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        if (codiceFiscale != null && !codiceFiscale.isEmpty()) {
+            List<biglietto> userTickets = getUserTickets(codiceFiscale);
+            request.setAttribute("userTickets", userTickets);
+            request.getRequestDispatcher("register.jsp").forward(request, response);
+        }
+    }
 
         // Inserisci i dati nel database
-        boolean success = registerVisitor(nome, cognome, codiceFiscale, dataNascita, sesso, username, password);
+       /* boolean success = registerVisitor(nome, cognome, codiceFiscale, dataNascita, sesso, username, password);
 
         if (success) {
             // Salva il codice fiscale nella sessione
@@ -42,10 +42,10 @@ public class RegisterVisitorController extends HttpServlet {
         } else {
             response.sendRedirect("newVisitor.jsp"); // Reindirizza di nuovo alla pagina di registrazione in caso di errore
         }
-    }
+    }*/
 
     // Metodo per registrare un nuovo visitatore nel database
-    private boolean registerVisitor(String nome, String cognome, String codiceFiscale,
+    /*private boolean registerVisitor(String nome, String cognome, String codiceFiscale,
                                     String dataNascita, String sesso, String username, String password) {
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -89,7 +89,7 @@ public class RegisterVisitorController extends HttpServlet {
         }
 
         return false;
-    }
+    }*/
 
     // Metodo per ottenere i biglietti acquistati da un utente
     public List<biglietto> getUserTickets(String codiceFiscale) {

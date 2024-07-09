@@ -81,11 +81,12 @@
     </div>
 
     <!-- Form per il login del visitatore -->
-    <form id="visitorLoginForm" class="login-form" action="register.jsp" method="post">
+    <form id="visitorLoginForm" class="login-form" action="login" method="post">
+        <input type="hidden" name="action" value="visitor">
         <label for="visitorUsername">Username:</label>
-        <input type="text" id="visitorUsername" name="visitorUsername" required>
+        <input type="text" id="visitorUsername" name="username" required>
         <label for="visitorPassword">Password:</label>
-        <input type="password" id="visitorPassword" name="visitorPassword" required>
+        <input type="password" id="visitorPassword" name="password" required>
         <button type="submit">Accedi</button>
     </form>
 
@@ -97,18 +98,18 @@
 
     <!-- Form per il login del dipendente -->
     <form id="employeeLoginForm" class="login-form" action="login" method="post">
-        <input type="hidden" name="action" value="existing">
+        <input type="hidden" name="action" value="employee">
         <label for="employeeRole">Ruolo:</label>
-        <select id="employeeRole" name="employeeRole">
+        <select id="employeeRole" name="category">
             <option value="manutentore">Manutentore</option>
             <option value="addetto_giostre">Addetto Giostre</option>
             <option value="addetto_ristorante">Addetto Ristorante</option>
             <option value="attore">Attore</option>
         </select>
         <label for="employeeUsername">Username:</label>
-        <input type="text" id="employeeUsername" name="employeeUsername" required>
+        <input type="text" id="employeeUsername" name="username" required>
         <label for="employeePassword">Password:</label>
-        <input type="password" id="employeePassword" name="employeePassword" required>
+        <input type="password" id="employeePassword" name="password" required>
         <button type="submit">Accedi</button>
     </form>
 </div>
