@@ -13,7 +13,7 @@ public class Configuration {
     public static final String DATABASE_DRIVER="com.mysql.cj.jdbc.Driver"; /*lasciare così*/
     public static final String SERVER_TIMEZONE=Calendar.getInstance().getTimeZone().getID(); /*lasciare così*/
     public static final String
-            DATABASE_URL="jdbc:mysql://localhost/parco_divertimenti?user=root&password=sarA2002&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone="+SERVER_TIMEZONE;
+            DATABASE_URL="jdbc:mysql://localhost/parco_web?user=root&password=sarA2002&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone="+SERVER_TIMEZONE;
 
     /* Session Configuration */
     public static final String COOKIE_IMPL=DaoFactory.COOKIEIMPL; /*lasciare così*/

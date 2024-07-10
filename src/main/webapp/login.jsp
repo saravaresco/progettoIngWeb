@@ -81,7 +81,7 @@
     </div>
 
     <!-- Form per il login del visitatore -->
-    <form id="visitorLoginForm" class="login-form" action="login" method="post">
+    <form id="visitorLoginForm" class="login-form" action="login" method="get">
         <input type="hidden" name="action" value="visitor">
         <label for="visitorUsername">Username:</label>
         <input type="text" id="visitorUsername" name="username" required>

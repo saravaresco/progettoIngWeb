@@ -113,7 +113,8 @@
 <body>
 <div class="container">
     <h1>Registrazione Visitatore</h1>
-    <form action="newVisitor" method="post">
+    <form action="login" method="get">
+        <input type="hidden" name="controllerAction" value="LoginController.doPost">
         <label for="nome">Nome:</label>
         <input type="text" id="nome" name="nome" required><br>
 
