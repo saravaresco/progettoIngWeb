@@ -110,11 +110,17 @@
         }
     </style>
 </head>
+<script language="javascript">
+    function insertContact() {
+        document.insertForm.submit();
+    }
+</script>
 <body>
 <div class="container">
     <h1>Registrazione Visitatore</h1>
-    <form action="login" method="get">
-        <input type="hidden" name="controllerAction" value="LoginController.doPost">
+    <form action="Dispatcher" method="get">
+        <%--<input type="hidden" name="insertForm">--%>
+        <input type="hidden" name="controllerAction" value="NewVisitorController.insert">
         <label for="nome">Nome:</label>
         <input type="text" id="nome" name="nome" required><br>
 

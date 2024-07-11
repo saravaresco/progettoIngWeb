@@ -6,11 +6,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @WebServlet("/newVisitor")
 public class NewVisitorController extends HttpServlet {
@@ -21,16 +21,16 @@ public class NewVisitorController extends HttpServlet {
     private static final String JDBC_USER = "root";
     private static final String JDBC_PASSWORD = "sarA2002";
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    public void insert(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // parametri inseriti
-        String nome = request.getParameter("NOME");
-        String cognome = request.getParameter("COGNOME");
-        String codiceFiscale = request.getParameter("CODICE_FISCALE");
-        String dataNascita = request.getParameter("DATA_NASCITA");
-        String sesso = request.getParameter("SESSO");
-        String username = request.getParameter("USERNAME");
-        String password = request.getParameter("PASSWORD");
+        String nome = request.getParameter("nome");
+        String cognome = request.getParameter("cognome");
+        String codiceFiscale = request.getParameter("codiceFiscale");
+        String dataNascita = request.getParameter("dataNascita");
+        String sesso = request.getParameter("sesso");
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
 
         // JDBC variables for opening and managing connection
         Connection connection = null;
@@ -42,7 +42,7 @@ public class NewVisitorController extends HttpServlet {
             connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
 
             // inserimento dati
-            String sql = "INSERT INTO visitatore (CODICE_FISCALE, NOME, COGNOME, DATA_NASSCITA, SESSO, USERNAME, PASSWORD) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO visitatore (CODICE_FISCALE, NOME, COGNOME, DATA_NASCITA, SESSO, USERNAME, PASSWORD) VALUES (?, ?, ?, ?, ?, ?, ?)";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, nome);
             preparedStatement.setString(2, cognome);
@@ -56,13 +56,18 @@ public class NewVisitorController extends HttpServlet {
             preparedStatement.executeUpdate();
 
             // Redirect to a success page or provide a success message
-            response.sendRedirect("confermaIscrizione.jsp");
+            //response.sendRedirect("confermaIscrizione.jsp");
+
+            // Set the view URL to redirect to the confirmation page
+            request.setAttribute("viewUrl", "confermaIscrizione");
 
         } catch (SQLException | ClassNotFoundException e) {
             // Handle any database or class not found errors
             e.printStackTrace();
             // Redirect to an error page or provide an error message
-            response.sendRedirect("login.jsp");
+            //response.sendRedirect("login.jsp");
+            // Set the view URL to redirect to the error page
+            request.setAttribute("viewUrl", "error");
 
         } finally {
             // Close the connection and statement

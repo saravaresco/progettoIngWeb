@@ -29,12 +29,19 @@ public class Dispatcher extends HttpServlet {
             String[] splittedAction=controllerAction.split("\\.");
             Class<?> controllerClass=Class.forName("com.parcodivertimenti.parcodivertimenti.controller."+splittedAction[0]);
             Method controllerMethod=controllerClass.getMethod(splittedAction[1],HttpServletRequest.class,HttpServletResponse.class);
-            LogService.getApplicationLogger().log(Level.INFO,splittedAction[0]+" "+splittedAction[1]);
-            controllerMethod.invoke(null,request,response);
+            //LogService.getApplicationLogger().log(Level.INFO,splittedAction[0]+" "+splittedAction[1]);
+            Object controllerInstance = controllerClass.getDeclaredConstructor().newInstance();
+            controllerMethod.invoke(controllerInstance,request,response);
 
             String viewUrl=(String)request.getAttribute("viewUrl");
-            RequestDispatcher view=request.getRequestDispatcher(viewUrl+".jsp");
-            view.forward(request,response);
+            /*RequestDispatcher view=request.getRequestDispatcher(viewUrl+".jsp");
+            view.forward(request,response);*/
+            if (viewUrl != null) {
+                RequestDispatcher view = request.getRequestDispatcher(viewUrl + ".jsp");
+                view.forward(request, response);
+            } else {
+                throw new ServerException("viewUrl not set by controller");
+            }
 
 
         } catch (Exception e) {
