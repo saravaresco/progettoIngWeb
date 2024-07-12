@@ -21,7 +21,7 @@ public interface visitatoreDAO {
 
     public void delete(visitatore visit);
 
-    public visitatore findLoggedUser();
+    public visitatore findLoggedUser(String username, String password);
 
     public visitatore findByCF(String codice_fiscale);
 

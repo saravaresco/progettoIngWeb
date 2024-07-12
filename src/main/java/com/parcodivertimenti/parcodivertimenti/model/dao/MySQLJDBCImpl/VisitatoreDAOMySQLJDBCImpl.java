@@ -187,9 +187,31 @@ public class VisitatoreDAOMySQLJDBCImpl implements visitatoreDAO {
     }
 
     @Override
-    public visitatore findLoggedUser(){
-        throw new UnsupportedOperationException("Not supported yet");
+    public visitatore findLoggedUser(String username, String password) {
+        PreparedStatement ps;
+        visitatore v = null;
+
+        try {
+            String sql = "SELECT * FROM visitatore WHERE USERNAME = ? AND PASSWORD = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, username);
+            ps.setString(2, password);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            if (resultSet.next()) {
+                v = read(resultSet);
+            }
+            resultSet.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return v;
     }
+
 
     @Override
     public visitatore findByCF(String codice_fiscale){

@@ -1,7 +1,11 @@
 package com.parcodivertimenti.parcodivertimenti.controller;
 
 import com.parcodivertimenti.parcodivertimenti.model.dao.CookieImpl.VisitatoreCookieImpl;
+import com.parcodivertimenti.parcodivertimenti.model.dao.DaoFactory;
+import com.parcodivertimenti.parcodivertimenti.model.dao.visitatoreDAO;
 import com.parcodivertimenti.parcodivertimenti.model.mo.visitatore;
+import com.parcodivertimenti.parcodivertimenti.services.config.Configuration;
+import com.parcodivertimenti.parcodivertimenti.services.logservice.LogService;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -16,6 +20,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
@@ -30,7 +37,7 @@ public class LoginController extends HttpServlet {
     private static final String DB_USER = "root"; // Sostituisci con il tuo username del database
     private static final String DB_PASS = "sarA2002"; // Sostituisci con la tua password del database
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    /*protected void loginReg(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
 
@@ -207,6 +214,59 @@ public class LoginController extends HttpServlet {
             }
         }
         return loggedVisitatore;
-    }
+    }*/
+
+    /*public static void view(HttpServletRequest request, HttpServletResponse response) {
+
+        DaoFactory sessionDAOFactory= null;
+        DaoFactory daoFactory = null;
+        visitatore loggedUser;
+        String applicationMessage = null;
+
+        Logger logger = LogService.getApplicationLogger();
+
+        try {
+
+            Map sessionFactoryParameters=new HashMap<String,Object>();
+            sessionFactoryParameters.put("request",request);
+            sessionFactoryParameters.put("response",response);
+            sessionDAOFactory = DaoFactory.getDaoFactory(Configuration.COOKIE_IMPL,sessionFactoryParameters);
+            sessionDAOFactory.beginTransaction();
+
+            visitatoreDAO sessionUserDAO = sessionDAOFactory.getVisitatoreDAO();
+            loggedUser = sessionUserDAO.findLoggedUser();
+
+            daoFactory = DaoFactory.getDaoFactory(Configuration.DAO_IMPL,null);
+            daoFactory.beginTransaction();
+
+            //commonView(daoFactory, sessionDAOFactory, request);
+
+            daoFactory.commitTransaction();
+            sessionDAOFactory.commitTransaction();
+
+            request.setAttribute("loggedOn",loggedUser!=null);
+            request.setAttribute("loggedUser", loggedUser);
+            request.setAttribute("applicationMessage", applicationMessage);
+            request.setAttribute("viewUrl", "addressBookManagement/view");
+
+        } catch (Exception e) {
+            logger.log(Level.SEVERE, "Controller Error", e);
+            try {
+                if (daoFactory != null) daoFactory.rollbackTransaction();
+                if (sessionDAOFactory != null) sessionDAOFactory.rollbackTransaction();
+            } catch (Throwable t) {
+            }
+            throw new RuntimeException(e);
+
+        } finally {
+            try {
+                if (daoFactory != null) daoFactory.closeTransaction();
+                if (sessionDAOFactory != null) sessionDAOFactory.closeTransaction();
+            } catch (Throwable t) {
+            }
+
+        }
+
+    }*/
 
 }

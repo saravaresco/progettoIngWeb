@@ -81,12 +81,9 @@
     </div>
 
     <!-- Form per il login del visitatore -->
-    <form id="visitorLoginForm" class="login-form" action="login" method="get">
+    <form id="visitorLoginForm" class="login-form" action="visitatore.jsp" >
         <input type="hidden" name="action" value="visitor">
-        <label for="visitorUsername">Username:</label>
-        <input type="text" id="visitorUsername" name="username" required>
-        <label for="visitorPassword">Password:</label>
-        <input type="password" id="visitorPassword" name="password" required>
+        <p>Se sei gi&#224; registrato accedi alla tua area personale:</p>
         <button type="submit">Accedi</button>
     </form>
 

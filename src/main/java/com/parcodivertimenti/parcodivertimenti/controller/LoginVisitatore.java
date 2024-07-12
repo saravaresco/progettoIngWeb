@@ -1,9 +1,17 @@
 package com.parcodivertimenti.parcodivertimenti.controller;
 
+import java.io.IOException;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.parcodivertimenti.parcodivertimenti.model.dao.MySQLJDBCImpl.VisitatoreDAOMySQLJDBCImpl;
+import java.sql.Connection;
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -19,10 +27,14 @@ import javax.servlet.annotation.WebServlet;
 @WebServlet(name = "login2", urlPatterns = {"/login2"})
 public class LoginVisitatore {
 
-    private LoginVisitatore() {
+    public LoginVisitatore() {
     }
 
-    public static void login(HttpServletRequest request, HttpServletResponse response) {
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/parco_web";
+    private static final String DB_USER = "root";
+    private static final String DB_PASSWORD = "sarA2002";
+
+    /*public static void login(HttpServletRequest request, HttpServletResponse response) {
         DaoFactory sessionDAOFactory = null;
         DaoFactory daoFactory = null;
         visitatore loggedVisitatore;
@@ -74,33 +86,29 @@ public class LoginVisitatore {
                 logger.log(Level.SEVERE, "Transaction Close Error", t);
             }
         }
-    }
+    }*/
 
-    private static void authenticateVisitor(HttpServletRequest request, HttpServletResponse response, DaoFactory daoFactory, DaoFactory sessionDAOFactory) throws Exception {
+    public void login(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        visitatoreDAO visitatoreDAO = daoFactory.getVisitatoreDAO();
-        visitatore loggedVisitatore = visitatoreDAO.findByUsername(username);
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
+            visitatoreDAO visitatoreDAO = new VisitatoreDAOMySQLJDBCImpl(conn);
+            visitatore visitatore = visitatoreDAO.findLoggedUser(username, password);
 
-        if (loggedVisitatore != null) {
-            VisitatoreCookieImpl visitatoreCookie = new VisitatoreCookieImpl(request, response);
-            visitatoreCookie.create(
-                    loggedVisitatore.getCodice_fiscale(),
-                    loggedVisitatore.getNome(),
-                    loggedVisitatore.getCognome(),
-                    loggedVisitatore.getData_nascita(),
-                    loggedVisitatore.getSesso(),
-                    loggedVisitatore.getUsername(),
-                    loggedVisitatore.getPassword()
-            );
-            response.sendRedirect("register.jsp");
-        } else {
-            response.sendRedirect("login.jsp");
+            if (visitatore != null) {
+                // Credenziali corrette, reindirizza alla pagina areaPersonale.jsp
+                RequestDispatcher dispatcher = request.getRequestDispatcher("register.jsp");
+                dispatcher.forward(request, response);
+            } else {
+                // Credenziali errate, reindirizza alla pagina error.jsp
+                RequestDispatcher dispatcher = request.getRequestDispatcher("error.jsp");
+                dispatcher.forward(request, response);
+            }
+        } catch (SQLException e) {
+            throw new ServletException("Errore di connessione al database", e);
         }
+
+
     }
-
-
-
-
 }

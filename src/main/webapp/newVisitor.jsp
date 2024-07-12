@@ -118,7 +118,7 @@
 <body>
 <div class="container">
     <h1>Registrazione Visitatore</h1>
-    <form action="Dispatcher" method="get">
+    <form action="Dispatcher" method="post">
         <%--<input type="hidden" name="insertForm">--%>
         <input type="hidden" name="controllerAction" value="NewVisitorController.insert">
         <label for="nome">Nome:</label>

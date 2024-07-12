@@ -69,7 +69,7 @@ public class VisitatoreCookieImpl implements visitatoreDAO{
     }
 
     @Override
-    public visitatore findLoggedUser() {
+    public visitatore findLoggedUser(String username, String password) {
 
         Cookie[] cookies = request.getCookies();
         visitatore loggedvisitatore = null;
