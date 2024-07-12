@@ -44,9 +44,9 @@ public class NewVisitorController extends HttpServlet {
             // inserimento dati
             String sql = "INSERT INTO visitatore (CODICE_FISCALE, NOME, COGNOME, DATA_NASCITA, SESSO, USERNAME, PASSWORD) VALUES (?, ?, ?, ?, ?, ?, ?)";
             preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, nome);
-            preparedStatement.setString(2, cognome);
-            preparedStatement.setString(3, codiceFiscale);
+            preparedStatement.setString(1, codiceFiscale);
+            preparedStatement.setString(2, nome);
+            preparedStatement.setString(3, cognome);
             preparedStatement.setString(4, dataNascita);
             preparedStatement.setString(5, sesso);
             preparedStatement.setString(6, username);
