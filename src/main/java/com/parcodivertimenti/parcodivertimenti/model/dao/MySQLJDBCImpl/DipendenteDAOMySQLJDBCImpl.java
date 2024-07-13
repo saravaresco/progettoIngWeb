@@ -2,6 +2,7 @@ package com.parcodivertimenti.parcodivertimenti.model.dao.MySQLJDBCImpl;
 
 import com.parcodivertimenti.parcodivertimenti.model.mo.dipendente;
 import com.parcodivertimenti.parcodivertimenti.model.dao.dipendenteDAO;
+import com.parcodivertimenti.parcodivertimenti.model.mo.visitatore;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,8 +33,48 @@ public class DipendenteDAOMySQLJDBCImpl implements dipendenteDAO{
     }
 
     @Override
-    public dipendente findLoggedUser(){
-        throw new UnsupportedOperationException("Not supported yet");
+    public dipendente findLoggedUser(String username, String password, String role){
+        PreparedStatement ps;
+        dipendente v = null;
+        String tableName;
+
+        // Determina il nome della tabella in base al ruolo
+        switch (role) {
+            case "manutentore":
+                tableName = "manutentore";
+                break;
+            case "addetto_giostre":
+                tableName = "addetto_giostre";
+                break;
+            case "addetto_ristorante":
+                tableName = "addetto_ristorante";
+                break;
+            case "attore":
+                tableName = "attore";
+                break;
+            default:
+                throw new IllegalArgumentException("Ruolo non valido: " + role);
+        }
+
+        try {
+            String sql = "SELECT * FROM " + tableName + " WHERE USERNAME = ? AND PASSWORD = ?";
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, username);
+            ps.setString(2, password);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            if (resultSet.next()) {
+                v = read(resultSet);
+            }
+            resultSet.close();
+            ps.close();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return v;
     }
 
     @Override

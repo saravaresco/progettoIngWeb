@@ -22,7 +22,7 @@ public interface dipendenteDAO {
 
     public void delete(dipendente dip);
 
-    public dipendente findLoggedUser();
+    public dipendente findLoggedUser(String username, String password, String categoria);
 
     public dipendente findByCF(String codice_fiscale);
 

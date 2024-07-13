@@ -70,7 +70,7 @@ public class DipendenteCookieImpl implements dipendenteDAO{
     }
 
     @Override
-    public dipendente findLoggedUser() {
+    public dipendente findLoggedUser(String username, String password, String categoria) {
 
         Cookie[] cookies = request.getCookies();
         dipendente loggedDipendente = null;
