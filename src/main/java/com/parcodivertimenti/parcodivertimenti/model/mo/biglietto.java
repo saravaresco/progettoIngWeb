@@ -28,9 +28,9 @@ public class biglietto {
     public void setData_acquisto(String data_acquisto){this.data_acquisto = data_acquisto;}
 
     public String getTipologia1(){return tipologia1;}
-    public void setTipologia1(String tipologia){this.tipologia1 = tipologia;}
+    public void setTipologia1(String tipologia1){this.tipologia1 = tipologia1;}
     public String getTipologia2(){return tipologia2;}
-    public void setTipologia2(String tipologia){this.tipologia2 = tipologia;}
+    public void setTipologia2(String tipologia2){this.tipologia2 = tipologia2;}
 
     public String getMail(){return mail;}
     public void setMail(String mail){this.mail = mail;}

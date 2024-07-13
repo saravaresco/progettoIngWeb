@@ -27,122 +27,6 @@ public class RegisterVisitorController extends HttpServlet {
     private static final String DB_USER = "root"; // Sostituisci con il tuo username del database
     private static final String DB_PASS = "sarA2002"; // Sostituisci con la tua password del database
 
-    /*protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String codiceFiscale = request.getParameter("codiceFiscale");
-        if (codiceFiscale != null && !codiceFiscale.isEmpty()) {
-            List<biglietto> userTickets = getUserTickets(codiceFiscale);
-            request.setAttribute("userTickets", userTickets);
-            request.getRequestDispatcher("register.jsp").forward(request, response);
-        }
-    }
-
-        // Inserisci i dati nel database
-       /* boolean success = registerVisitor(nome, cognome, codiceFiscale, dataNascita, sesso, username, password);
-
-        if (success) {
-            // Salva il codice fiscale nella sessione
-            request.getSession().setAttribute("codiceFiscale", codiceFiscale);
-            response.sendRedirect("confermaIscrizione.jsp"); // Reindirizza alla pagina persona la registrazione
-        } else {
-            response.sendRedirect("newVisitor.jsp"); // Reindirizza di nuovo alla pagina di registrazione in caso di errore
-        }
-    }*/
-
-    // Metodo per registrare un nuovo visitatore nel database
-    /*private boolean registerVisitor(String nome, String cognome, String codiceFiscale,
-                                    String dataNascita, String sesso, String username, String password) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-
-        try {
-            // Carica il driver JDBC
-            Class.forName(JDBC_DRIVER);
-
-            // Crea la connessione al database
-            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
-
-            // Query per inserire i dati nel database visitatore
-            String query = "INSERT INTO visitatore (CODICE_FISCALE, NOME, COGNOME,  DATA_NASCITA, SESSO, USERNAME, PASSWORD) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
-            stmt = conn.prepareStatement(query);
-            stmt.setString(1, codiceFiscale);
-            stmt.setString(2, nome);
-            stmt.setString(3, cognome);
-            stmt.setString(4, dataNascita);
-            stmt.setString(5, sesso);
-            stmt.setString(6, username);
-            stmt.setString(7, password);
-
-            // Esegui la query di inserimento
-            int rowsInserted = stmt.executeUpdate();
-
-            // Verifica se l'inserimento è riuscito
-            if (rowsInserted > 0) {
-                return true;
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            // Chiudi le risorse
-            try {
-                if (stmt != null) stmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return false;
-    }*/
-
-    // Metodo per ottenere i biglietti acquistati da un utente
-    /*public List<biglietto> getUserTickets(String codiceFiscale) {
-        Connection conn = null;
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-        List<biglietto> tickets = new ArrayList<>();
-
-        try {
-            // Carica il driver JDBC
-            Class.forName(JDBC_DRIVER);
-
-            // Crea la connessione al database
-            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
-
-            // Query per ottenere i biglietti acquistati dall'utente
-            String query = "SELECT * FROM biglietto WHERE CODICE_FISCALE_V = ?";
-            stmt = conn.prepareStatement(query);
-            stmt.setString(1, codiceFiscale);
-
-            // Esegui la query
-            rs = stmt.executeQuery();
-
-            // Processa i risultati
-            while (rs.next()) {
-                biglietto ticket = new biglietto();
-                ticket.setID(rs.getLong("ID"));
-                ticket.setData_acquisto(rs.getDate("DATA_ACQUISTO"));
-                ticket.setTipologia1(rs.getString("TIPOLOGIA1"));
-                ticket.setTipologia2(rs.getString("TIPOLOGIA2"));
-                ticket.setPrezzo(rs.getLong("PREZZO"));
-                tickets.add(ticket);
-            }
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        } finally {
-            // Chiudi le risorse
-            try {
-                if (rs != null) rs.close();
-                if (stmt != null) stmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-
-        return tickets;
-    }*/
 
     public List<biglietto> getUserTickets(String codiceFiscale) throws ServletException {
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS)) {
@@ -253,6 +137,109 @@ public class RegisterVisitorController extends HttpServlet {
         }
 
         return biglietti;
+    }
+
+    public void modifyTicket(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Ottenere l'ID del biglietto dall'input dell'utente
+        Long idBiglietto = Long.valueOf(request.getParameter("idBiglietto"));
+
+        // Eseguire il recupero dei dati del biglietto dal database
+        biglietto ticket = retrieveTicketsByCodice(idBiglietto);
+
+        // Verificare se il biglietto è stato trovato
+        if (ticket != null) {
+            // Salva l'ID del biglietto nella sessione
+            HttpSession session = request.getSession();
+            session.setAttribute("idBiglietto", idBiglietto);
+            // Inserire il biglietto come attributo nella richiesta per essere utilizzato nel JSP
+            request.setAttribute("ticket", ticket);
+
+            // Inviare il controllo alla pagina di modifica biglietto (potrebbe essere un altro JSP)
+            RequestDispatcher dispatcher = request.getRequestDispatcher("modifyTicket.jsp");
+            dispatcher.forward(request, response);
+        } else {
+            // Se il biglietto non è stato trovato, gestire l'errore o redirigere a una pagina di errore
+            response.sendRedirect("error.jsp");
+        }
+    }
+
+    // Metodo per simulare il recupero del biglietto dal database
+    public biglietto retrieveTicketsByCodice(Long id) throws ServletException {
+        biglietto biglietto = null;
+        String query = "SELECT * FROM biglietto WHERE ID = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setLong(1, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    biglietto = new biglietto();
+
+                    biglietto.setID(rs.getLong("ID"));
+                    biglietto.setCodice_fiscale(rs.getString("CODICE_FISCALE_V"));
+                    biglietto.setPrezzo(rs.getLong("PREZZO"));
+                    biglietto.setData_acquisto(rs.getString("DATA_ACQUISTO"));
+                    biglietto.setTipologia1(rs.getString("TIPOLOGIA1"));
+                    biglietto.setTipologia2(rs.getString("TIPOLOGIA2"));
+                    biglietto.setMail(rs.getString("MAIL"));
+
+
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new ServletException("Errore durante il recupero dei biglietti dell'utente", e);
+        }
+
+        return biglietto;
+    }
+
+    public void updateTicket(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Long idBiglietto = (Long) session.getAttribute("idBiglietto");
+
+        // Verifica che idBiglietto non sia null
+        if (idBiglietto == null) {
+            // Gestire il caso in cui idBiglietto non sia presente nella sessione
+            response.sendRedirect("error.jsp");
+            return;
+        }
+
+        try {
+            // Ottenere i parametri modificati dal form
+            String mail = request.getParameter("mail");
+
+            // Query per aggiornare i dati del biglietto nel database
+            String query = "UPDATE biglietto SET MAIL = ? WHERE ID = ?";
+
+            try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+                 PreparedStatement stmt = conn.prepareStatement(query)) {
+
+                stmt.setString(1, mail);
+                stmt.setLong(2, idBiglietto);
+
+                // Eseguire l'aggiornamento
+                int rowsUpdated = stmt.executeUpdate();
+
+                if (rowsUpdated > 0) {
+                    // Redirect alla pagina di successo o messaggio di conferma
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("ticketUpdated.jsp");
+                    dispatcher.forward(request, response);
+                } else {
+                    // Gestire il caso in cui il biglietto non sia stato trovato o non aggiornato
+                    response.sendRedirect("error.jsp");
+                }
+
+            } catch (SQLException e) {
+                throw new ServletException("Errore durante l'aggiornamento del biglietto", e);
+            }
+        }catch (NumberFormatException e) {
+            // Gestire il caso in cui idBiglietto non sia un numero valido
+            response.sendRedirect("error.jsp");
+        }
+
     }
 }
 
