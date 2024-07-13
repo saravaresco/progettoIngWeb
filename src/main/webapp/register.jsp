@@ -61,9 +61,11 @@
     <button class="btn btn-custom" id="showModifyTickets">Modifica Biglietti Acquistati</button>
     <button class="btn btn-custom" id="showPurchaseTicket">Acquista Nuovo Biglietto</button>
 
+
     <div id="ticketsSection" class="section">
         <h2>Biglietti Acquistati</h2>
-        <form action="register-visitor" method="post">
+        <form action="Dispatcher" method="get">
+            <input type="hidden" name="controllerAction" value="RegisterVisitorController.getTicket">
             <div class="form-group">
                 <label for="codiceFiscale">Inserisci il tuo codice fiscale:</label>
                 <input type="text" class="form-control" id="codiceFiscaleInput" name="codiceFiscale" required>
@@ -71,14 +73,9 @@
             <button type="submit" class="btn btn-primary">Visualizza Biglietti</button>
         </form>
         <div class="mt-4">
-            <%
-                String codiceFiscale = request.getParameter("codiceFiscale");
-                if (codiceFiscale != null && !codiceFiscale.isEmpty()) {
-                    RegisterVisitorController controller = new RegisterVisitorController();
-                    List<biglietto> userTickets = controller.getUserTickets(codiceFiscale);
-                    if (userTickets != null && !userTickets.isEmpty()) {
-                        for (biglietto ticket : userTickets) {
-            %>
+            <% List<biglietto> userTickets = (List<biglietto>) request.getAttribute("userTickets");
+                if (userTickets != null && !userTickets.isEmpty()) {
+                    for (biglietto ticket : userTickets) { %>
             <div class="ticket">
                 <p><strong>ID Biglietto:</strong> <%= ticket.getID() %></p>
                 <p><strong>Data Acquisto:</strong> <%= ticket.getData_acquisto() %></p>
@@ -86,15 +83,10 @@
                 <p><strong>Tipologia 2:</strong> <%= ticket.getTipologia2() %></p>
                 <p><strong>Prezzo:</strong> <%= ticket.getPrezzo() %></p>
             </div>
-            <%
-                }
-            } else {
-            %>
+            <%     }
+            } else { %>
             <p>Nessun biglietto acquistato.</p>
-            <%
-                }
-                }
-            %>
+            <% } %>
         </div>
     </div>
 
@@ -103,7 +95,8 @@
 
         <%--<% biglietto ticket = (biglietto) request.getAttribute("ticket"); %>--%>
 
-        <form action="modify-ticket" method="post">
+        <form action="Dispatcher" method="get">
+            <input type="hidden" name="controllerAction" value="RegisterVisitorController.modifyTicket">
             <div class="form-group">
                 <label for="idBiglietto">Inserisci l'ID del biglietto da modificare:</label>
                 <input type="text" class="form-control" id="idBiglietto" name="idBiglietto" required>
@@ -114,7 +107,8 @@
 
     <div id="purchaseTicketSection" class="section">
         <h2>Acquista Nuovo Biglietto</h2>
-        <form action="purchaseTicket" method="post">
+        <form action="Dispatcher" method="get">
+            <input type="hidden" name="controllerAction" value="RegisterVisitorController.newTicket">
             <div class="form-group">
                 <label for="nome">Nome:</label>
                 <input type="text" class="form-control" id="nome" name="nome" required>

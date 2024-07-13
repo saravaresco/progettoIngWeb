@@ -7,7 +7,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class BigliettoDAOMySQLJDBCImpl implements bigliettoDAO {
 
@@ -63,33 +65,28 @@ public class BigliettoDAOMySQLJDBCImpl implements bigliettoDAO {
     }
 
     @Override
-    public biglietto findByCF(String codice_fiscale){
-        PreparedStatement ps;
-        biglietto b = null;
+    public List<biglietto> findByCF(String codiceFiscale) {
+        List<biglietto> tickets = new ArrayList<>();
+        String sql = "SELECT * FROM biglietto WHERE CODICE_FISCALE_V = ?";
 
-        try{
-            String sql
-                    = "SELECT *"
-                    + "FROM b"
-                    + "WHERE"
-                    + "codice_fiscale = ?";
-
-            ps = conn.prepareStatement(sql);
-            ps.setString(1, codice_fiscale);
-
-            ResultSet resultSet = ps.executeQuery();
-
-            while(resultSet.next()){
-                b = read(resultSet);
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, codiceFiscale);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    biglietto ticket = new biglietto();
+                    ticket.setID(rs.getLong("id"));
+                    ticket.setData_acquisto(rs.getDate("data_acquisto"));
+                    ticket.setTipologia1(rs.getString("tipologia1"));
+                    ticket.setTipologia2(rs.getString("tipologia2"));
+                    ticket.setPrezzo(rs.getLong("prezzo"));
+                    tickets.add(ticket);
+                }
             }
-            resultSet.close();
-            ps.close();
-        }
-        catch (SQLException e){
-            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException("Errore durante il recupero dei biglietti", e);
         }
 
-        return b;
+        return tickets;
     }
 
     @Override

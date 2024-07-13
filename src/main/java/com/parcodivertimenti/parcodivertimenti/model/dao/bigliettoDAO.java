@@ -4,6 +4,7 @@ import com.parcodivertimenti.parcodivertimenti.model.mo.addettoGiostre;
 import com.parcodivertimenti.parcodivertimenti.model.mo.biglietto;
 
 import java.util.Date;
+import java.util.List;
 
 public interface bigliettoDAO {
 
@@ -22,7 +23,7 @@ public interface bigliettoDAO {
 
     public biglietto findById(Long ID);
 
-    public biglietto findByCF(String codice_fiscale);
+    public List<biglietto> findByCF(String codice_fiscale);
 
     public biglietto findByData(Date data_acquisto);
 

@@ -13,12 +13,6 @@ public class biglietto {
     private String mail;
 
     public biglietto() {
-        this.codice_fiscale = codice_fiscale;
-        this.prezzo = (long) prezzo;
-        this.data_acquisto = data_acquisto;
-        this.tipologia1 = tipologia1;
-        this.tipologia2 = tipologia2;
-        this.mail = mail;
     }
 
     public Long getID(){return ID;}

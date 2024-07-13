@@ -9,6 +9,7 @@ import com.parcodivertimenti.parcodivertimenti.model.dao.bigliettoDAO;
 import com.parcodivertimenti.parcodivertimenti.model.mo.biglietto;
 
 import java.util.Date;
+import java.util.List;
 
 public class BigliettoCookieImpl implements bigliettoDAO{
 
@@ -77,7 +78,7 @@ public class BigliettoCookieImpl implements bigliettoDAO{
     }
 
     @Override
-    public biglietto findByCF(String codice_fiscale) {
+    public List<biglietto> findByCF(String codice_fiscale) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

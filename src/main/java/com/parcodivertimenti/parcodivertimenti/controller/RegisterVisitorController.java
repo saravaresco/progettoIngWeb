@@ -1,5 +1,7 @@
 package com.parcodivertimenti.parcodivertimenti.controller;
 
+import com.parcodivertimenti.parcodivertimenti.model.dao.MySQLJDBCImpl.BigliettoDAOMySQLJDBCImpl;
+import com.parcodivertimenti.parcodivertimenti.model.dao.bigliettoDAO;
 import com.parcodivertimenti.parcodivertimenti.model.mo.biglietto;
 
 import java.io.IOException;
@@ -22,7 +24,7 @@ public class RegisterVisitorController extends HttpServlet {
     private static final String DB_USER = "root"; // Sostituisci con il tuo username del database
     private static final String DB_PASS = "sarA2002"; // Sostituisci con la tua password del database
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    /*protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String codiceFiscale = request.getParameter("codiceFiscale");
         if (codiceFiscale != null && !codiceFiscale.isEmpty()) {
@@ -92,7 +94,7 @@ public class RegisterVisitorController extends HttpServlet {
     }*/
 
     // Metodo per ottenere i biglietti acquistati da un utente
-    public List<biglietto> getUserTickets(String codiceFiscale) {
+    /*public List<biglietto> getUserTickets(String codiceFiscale) {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -137,6 +139,27 @@ public class RegisterVisitorController extends HttpServlet {
         }
 
         return tickets;
+    }*/
+
+    public List<biglietto> getUserTickets(String codiceFiscale) throws ServletException {
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS)) {
+            bigliettoDAO bigliettoDAO = new BigliettoDAOMySQLJDBCImpl(conn);
+            return (List<biglietto>) bigliettoDAO.findByCF(codiceFiscale);
+        } catch (SQLException e) {
+            throw new ServletException("Errore di connessione al database", e);
+        }
+    }
+
+    public void getTicket(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String codiceFiscale = request.getParameter("codiceFiscale");
+        if (codiceFiscale != null && !codiceFiscale.isEmpty()) {
+            List<biglietto> userTickets = getUserTickets(codiceFiscale);
+            request.setAttribute("userTickets", userTickets);
+            request.getRequestDispatcher("register.jsp").forward(request, response);
+        } else {
+            request.setAttribute("error", "Codice Fiscale non può essere vuoto");
+            request.getRequestDispatcher("register.jsp").forward(request, response);
+        }
     }
 }
 
