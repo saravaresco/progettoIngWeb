@@ -8,11 +8,14 @@ import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 @WebServlet("/register-visitor")
 public class RegisterVisitorController extends HttpServlet {
@@ -160,6 +163,96 @@ public class RegisterVisitorController extends HttpServlet {
             request.setAttribute("error", "Codice Fiscale non può essere vuoto");
             request.getRequestDispatcher("register.jsp").forward(request, response);
         }
+    }
+
+    public void retrieveTickets(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("username");
+        String password = (String) session.getAttribute("password");
+
+        if (username == null || password == null) {
+            // Se username o password non sono presenti nella sessione, gestire l'errore o il redirect necessario
+            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp"); // Esempio
+            dispatcher.forward(request, response);
+            return;
+        }
+
+        // Query per recuperare il codice fiscale dell'utente basato su username e password
+        String query = "SELECT CODICE_FISCALE FROM visitatore WHERE USERNAME = ? AND PASSWORD = ?";
+        String codiceFiscale = null;
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    codiceFiscale = rs.getString("CODICE_FISCALE");
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new ServletException("Errore durante il recupero del codice fiscale dell'utente", e);
+        }
+
+        // Se il codice fiscale è stato trovato, recuperare i biglietti associati a quel codice fiscale
+        if (codiceFiscale != null) {
+            List<biglietto> biglietti = retrieveTicketsByCodiceFiscale(codiceFiscale);
+
+            // Salvare i biglietti nella request per poterli visualizzare nella JSP
+            request.setAttribute("biglietti", biglietti);
+
+            // Reindirizzare alla pagina per visualizzare i biglietti (esempio)
+            RequestDispatcher dispatcher = request.getRequestDispatcher("visualizzaBiglietti.jsp");
+            dispatcher.forward(request, response);
+        } else {
+            // Gestione caso in cui l'utente non esista o ci siano problemi di autenticazione
+            RequestDispatcher dispatcher = request.getRequestDispatcher("error.jsp");
+            dispatcher.forward(request, response);
+        }
+    }
+
+    // Metodo per recuperare i biglietti associati a un dato codice fiscale
+    private List<biglietto> retrieveTicketsByCodiceFiscale(String codiceFiscale) throws ServletException {
+        List<biglietto> biglietti = new ArrayList<>();
+        String query = "SELECT * FROM biglietto WHERE CODICE_FISCALE_V = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, codiceFiscale);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    int id = rs.getInt("ID");
+                    String codiceFiscaleV = rs.getString("CODICE_FISCALE_V");
+                    double prezzo = rs.getDouble("PREZZO");
+                    String dataAcquisto = rs.getString("DATA_ACQUISTO");
+                    String tipologia1 = rs.getString("TIPOLOGIA1");
+                    String tipologia2 = rs.getString("TIPOLOGIA2");
+                    String mail = rs.getString("MAIL");
+
+                    biglietto biglietto = new biglietto();
+                    biglietto.setID((long) id);
+                    biglietto.setCodice_fiscale(codiceFiscaleV);
+                    biglietto.setPrezzo((long) prezzo);
+                    biglietto.setData_acquisto(dataAcquisto);
+                    biglietto.setTipologia1(tipologia1);
+                    biglietto.setTipologia2(tipologia2);
+                    biglietto.setMail(mail);
+
+                    biglietti.add(biglietto);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new ServletException("Errore durante il recupero dei biglietti dell'utente", e);
+        }
+
+        return biglietti;
     }
 }
 

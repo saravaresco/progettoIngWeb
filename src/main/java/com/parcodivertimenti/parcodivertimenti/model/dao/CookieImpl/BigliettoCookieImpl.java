@@ -26,7 +26,7 @@ public class BigliettoCookieImpl implements bigliettoDAO{
             Long ID,
             String codice_fiscale,
             Long prezzo,
-            Date data_acquisto,
+            String data_acquisto,
             String tipologia1,
             String tipologia2,
             String mail) {
@@ -83,7 +83,7 @@ public class BigliettoCookieImpl implements bigliettoDAO{
     }
 
     @Override
-    public biglietto findByData(Date data_acquisto) {
+    public biglietto findByData(String data_acquisto) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

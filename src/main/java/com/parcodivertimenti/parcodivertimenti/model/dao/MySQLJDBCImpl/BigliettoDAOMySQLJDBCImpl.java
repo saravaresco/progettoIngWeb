@@ -19,7 +19,7 @@ public class BigliettoDAOMySQLJDBCImpl implements bigliettoDAO {
     public BigliettoDAOMySQLJDBCImpl(Connection conn){this.conn = conn;}
 
     @Override
-    public biglietto create(Long ID, String codice_fiscale, Long prezzo, Date data_acquisto, String tipoligia1, String tipologia2, String mail){
+    public biglietto create(Long ID, String codice_fiscale, Long prezzo, String data_acquisto, String tipoligia1, String tipologia2, String mail){
         throw new UnsupportedOperationException("Not supported yet");
     }
 
@@ -75,7 +75,7 @@ public class BigliettoDAOMySQLJDBCImpl implements bigliettoDAO {
                 while (rs.next()) {
                     biglietto ticket = new biglietto();
                     ticket.setID(rs.getLong("id"));
-                    ticket.setData_acquisto(rs.getDate("data_acquisto"));
+                    ticket.setData_acquisto(rs.getString("data_acquisto"));
                     ticket.setTipologia1(rs.getString("tipologia1"));
                     ticket.setTipologia2(rs.getString("tipologia2"));
                     ticket.setPrezzo(rs.getLong("prezzo"));
@@ -90,7 +90,7 @@ public class BigliettoDAOMySQLJDBCImpl implements bigliettoDAO {
     }
 
     @Override
-    public biglietto findByData(Date data_acquisto){
+    public biglietto findByData(String data_acquisto){
         PreparedStatement ps;
         biglietto b = null;
 
@@ -102,7 +102,7 @@ public class BigliettoDAOMySQLJDBCImpl implements bigliettoDAO {
                     + "data_acquisto = ?";
 
             ps = conn.prepareStatement(sql);
-            ps.setDate(1, (java.sql.Date) data_acquisto);
+            ps.setString(1, data_acquisto);
 
             ResultSet resultSet = ps.executeQuery();
 
@@ -224,7 +224,7 @@ public class BigliettoDAOMySQLJDBCImpl implements bigliettoDAO {
         }catch (SQLException sqle){
         }
         try{
-            b.setData_acquisto(rs.getDate("data_acquisto"));
+            b.setData_acquisto(rs.getString("data_acquisto"));
         }catch (SQLException sqle){
         }
 

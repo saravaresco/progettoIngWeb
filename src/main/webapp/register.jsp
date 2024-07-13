@@ -57,22 +57,17 @@
 <body>
 <div class="container">
     <h1 class="text-center title">Area Personale Visitatore</h1>
-    <button class="btn btn-custom" id="showTickets">Biglietti Acquistati</button>
+    <form action="Dispatcher" method="get" id="retrieveTicketsForm">
+        <input type="hidden" name="controllerAction" value="RegisterVisitorController.retrieveTickets">
+        <button type="submit" class="btn btn-custom" id="showTickets">Biglietti Acquistati</button>
+    </form>
     <button class="btn btn-custom" id="showModifyTickets">Modifica Biglietti Acquistati</button>
     <button class="btn btn-custom" id="showPurchaseTicket">Acquista Nuovo Biglietto</button>
 
 
     <div id="ticketsSection" class="section">
         <h2>Biglietti Acquistati</h2>
-        <form action="Dispatcher" method="get">
-            <input type="hidden" name="controllerAction" value="RegisterVisitorController.getTicket">
-            <div class="form-group">
-                <label for="codiceFiscale">Inserisci il tuo codice fiscale:</label>
-                <input type="text" class="form-control" id="codiceFiscaleInput" name="codiceFiscale" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Visualizza Biglietti</button>
-        </form>
-        <div class="mt-4">
+        <div id="userTickets">
             <% List<biglietto> userTickets = (List<biglietto>) request.getAttribute("userTickets");
                 if (userTickets != null && !userTickets.isEmpty()) {
                     for (biglietto ticket : userTickets) { %>
@@ -83,7 +78,7 @@
                 <p><strong>Tipologia 2:</strong> <%= ticket.getTipologia2() %></p>
                 <p><strong>Prezzo:</strong> <%= ticket.getPrezzo() %></p>
             </div>
-            <%     }
+            <% }
             } else { %>
             <p>Nessun biglietto acquistato.</p>
             <% } %>
@@ -179,9 +174,7 @@
         }
     });
 
-    document.getElementById('showTickets').addEventListener('click', function () {
-        toggleSection('ticketsSection');
-    });
+
 
     document.getElementById('showModifyTickets').addEventListener('click', function () {
         toggleSection('modifyTicketsSection');
@@ -190,6 +183,7 @@
     document.getElementById('showPurchaseTicket').addEventListener('click', function () {
         toggleSection('purchaseTicketSection');
     });
+
 
     function toggleSection(sectionId) {
         var sections = document.querySelectorAll('.section');

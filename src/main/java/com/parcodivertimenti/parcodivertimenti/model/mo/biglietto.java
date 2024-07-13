@@ -7,7 +7,7 @@ public class biglietto {
     private Long ID;
     private String codice_fiscale;
     private Long prezzo;
-    private Date data_acquisto;
+    private String data_acquisto;
     private String tipologia1;
     private String tipologia2;
     private String mail;
@@ -24,8 +24,8 @@ public class biglietto {
     public Long getPrezzo(){return prezzo;}
     public void setPrezzo(Long prezzo){this.prezzo = prezzo;}
 
-    public Date getData_acquisto(){return data_acquisto;}
-    public void setData_acquisto(Date data_acquisto){this.data_acquisto = data_acquisto;}
+    public String getData_acquisto(){return data_acquisto;}
+    public void setData_acquisto(String data_acquisto){this.data_acquisto = data_acquisto;}
 
     public String getTipologia1(){return tipologia1;}
     public void setTipologia1(String tipologia){this.tipologia1 = tipologia;}

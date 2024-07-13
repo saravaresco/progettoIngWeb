@@ -21,6 +21,7 @@ import com.parcodivertimenti.parcodivertimenti.model.dao.visitatoreDAO;
 import com.parcodivertimenti.parcodivertimenti.model.mo.visitatore;
 import com.parcodivertimenti.parcodivertimenti.services.config.Configuration;
 import com.parcodivertimenti.parcodivertimenti.services.logservice.LogService;
+import jakarta.servlet.http.HttpSession;
 
 import javax.servlet.annotation.WebServlet;
 
@@ -97,6 +98,10 @@ public class LoginVisitatore {
             visitatore visitatore = visitatoreDAO.findLoggedUser(username, password);
 
             if (visitatore != null) {
+                // Credenziali corrette, salva username e password nella sessione
+                HttpSession session = request.getSession();
+                session.setAttribute("username", username);
+                session.setAttribute("password", password);
                 // Credenziali corrette, reindirizza alla pagina areaPersonale.jsp
                 RequestDispatcher dispatcher = request.getRequestDispatcher("register.jsp");
                 dispatcher.forward(request, response);
