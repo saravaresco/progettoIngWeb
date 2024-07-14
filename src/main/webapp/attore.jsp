@@ -108,10 +108,19 @@
             document.getElementById("searchButton").addEventListener("click", function() {
                 document.getElementById("searchSection").style.display = 'block';
                 document.getElementById("insertSection").style.display = 'none';
+                document.getElementById("modifySection").style.display = 'none';
             });
+
             document.getElementById("insertButton").addEventListener("click", function() {
                 document.getElementById("insertSection").style.display = 'block';
                 document.getElementById("searchSection").style.display = 'none';
+                document.getElementById("modifySection").style.display = 'none';
+            });
+
+            document.getElementById("modifyButton").addEventListener("click", function() {
+                document.getElementById("modifySection").style.display = 'block';
+                document.getElementById("searchSection").style.display = 'none';
+                document.getElementById("insertSection").style.display = 'none'; // Nascondi anche la sezione di inserimento nuovo spettacolo
             });
         });
     </script>
@@ -135,28 +144,19 @@
             </div>
             <button type="submit" class="btn btn-primary">Visualizza Dettagli</button>
         </form>
-        <%
-            spettacolo spettacolo = (spettacolo) request.getAttribute("spettacolo");
-            String error = (String) request.getAttribute("error");
+    </div>
 
-            if (spettacolo != null) {
-        %>
-        <div class="details">
-            <h2>Dettagli dello Spettacolo</h2>
-            <p><strong>Nome:</strong> <%=spettacolo.getNome() %></p>
-            <p><strong>Tipologia:</strong> <%= spettacolo.getTipologia() %></p>
-            <p><strong>Data:</strong> <%=spettacolo.getData() %></p>
-            <p><strong>Luogo:</strong> <%= spettacolo.getLuogo() %></p>
-            <p><strong>Orario inizio:</strong> <%= spettacolo.getOrario_inizio() %></p>
-            <p><strong>Durata:</strong> <%= spettacolo.getDurata() %></p>
-        </div>
-        <%
-        } else if (error != null) {
-        %>
-        <p style="color: red;"><%= error %></p>
-        <%
-            }
-        %>
+    <div id="modifySection" class="hidden-section mt-4">
+        <h2>Modifica spettacolo</h2>
+        <form action="Dispatcher" method="get">
+            <input type="hidden" name="controllerAction" value="AttoreController.modifySpettacolo">
+            <div class="form-group">
+                <label for="nomeSpettacolo">Inserisci il nome dello spettacolo da modificare:</label>
+                <input type="text" class="form-control" id="nomeSpettacolo" name="nomeSpettacolo" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Modifica Biglietto</button>
+        </form>
+
     </div>
 
     <div id="insertSection" class="hidden-section mt-4">
