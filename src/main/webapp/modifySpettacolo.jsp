@@ -48,11 +48,11 @@
     <input type="hidden" name="controllerAction" value="AttoreController.updateSpettacolo">
     <div class="form-group">
         <label>Nome:</label>
-        <input type="text" name="nome" value="<%= spett != null ? spett.getNome() : "" %>" required />
+        <input type="text" name="nome" value="<%= spett != null ? spett.getNome() : "" %>" readonly />
     </div>
     <div>
         <label>Tipologia:</label>
-        <input type="text" name="tipologia" value="<%= spett != null ? spett.getTipologia() : "" %>" required />
+        <input type="text" name="tipologia" value="<%= spett != null ? spett.getTipologia() : "" %>" readonly />
     </div>
     <div>
         <label>Data:</label>
