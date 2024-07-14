@@ -57,8 +57,8 @@
 <body>
 <div class="container">
     <h1>Inserisci il Nome del Ristorante</h1>
-    <form action="ristorante" method="post">
-        <input type="hidden" name="action" value="view">
+    <form action="Dispatcher" method="get">
+        <input type="hidden" name="controllerAction" value="RistoranteController.getRistorante">
         <label for="nomeRistorante">Nome Ristorante:</label>
         <input type="text" id="nomeRistorante" name="nomeRistorante" required>
         <button type="submit">Visualizza Dettagli</button>

@@ -18,22 +18,22 @@ import jakarta.servlet.RequestDispatcher;
 public class RistoranteController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    /*protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
 
         if ("view".equals(action)) {
             visualizzaRistorante(request, response);
         }
-    }
+    }*/
 
-    private void visualizzaRistorante(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void getRistorante(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String nomeRistorante = request.getParameter("nomeRistorante");
         puntoRistoro ristorante = null;
         String error = null;
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/tuoDatabase", "username", "password");
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/parco_web", "root", "sarA2002");
 
             String query = "SELECT * FROM punto_ristoro WHERE NOME = ?";
             PreparedStatement statement = connection.prepareStatement(query);
