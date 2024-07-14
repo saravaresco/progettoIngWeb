@@ -151,13 +151,15 @@
         <form action="Dispatcher" method="get">
             <input type="hidden" name="controllerAction" value="AttoreController.modifySpettacolo">
             <div class="form-group">
-                <label for="nomeSpettacolo">Inserisci il nome dello spettacolo da modificare:</label>
-                <input type="text" class="form-control" id="nomeSpettacolo" name="nomeSpettacolo" required>
+                <label for="spettacolo">Inserisci il nome dello spettacolo da modificare:</label>
+                <input type="text" class="form-control" id="spettacolo" name="spettacolo" required>
             </div>
             <button type="submit" class="btn btn-primary">Modifica Biglietto</button>
         </form>
 
     </div>
+
+
 
     <div id="insertSection" class="hidden-section mt-4">
         <h2>Inserisci un Nuovo Spettacolo</h2>

@@ -1,6 +1,5 @@
 package com.parcodivertimenti.parcodivertimenti.model.mo;
 
-import javax.xml.crypto.Data;
 import java.sql.Time;
 import java.util.Date;
 
