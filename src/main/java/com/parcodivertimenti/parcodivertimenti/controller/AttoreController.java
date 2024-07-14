@@ -18,22 +18,11 @@ import jakarta.servlet.RequestDispatcher;
 public class AttoreController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
-        String codiceSpettacolo = request.getParameter("codiceSpettacolo");
 
-        if ("view".equals(action)) {
-            visualizzaSpettacolo(request, response, codiceSpettacolo);
-        } else if ("update".equals(action)) {
-            modificaSpettacolo(request, response);
-        } else if ("insert".equals(action)) {
-            inserisciSpettacolo(request, response);
-        }
-    }
-
-    private void visualizzaSpettacolo(HttpServletRequest request, HttpServletResponse response, String codiceSpettacolo) throws ServletException, IOException {
+    public void getSpettacolo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         spettacolo spettacolo = null;
         String error = null;
+        String codiceSpettacolo = request.getParameter("codiceSpettacolo");
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -53,8 +42,17 @@ public class AttoreController extends HttpServlet {
                 spettacolo.setLuogo(resultSet.getString("LUOGO"));
                 spettacolo.setOrario_inizio(resultSet.getTime("ORARIO_INIZIO"));
                 spettacolo.setDurata(resultSet.getTime("DURATA"));
+
+                // Reindirizzamento a spettacoli2.jsp
+                request.setAttribute("spettacolo", spettacolo);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("spettacoli.jsp");
+                dispatcher.forward(request, response);
             } else {
+                // Nessuno spettacolo trovato, reindirizzamento a pagina di errore
                 error = "Spettacolo non trovato.";
+                request.setAttribute("error", error);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("error.jsp");
+                dispatcher.forward(request, response);
             }
 
             resultSet.close();
@@ -63,15 +61,16 @@ public class AttoreController extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
             error = "Errore nel recupero dei dettagli dello spettacolo.";
+            request.setAttribute("error", error);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("errore.jsp");
+            dispatcher.forward(request, response);
+
         }
 
-        request.setAttribute("spettacolo", spettacolo);
-        request.setAttribute("error", error);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("attore.jsp");
-        dispatcher.forward(request, response);
+
     }
 
-    private void modificaSpettacolo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    /*private void modificaSpettacolo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String nome = request.getParameter("nome");
         String tipologia = request.getParameter("tipologia");
         String data = request.getParameter("data");
@@ -108,7 +107,7 @@ public class AttoreController extends HttpServlet {
 
         request.setAttribute("error", error);
         visualizzaSpettacolo(request, response, nome);
-    }
+    }*/
 
     private void inserisciSpettacolo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String nome = request.getParameter("nome");

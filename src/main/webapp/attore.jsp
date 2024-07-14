@@ -1,71 +1,4 @@
-<%--<%@ page import="com.parcodivertimenti.parcodivertimenti.model.mo.spettacolo" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Gestione Spettacoli</title>
-</head>
-<body>
-<h1>Inserisci il Codice dello Spettacolo</h1>
-<form action="attore" method="post">
-    <input type="hidden" name="action" value="view">
-    <label for="codiceSpettacolo">Codice Spettacolo:</label>
-    <input type="text" id="codiceSpettacolo" name="codiceSpettacolo" required>
-    <button type="submit">Visualizza Dettagli</button>
-</form>
-
-<%
-    spettacolo spettacolo = (spettacolo) request.getAttribute("spettacolo");
-    String error = (String) request.getAttribute("error");
-
-    if (spettacolo != null) {
-%>
-<h2>Dettagli dello Spettacolo</h2>
-<form action="attore" method="post">
-    <label for="nomeUpdate">Nome:</label>
-    <input type="text" id="nomeUpdate" name="nome" value="<%= spettacolo.getNome() %>" required><br>
-    <label for="tipologiaUpdate">Tipologia:</label>
-    <input type="text" id="tipologiaUpdate" name="tipologia" value="<%= spettacolo.getTipologia() %>" required><br>
-    <label for="dataUpdate">Data:</label>
-    <input type="date" id="dataUpdate" name="data" value="<%= spettacolo.getData() %>" required><br>
-    <label for="luogoUpdate">Luogo:</label>
-    <input type="text" id="luogoUpdate" name="luogo" value="<%= spettacolo.getLuogo() %>" required><br>
-    <label for="orarioInizioUpdate">Orario Inizio:</label>
-    <input type="time" id="orarioInizioUpdate" name="orarioInizio" value="<%= spettacolo.getOrario_inizio() %>" required><br>
-    <label for="durataUpdate">Durata:</label>
-    <input type="time" id="durataUpdate" name="durata" value="<%= spettacolo.getDurata() %>" required><br>
-    <button type="submit">Modifica</button>
-</form>
-<%
-} else if (error != null) {
-%>
-<p style="color: red;"><%= error %></p>
-<%
-    }
-%>
-
-<h1>Inserisci un Nuovo Spettacolo</h1>
-<form action="attore" method="post">
-    <input type="hidden" name="action" value="insert">
-    <label for="nomeInsert">Nome:</label>
-    <input type="text" id="nomeInsert" name="nome" required><br>
-    <label for="tipologiaInsert">Tipologia:</label>
-    <input type="text" id="tipologiaInsert" name="tipologia" required><br>
-    <label for="dataInsert">Data:</label>
-    <input type="date" id="dataInsert" name="data" required><br>
-    <label for="luogoInsert">Luogo:</label>
-    <input type="text" id="luogoInsert" name="luogo" required><br>
-    <label for="orarioInizioInsert">Orario Inizio:</label>
-    <input type="time" id="orarioInizioInsert" name="orarioInizio" required><br>
-    <label for="durataInsert">Durata:</label>
-    <input type="time" id="durataInsert" name="durata" required><br>
-    <button type="submit">Inserisci</button>
-</form>
-</body>
-</html>
---%>
 <%@ page import="com.parcodivertimenti.parcodivertimenti.model.mo.spettacolo" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
@@ -188,15 +121,16 @@
     <h1 class="text-center">Gestione Spettacoli</h1>
     <div class="text-center">
         <button id="searchButton" class="btn btn-primary">Cerca Spettacolo</button>
+        <button id="modifyButton" class="btn btn-primary">Modifica Spettacolo</button>
         <button id="insertButton" class="btn btn-success">Inserisci Nuovo Spettacolo</button>
     </div>
 
     <div id="searchSection" class="hidden-section mt-4">
-        <h2>Inserisci il Codice dello Spettacolo</h2>
-        <form action="attore" method="post">
-            <input type="hidden" name="action" value="view">
+        <h2>Inserisci il Nome dello Spettacolo</h2>
+        <form action="Dispatcher" method="get">
+            <input type="hidden" name="controllerAction" value="AttoreController.getSpettacolo">
             <div class="form-group">
-                <label for="codiceSpettacolo">Codice Spettacolo:</label>
+                <label for="codiceSpettacolo">Nome Spettacolo:</label>
                 <input type="text" class="form-control" id="codiceSpettacolo" name="codiceSpettacolo" required>
             </div>
             <button type="submit" class="btn btn-primary">Visualizza Dettagli</button>
@@ -207,34 +141,15 @@
 
             if (spettacolo != null) {
         %>
-        <h2>Dettagli dello Spettacolo</h2>
-        <form action="attore" method="post">
-            <div class="form-group">
-                <label for="nomeUpdate">Nome:</label>
-                <input type="text" class="form-control" id="nomeUpdate" name="nome" value="<%= spettacolo.getNome() %>" required>
-            </div>
-            <div class="form-group">
-                <label for="tipologiaUpdate">Tipologia:</label>
-                <input type="text" class="form-control" id="tipologiaUpdate" name="tipologia" value="<%= spettacolo.getTipologia() %>" required>
-            </div>
-            <div class="form-group">
-                <label for="dataUpdate">Data:</label>
-                <input type="date" class="form-control" id="dataUpdate" name="data" value="<%= spettacolo.getData() %>" required>
-            </div>
-            <div class="form-group">
-                <label for="luogoUpdate">Luogo:</label>
-                <input type="text" class="form-control" id="luogoUpdate" name="luogo" value="<%= spettacolo.getLuogo() %>" required>
-            </div>
-            <div class="form-group">
-                <label for="orarioInizioUpdate">Orario Inizio:</label>
-                <input type="time" class="form-control" id="orarioInizioUpdate" name="orarioInizio" value="<%= spettacolo.getOrario_inizio() %>" required>
-            </div>
-            <div class="form-group">
-                <label for="durataUpdate">Durata:</label>
-                <input type="time" class="form-control" id="durataUpdate" name="durata" value="<%= spettacolo.getDurata() %>" required>
-            </div>
-            <button type="submit" class="btn btn-warning">Modifica</button>
-        </form>
+        <div class="details">
+            <h2>Dettagli dello Spettacolo</h2>
+            <p><strong>Nome:</strong> <%=spettacolo.getNome() %></p>
+            <p><strong>Tipologia:</strong> <%= spettacolo.getTipologia() %></p>
+            <p><strong>Data:</strong> <%=spettacolo.getData() %></p>
+            <p><strong>Luogo:</strong> <%= spettacolo.getLuogo() %></p>
+            <p><strong>Orario inizio:</strong> <%= spettacolo.getOrario_inizio() %></p>
+            <p><strong>Durata:</strong> <%= spettacolo.getDurata() %></p>
+        </div>
         <%
         } else if (error != null) {
         %>
