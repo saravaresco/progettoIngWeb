@@ -304,12 +304,37 @@
     <h1>Gestione Interventi Manutentore</h1>
 
     <div class="center-buttons">
-        <button type="button" onclick="showField('visualizzaInterventi')">Visualizza Interventi</button>
+        <form action="Dispatcher" method="get" id="retrieveInterventiForm">
+            <input type="hidden" name="controllerAction" value="ManutenzioneController.retrieveInterventi">
+            <button type="submit" onclick="showField('visualizzaInterventiM')">Visualizza Interventi del manutentore</button>
+        </form>
+
+        <button type="button" onclick="showField('visualizzaInterventi')">Visualizza Interventi per attrazione</button>
         <button type="button" onclick="showField('nuovoIntervento')">Inserisci Nuovo Intervento</button>
     </div>
 
+    <div id="visualizzaInterventiM" class="form-section">
+        <h2>Interventi del manutentore</h2>
+        <div id="interventiManutentore">
+            <% List<ripara> interventiManutentore = (List<ripara>) request.getAttribute("interventiManutentore");
+                if(interventiManutentore != null && !interventiManutentore.isEmpty()){
+                    for(ripara rip : interventiManutentore){%>
+            <div class="rip">
+                <p><strong>Codice fiscale:</strong> <%= rip.getCf_manutentore()%></p>
+                <p><strong>Codice attrazione:</strong> <%= rip.getCodice_attrazione()%></p>
+                <p><strong>Descrizione:</strong> <%= rip.getDescrizione()%></p>
+            </div>
+            <%}
+            } else { %>
+            <p>Nessun intervento effettuato</p>
+            <% } %>
+        </div>
+
+    </div>
+
     <div id="visualizzaInterventi" class="form-section">
-        <form action="ManutentoreController" method="get">
+        <form action="Dispatcher" method="get">
+            <input type="hidden" name="controllerAction" value="ManutenzioneController.retrieveInterventi">
             <h2>Visualizza Interventi</h2>
             <label for="codiceAttrazioneVisualizza">Codice Attrazione:</label>
             <input type="text" id="codiceAttrazioneVisualizza" name="codiceAttrazioneVisualizza">

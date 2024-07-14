@@ -5,6 +5,9 @@ public class ripara {
     private Long codice_attrazione;
     private String descrizione;
 
+    public ripara(){
+
+    }
     public String getCf_manutentore(){return cf_manutentore;}
     public void setCf_manutentore(String cf_manutentore){this.cf_manutentore = cf_manutentore;}
 

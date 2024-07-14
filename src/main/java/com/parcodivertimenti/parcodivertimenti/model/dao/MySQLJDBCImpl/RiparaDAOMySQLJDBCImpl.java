@@ -7,6 +7,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RiparaDAOMySQLJDBCImpl implements riparaDAO {
     private final String COUNTER_ID = "addettoGiostreId";
@@ -31,33 +33,25 @@ public class RiparaDAOMySQLJDBCImpl implements riparaDAO {
 
 
     @Override
-    public ripara findByCFManutentore(String cf_manutentore){
-        PreparedStatement ps;
-        ripara ag = null;
-
-        try{
-            String sql
-                    = "SELECT *"
-                    + "FROM ag"
-                    + "WHERE"
-                    + "cf_manutentore = ?";
-
-            ps = conn.prepareStatement(sql);
-            ps.setString(1,cf_manutentore); /* 1 è l'indice del punto di domanda*/
-
-            ResultSet resultSet = ps.executeQuery();
-
-            if(resultSet.next()){
-                ag = read(resultSet);
-            }
-            resultSet.close();
-            ps.close();
-        }
-        catch (SQLException e){
-            throw new RuntimeException(e);
+    public List<ripara> findByCFManutentore(String cf_manutentore){
+        List<ripara> ripara = new ArrayList<>();
+        String sql = "SELECT * FROM ripara WHERE CF_MANUTENTORE = ?";
+        try(PreparedStatement ps = conn.prepareStatement(sql)){
+             ps.setString(1, cf_manutentore);
+             try(ResultSet rs = ps.executeQuery()){
+                 while(rs.next()){
+                     ripara rip = new ripara();
+                     rip.setCodice_attrazione(rs.getLong("codice_attrazione"));
+                     rip.setDescrizione(rs.getString("descrizione"));
+                     ripara.add(rip);
+                 }
+             }
+        } catch (SQLException e){
+            throw new RuntimeException("Errore durante il recupero dei biglietti", e);
         }
 
-        return ag;
+        return ripara;
+
     }
 
     @Override

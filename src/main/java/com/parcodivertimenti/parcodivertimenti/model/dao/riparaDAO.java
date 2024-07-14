@@ -1,6 +1,8 @@
 package com.parcodivertimenti.parcodivertimenti.model.dao;
 import com.parcodivertimenti.parcodivertimenti.model.mo.ripara;
 
+import java.util.List;
+
 public interface riparaDAO {
     public ripara create(
             String cf_manutentore,
@@ -10,7 +12,7 @@ public interface riparaDAO {
     public void update(ripara Ripara);
 
     public void delete(ripara Ripara);
-    public ripara findByCFManutentore(String cf_manutentore);
+    public List<ripara> findByCFManutentore(String cf_manutentore);
     public ripara findByCodiceAttrazione(Long codice_attrazione);
 
 }

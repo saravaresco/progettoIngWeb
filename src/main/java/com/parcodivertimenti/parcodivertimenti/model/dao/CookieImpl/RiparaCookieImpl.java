@@ -5,6 +5,8 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.util.List;
+
 public class RiparaCookieImpl implements riparaDAO {
     HttpServletRequest request;
     HttpServletResponse response;
@@ -60,7 +62,7 @@ public class RiparaCookieImpl implements riparaDAO {
 
 
     @Override
-    public ripara findByCFManutentore(String cf_manutentore) {
+    public List<ripara> findByCFManutentore(String cf_manutentore) {
         throw new UnsupportedOperationException("Not supported yet.");
     } /* sollevo un'eccezione perchè non lo posso fare dai cookie*/
 
