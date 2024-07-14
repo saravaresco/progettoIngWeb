@@ -39,6 +39,11 @@
             background-color: #218838;
             border-color: #1e7e34;
         }
+        .readonly-field {
+            background-color: #f2f2f2;
+            padding: 10px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -48,27 +53,32 @@
     <input type="hidden" name="controllerAction" value="AttoreController.updateSpettacolo">
     <div class="form-group">
         <label>Nome:</label>
-        <input type="text" name="nome" value="<%= spett != null ? spett.getNome() : "" %>" readonly />
+        <input type="text" class="form-control" name="nome" value="<%= spett != null ? spett.getNome() : "" %>" readonly />
     </div>
-    <div>
+
+    <div class="form-group">
         <label>Tipologia:</label>
-        <input type="text" name="tipologia" value="<%= spett != null ? spett.getTipologia() : "" %>" readonly />
+        <input type="text" class="form-control"  name="tipologia" value="<%= spett != null ? spett.getTipologia() : "" %>" readonly />
     </div>
-    <div>
+
+    <div class="form-group" style="background-color: #f2f2f2; padding: 10px; border-radius: 5px;">
         <label>Data:</label>
-        <input type="date" name="data" value="<%= spett != null ? spett.getData() : "" %>" required />
+        <input type="date" class="form-control" name="data" value="<%= spett != null ? spett.getData() : "" %>" required />
     </div>
-    <div>
+
+    <div class="form-group" style="background-color: #f2f2f2; padding: 10px; border-radius: 5px;">
         <label>Luogo:</label>
-        <input type="text" name="luogo" value="<%= spett != null ? spett.getLuogo() : "" %>" required />
+        <input type="text" class="form-control" name="luogo" value="<%= spett != null ? spett.getLuogo() : "" %>" required />
     </div>
-    <div>
+
+    <div class="form-group" style="background-color: #f2f2f2; padding: 10px; border-radius: 5px;">
         <label>Orario Inizio:</label>
-        <input type="time" name="orario_inizio" value="<%= spett != null ? spett.getOrario_inizio() : "" %>" required />
+        <input type="time" class="form-control" name="orario_inizio" value="<%= spett != null ? spett.getOrario_inizio() : "" %>" required />
     </div>
-    <div>
+
+    <div class="form-group" style="background-color: #f2f2f2; padding: 10px; border-radius: 5px;">
         <label>Durata:</label>
-        <input type="time" name="durata" value="<%= spett != null ? spett.getDurata() : "" %>" required />
+        <input type="time" class="form-control" name="durata" value="<%= spett != null ? spett.getDurata() : "" %>" required />
     </div>
     <div>
         <button type="submit" class="btn btn-custom">Salva Modifiche</button>
