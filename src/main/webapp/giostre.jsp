@@ -65,7 +65,8 @@
 <body>
 <div class="container">
     <h1>Inserisci il Codice dell'Attrazione</h1>
-    <form action="giostre" method="post">
+    <form action="Dispatcher" method="get">
+        <input type="hidden" name="controllerAction" value="GiostreController.getAttrazione">
         <label for="codiceAttrazione">Codice Attrazione:</label>
         <input type="text" id="codiceAttrazione" name="codiceAttrazione" required>
         <button type="submit">Visualizza Dettagli</button>

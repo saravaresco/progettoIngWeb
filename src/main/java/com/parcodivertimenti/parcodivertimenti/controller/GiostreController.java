@@ -18,7 +18,7 @@ import jakarta.servlet.RequestDispatcher;
 public class GiostreController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void getAttrazione(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String codiceAttrazione = request.getParameter("codiceAttrazione");
 
         attrazione attrazione = null;
@@ -29,7 +29,7 @@ public class GiostreController extends HttpServlet {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/parco_web", "root", "sarA2002");
 
-            String query = "SELECT * FROM attrazione WHERE CODICE_ATTRAZIONE = ?";
+            String query = "SELECT * FROM attrazione WHERE CODICE = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setString(1, codiceAttrazione);
 
