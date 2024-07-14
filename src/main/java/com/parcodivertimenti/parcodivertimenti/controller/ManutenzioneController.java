@@ -1,5 +1,6 @@
 package com.parcodivertimenti.parcodivertimenti.controller;
 
+import com.parcodivertimenti.parcodivertimenti.model.mo.biglietto;
 import com.parcodivertimenti.parcodivertimenti.model.mo.ripara;
 import com.parcodivertimenti.parcodivertimenti.model.dao.riparaDAO;
 
@@ -131,5 +132,74 @@ public class ManutenzioneController extends HttpServlet {
         }
 
         return ripara;
+    }
+
+    public void recuperaInterventi(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Recupera il codice dell'attrazione dai parametri della richiesta
+        String codiceAttrazioneStr = request.getParameter("codiceAttrazioneVisualizza");
+
+        if (codiceAttrazioneStr != null && !codiceAttrazioneStr.isEmpty()) {
+            try {
+                Long codiceAttrazione = Long.valueOf(codiceAttrazioneStr);
+
+                // Eseguire il recupero dei dati del biglietto dal database
+                List <ripara> riparazione = retrieveAttrazioneByCodice(codiceAttrazione);
+
+                // Verificare se l'attrazione è stata trovata
+                if (riparazione != null & !riparazione.isEmpty()) {
+                    // Inserire il biglietto come attributo nella richiesta per essere utilizzato nel JSP
+                    request.setAttribute("riparazione", riparazione);
+
+                    // Inviare il controllo alla pagina di visualizzazione degli interventi per l'attrazione
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("interventiAttrazione.jsp");
+                    dispatcher.forward(request, response);
+                } else {
+                    // Se le riparazioni non sono state trovate, gestire l'errore o redirigere a una pagina di errore
+                    request.setAttribute("error", "Nessuna riparazione trovata per l'attrazione specificata");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("error.jsp");
+                    dispatcher.forward(request, response);
+                }
+            } catch (NumberFormatException e) {
+                // Gestire l'errore nel caso in cui il codice attrazione non possa essere convertito in Long
+                request.setAttribute("error", "Codice attrazione non valido");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("error.jsp");
+                dispatcher.forward(request, response);
+            }
+        } else {
+            // Gestire il caso in cui il codice attrazione non è presente nei parametri della richiesta
+            request.setAttribute("error", "Codice attrazione non fornito");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("error.jsp");
+            dispatcher.forward(request, response);
+        }
+    }
+
+    // Metodo per simulare il recupero dell'attrazione dal database
+    public List<ripara> retrieveAttrazioneByCodice(Long id) throws ServletException {
+        List<ripara> riparazioni = new ArrayList<>();
+        String query = "SELECT * FROM ripara WHERE CODICE_ATTRAZIONE = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setLong(1, id);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    ripara rip = new ripara();
+
+                    rip.setCf_manutentore(rs.getString("CF_MANUTENTORE"));
+                    rip.setCodice_attrazione(rs.getLong("CODICE_ATTRAZIONE"));
+                    rip.setDescrizione(rs.getString("DESCRIZIONE"));
+
+                    riparazioni.add(rip);
+
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new ServletException("Errore durante il recupero dei biglietti dell'utente", e);
+        }
+
+        return riparazioni;
     }
 }
