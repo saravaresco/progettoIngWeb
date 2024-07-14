@@ -202,4 +202,81 @@ public class ManutenzioneController extends HttpServlet {
 
         return riparazioni;
     }
+
+    //Metodo per inserire un nuovo intervento
+    public void newIntervento(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("username");
+        String password = (String) session.getAttribute("password");
+
+        if (username == null || password == null) {
+            // Se username o password non sono presenti nella sessione, gestire l'errore o il redirect necessario
+            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp"); // Esempio
+            dispatcher.forward(request, response);
+            return;
+        }
+
+        // Query per recuperare il codice fiscale del manutentore basato su username e password
+        String codiceFiscale = null;
+        String queryCF = "SELECT CODICE_FISCALE FROM manutentore WHERE USERNAME = ? AND PASSWORD = ?";
+
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+             PreparedStatement stmtCF = conn.prepareStatement(queryCF)) {
+
+            stmtCF.setString(1, username);
+            stmtCF.setString(2, password);
+
+            try (ResultSet rs = stmtCF.executeQuery()) {
+                if (rs.next()) {
+                    codiceFiscale = rs.getString("CODICE_FISCALE");
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new ServletException("Errore durante il recupero del codice fiscale dell'utente", e);
+        }
+
+        if (codiceFiscale != null) {
+            // Recupera i dati dal form
+            String codiceAttrazioneStr = request.getParameter("codiceAttrazioneInserisci");
+            String descrizione = request.getParameter("descrizione");
+
+            try {
+                Long codiceAttrazione = Long.valueOf(codiceAttrazioneStr);
+
+                // Query per inserire il nuovo intervento
+                String queryInsert = "INSERT INTO ripara (CF_MANUTENTORE, CODICE_ATTRAZIONE, DESCRIZIONE) VALUES (?, ?, ?)";
+
+                try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+                     PreparedStatement stmtInsert = conn.prepareStatement(queryInsert)) {
+
+                    stmtInsert.setString(1, codiceFiscale);
+                    stmtInsert.setLong(2, codiceAttrazione);
+                    stmtInsert.setString(3, descrizione);
+
+                    int rowsInserted = stmtInsert.executeUpdate();
+                    if (rowsInserted > 0) {
+                        request.setAttribute("success", "Intervento inserito con successo!");
+                    } else {
+                        request.setAttribute("error", "Errore durante l'inserimento dell'intervento.");
+                    }
+
+                } catch (SQLException e) {
+                    throw new ServletException("Errore durante l'inserimento dell'intervento nel database", e);
+                }
+
+            } catch (NumberFormatException e) {
+                request.setAttribute("error", "Codice attrazione non valido");
+            }
+
+        } else {
+            request.setAttribute("error", "Errore durante il recupero del codice fiscale dell'utente");
+        }
+
+        // Inviare il controllo alla pagina di conferma o errore
+        RequestDispatcher dispatcher = request.getRequestDispatcher("confermaAzione.jsp");
+        dispatcher.forward(request, response);
+    }
+
 }

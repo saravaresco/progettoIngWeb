@@ -128,7 +128,8 @@
 
 
     <div id="nuovoIntervento" class="form-section">
-        <form action="ManutentoreController" method="post">
+        <form action="Dispatcher" method="get">
+            <input type="hidden" name="controllerAction" value="ManutenzioneController.newIntervento">
             <h2>Inserisci Nuovo Intervento</h2>
             <label for="codiceAttrazioneInserisci">Codice Attrazione:</label>
             <input type="text" id="codiceAttrazioneInserisci" name="codiceAttrazioneInserisci">
