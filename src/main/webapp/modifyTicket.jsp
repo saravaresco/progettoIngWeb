@@ -50,6 +50,31 @@
 
 
         <div class="form-group">
+            <label for="codiceFiscale">Codice Fiscale:</label>
+            <input type="text" class="form-control" id="codiceFiscale" name="codiceFiscale" value="<%= ticket.getCodice_fiscale() %>" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="prezzo">Prezzo:</label>
+            <input type="text" class="form-control" id="prezzo" name="prezzo" value="<%= ticket.getPrezzo() %>" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="dataAcquisto">Data Acquisto:</label>
+            <input type="text" class="form-control" id="dataAcquisto" name="dataAcquisto" value="<%= ticket.getData_acquisto() %>" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="tipologia1">Tipologia 1:</label>
+            <input type="text" class="form-control" id="tipologia1" name="tipologia1" value="<%= ticket.getTipologia1() %>" readonly>
+        </div>
+
+        <div class="form-group">
+            <label for="tipologia2">Tipologia 2:</label>
+            <input type="text" class="form-control" id="tipologia2" name="tipologia2" value="<%= ticket.getTipologia2() %>" readonly>
+        </div>
+
+        <div class="form-group">
             <label for="mail">Mail:</label>
             <input type="email" class="form-control" id="mail" name="mail" value="<%= ticket.getMail() %>" required>
         </div>
