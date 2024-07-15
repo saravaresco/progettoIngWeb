@@ -251,10 +251,16 @@ public class ManutenzioneController extends HttpServlet {
                 String queryInsert = "INSERT INTO ripara (CF_MANUTENTORE, CODICE_ATTRAZIONE, DESCRIZIONE) VALUES (?, ?, ?)";
                 // Query per aggiornare il numero di interventi
                 String queryUpdateInterventi = "UPDATE manutentore SET NUMERO_INTERVENTI_ESEGUITI = ? WHERE CODICE_FISCALE = ?";
+                //Query per aggiornare data ultima manutenzione
+                String queryUpdateDataManutenzione = "UPDATE attrazione SET DATA_ULTIMA_MANUTENZIONE = ? WHERE CODICE = ?";
+
+                // Ottieni la data e ora corrente da Java
+                Timestamp currentTimeStamp = new Timestamp(System.currentTimeMillis());
 
                 try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
                      PreparedStatement stmtInsert = conn.prepareStatement(queryInsert);
-                     PreparedStatement stmtUpdateInterventi = conn.prepareStatement(queryUpdateInterventi)) {
+                     PreparedStatement stmtUpdateInterventi = conn.prepareStatement(queryUpdateInterventi);
+                     PreparedStatement stmtUpdateDataManutenzione = conn.prepareStatement(queryUpdateDataManutenzione)) {
 
                     conn.setAutoCommit(false); // Inizia una transazione
 
@@ -269,11 +275,22 @@ public class ManutenzioneController extends HttpServlet {
                         numeroInterventi++;
                         stmtUpdateInterventi.setInt(1, numeroInterventi);
                         stmtUpdateInterventi.setString(2, codiceFiscale);
-                        int rowsUpdated = stmtUpdateInterventi.executeUpdate();
+                        int rowsUpdatedInterventi = stmtUpdateInterventi.executeUpdate();
 
-                        if (rowsUpdated > 0) {
-                            conn.commit(); // Conferma la transazione
-                            request.setAttribute("success", "Intervento inserito con successo!");
+                        if (rowsUpdatedInterventi > 0) {
+                            //conn.commit(); // Conferma la transazione
+                            //request.setAttribute("success", "Intervento inserito con successo!");
+                            stmtUpdateDataManutenzione.setTimestamp(1, currentTimeStamp);
+                            stmtUpdateDataManutenzione.setLong(2, codiceAttrazione);
+                            int rowsUpdatedDataManutenzione = stmtUpdateDataManutenzione.executeUpdate();
+
+                            if (rowsUpdatedDataManutenzione > 0) {
+                                conn.commit();
+                                request.setAttribute("success", "Intervento inserito con successo!");
+                            } else {
+                                conn.rollback();
+                                request.setAttribute("error", "Errore durante l'aggiornamento della data ultima manutenzione.");
+                            }
                         } else {
                             conn.rollback(); // Annulla la transazione
                             request.setAttribute("error", "Errore durante l'aggiornamento del numero di interventi.");
