@@ -123,9 +123,9 @@
             <div class="form-group">
                 <label for="tipologia1">Tipologia di biglietto:</label>
                 <select class="form-control" id="tipologia1" name="tipologia1" required>
-                    <option value="serale">Serale</option>
-                    <option value="giornaliero">Giornaliero</option>
-                    <option value="abbonamento">Abbonamento</option>
+                    <option value="Serale">Serale</option>
+                    <option value="Giornaliero">Giornaliero</option>
+                    <option value="Abbonamento">Abbonamento</option>
                 </select>
             </div>
             <div class="form-group">

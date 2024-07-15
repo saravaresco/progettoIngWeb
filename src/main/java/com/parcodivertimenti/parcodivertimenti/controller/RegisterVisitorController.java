@@ -17,6 +17,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import java.util.Random;
+
 @WebServlet("/register-visitor")
 public class RegisterVisitorController extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -240,6 +242,74 @@ public class RegisterVisitorController extends HttpServlet {
             response.sendRedirect("error.jsp");
         }
 
+    }
+
+
+    public void newTicket(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String nome = request.getParameter("nome");
+        String cognome = request.getParameter("cognome");
+        String codiceFiscale = request.getParameter("codiceFiscale");
+        String mail = request.getParameter("mail");
+        String tipologia1 = request.getParameter("tipologia1");
+        String tipologia2 = request.getParameter("tipologia2");
+        String metodoPagamento = request.getParameter("metodoPagamento");
+
+        int randomId = generateRandomId();
+
+        // Calcolo del prezzo basato sulla tipologia del biglietto
+        double prezzo = calculatePrezzo(tipologia1, tipologia2);
+
+        // Data di acquisto corrente
+        String dataAcquisto = new java.text.SimpleDateFormat("yyyy-MM-dd").format(new java.util.Date());
+
+        // Inserimento del biglietto nel database
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS)) {
+            String query = "INSERT INTO biglietto (ID, CODICE_FISCALE_V, PREZZO, DATA_ACQUISTO, TIPOLOGIA1, TIPOLOGIA2, MAIL) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+            try (PreparedStatement stmt = conn.prepareStatement(query)) {
+                stmt.setInt(1, randomId);
+                stmt.setString(2, codiceFiscale);
+                stmt.setDouble(3, prezzo);
+                stmt.setString(4, dataAcquisto);
+                stmt.setString(5, tipologia1);
+                stmt.setString(6, tipologia2);
+                stmt.setString(7, mail);
+
+                int rowsInserted = stmt.executeUpdate();
+                if (rowsInserted > 0) {
+                    request.setAttribute("successMessage", "Biglietto acquistato con successo!");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("ticketConfirmation.jsp");
+                    dispatcher.forward(request, response);
+                } else {
+                    request.setAttribute("errorMessage", "Errore durante l'acquisto del biglietto.");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("register.jsp");
+                    dispatcher.forward(request, response);
+                }
+            }
+        } catch (SQLException e) {
+            throw new ServletException("Errore durante l'inserimento del biglietto nel database", e);
+        }
+    }
+
+    private double calculatePrezzo(String tipologia1, String tipologia2) {
+        double prezzo = 0.0;
+
+        if ("Serale".equalsIgnoreCase(tipologia1)) {
+            prezzo = "intero".equalsIgnoreCase(tipologia2) ? 22.0 : 12.0;
+        } else if ("Giornaliero".equalsIgnoreCase(tipologia1)) {
+            prezzo = "intero".equalsIgnoreCase(tipologia2) ? 35.0 : 25.0;
+        } else if ("Abbonamento".equalsIgnoreCase(tipologia1)) {
+            prezzo = "intero".equalsIgnoreCase(tipologia2) ? 60.0 : 45.0;
+        }
+
+        return prezzo;
+    }
+
+
+    // Metodo per generare un ID casuale di 9 cifre
+    private int generateRandomId() {
+        Random random = new Random();
+        return 100000000 + random.nextInt(900000000);
     }
 }
 
