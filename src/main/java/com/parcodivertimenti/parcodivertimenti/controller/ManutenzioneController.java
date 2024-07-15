@@ -218,7 +218,8 @@ public class ManutenzioneController extends HttpServlet {
 
         // Query per recuperare il codice fiscale del manutentore basato su username e password
         String codiceFiscale = null;
-        String queryCF = "SELECT CODICE_FISCALE FROM manutentore WHERE USERNAME = ? AND PASSWORD = ?";
+        int numeroInterventi = 0;
+        String queryCF = "SELECT CODICE_FISCALE, NUMERO_INTERVENTI_ESEGUITI FROM manutentore WHERE USERNAME = ? AND PASSWORD = ?";
 
 
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
@@ -230,6 +231,7 @@ public class ManutenzioneController extends HttpServlet {
             try (ResultSet rs = stmtCF.executeQuery()) {
                 if (rs.next()) {
                     codiceFiscale = rs.getString("CODICE_FISCALE");
+                    numeroInterventi = rs.getInt("NUMERO_INTERVENTI_ESEGUITI");
                 }
             }
 
@@ -247,18 +249,37 @@ public class ManutenzioneController extends HttpServlet {
 
                 // Query per inserire il nuovo intervento
                 String queryInsert = "INSERT INTO ripara (CF_MANUTENTORE, CODICE_ATTRAZIONE, DESCRIZIONE) VALUES (?, ?, ?)";
+                // Query per aggiornare il numero di interventi
+                String queryUpdateInterventi = "UPDATE manutentore SET NUMERO_INTERVENTI_ESEGUITI = ? WHERE CODICE_FISCALE = ?";
 
                 try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
-                     PreparedStatement stmtInsert = conn.prepareStatement(queryInsert)) {
+                     PreparedStatement stmtInsert = conn.prepareStatement(queryInsert);
+                     PreparedStatement stmtUpdateInterventi = conn.prepareStatement(queryUpdateInterventi)) {
 
+                    conn.setAutoCommit(false); // Inizia una transazione
+
+                    // Inserisce il nuovo intervento
                     stmtInsert.setString(1, codiceFiscale);
                     stmtInsert.setLong(2, codiceAttrazione);
                     stmtInsert.setString(3, descrizione);
-
                     int rowsInserted = stmtInsert.executeUpdate();
+
                     if (rowsInserted > 0) {
-                        request.setAttribute("success", "Intervento inserito con successo!");
+                        // Incrementa il numero di interventi
+                        numeroInterventi++;
+                        stmtUpdateInterventi.setInt(1, numeroInterventi);
+                        stmtUpdateInterventi.setString(2, codiceFiscale);
+                        int rowsUpdated = stmtUpdateInterventi.executeUpdate();
+
+                        if (rowsUpdated > 0) {
+                            conn.commit(); // Conferma la transazione
+                            request.setAttribute("success", "Intervento inserito con successo!");
+                        } else {
+                            conn.rollback(); // Annulla la transazione
+                            request.setAttribute("error", "Errore durante l'aggiornamento del numero di interventi.");
+                        }
                     } else {
+                        conn.rollback(); // Annulla la transazione
                         request.setAttribute("error", "Errore durante l'inserimento dell'intervento.");
                     }
 
@@ -278,5 +299,4 @@ public class ManutenzioneController extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("confermaAzione.jsp");
         dispatcher.forward(request, response);
     }
-
 }
