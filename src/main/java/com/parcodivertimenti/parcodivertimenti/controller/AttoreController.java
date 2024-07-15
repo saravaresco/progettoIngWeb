@@ -211,40 +211,96 @@ public class AttoreController extends HttpServlet {
         String orarioInizio = request.getParameter("orarioInizio") + ":00";
         String durata = request.getParameter("durata") + ":00";
 
+        // Recupera il codice fiscale dell'attore loggato dalla sessione
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("username");
+        String password = (String) session.getAttribute("password");
+
+        String codiceFiscaleAttore = null;
         String error = null;
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/parco_web", "root", "sarA2002");
 
-            String query = "INSERT INTO spettacolo (NOME, TIPOLOGIA, DATA, LUOGO, ORARIO_INIZIO, DURATA) VALUES (?, ?, ?, ?, ?, ?)";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, nome);
-            statement.setString(2, tipologia);
-            statement.setDate(3, java.sql.Date.valueOf(data));
-            statement.setString(4, luogo);
-            statement.setTime(5, java.sql.Time.valueOf(orarioInizio));
-            statement.setTime(6, java.sql.Time.valueOf(durata));
+            // Recupera il codice fiscale dell'attore loggato
+            String queryAttore = "SELECT CODICE_FISCALE FROM attore WHERE USERNAME = ? AND PASSWORD = ?";
+            PreparedStatement statementAttore = connection.prepareStatement(queryAttore);
+            statementAttore.setString(1, username);
+            statementAttore.setString(2, password);
 
-            int rowsInserted = statement.executeUpdate();
-            if(rowsInserted > 0){
-                request.setAttribute("success", "Spettacolo inserito con successo!");
-            }else{
-                request.setAttribute("error", "Errore durente l'inserimento dello spettacolo");
+            ResultSet resultSet = statementAttore.executeQuery();
+            if (resultSet.next()) {
+                codiceFiscaleAttore = resultSet.getString("CODICE_FISCALE");
+            } else {
+                error = "Attore non trovato o credenziali errate.";
+            }
+            resultSet.close();
+            statementAttore.close();
+
+            if (codiceFiscaleAttore != null) {
+                // Avvia una transazione
+                connection.setAutoCommit(false);
+
+                // Inserisci il nuovo spettacolo nella tabella 'spettacolo'
+                String querySpettacolo = "INSERT INTO spettacolo (NOME, TIPOLOGIA, DATA, LUOGO, ORARIO_INIZIO, DURATA) VALUES (?, ?, ?, ?, ?, ?)";
+                PreparedStatement statementSpettacolo = connection.prepareStatement(querySpettacolo);
+                statementSpettacolo.setString(1, nome);
+                statementSpettacolo.setString(2, tipologia);
+                statementSpettacolo.setDate(3, java.sql.Date.valueOf(data));
+                statementSpettacolo.setString(4, luogo);
+                statementSpettacolo.setTime(5, java.sql.Time.valueOf(orarioInizio));
+                statementSpettacolo.setTime(6, java.sql.Time.valueOf(durata));
+
+                int rowsInsertedSpettacolo = statementSpettacolo.executeUpdate();
+
+                if (rowsInsertedSpettacolo > 0) {
+                    // Inserisci i dati nella tabella 'realizza'
+                    String queryRealizza = "INSERT INTO realizza (CF_ATTORE, NOME_SPETTACOLO) VALUES (?, ?)";
+                    PreparedStatement statementRealizza = connection.prepareStatement(queryRealizza);
+                    statementRealizza.setString(1, codiceFiscaleAttore);
+                    statementRealizza.setString(2, nome);
+
+                    int rowsInsertedRealizza = statementRealizza.executeUpdate();
+
+                    if (rowsInsertedRealizza > 0) {
+                        // Conferma la transazione
+                        connection.commit();
+                        request.setAttribute("success", "Spettacolo inserito con successo e associazione con attore registrata!");
+                        RequestDispatcher dispatcher = request.getRequestDispatcher("confermaAzione.jsp");
+                        dispatcher.forward(request, response);
+                    } else {
+                        // Rollback della transazione in caso di errore
+                        connection.rollback();
+                        request.setAttribute("error", "Errore durante l'associazione dello spettacolo con l'attore.");
+                        RequestDispatcher dispatcher = request.getRequestDispatcher("error.jsp");
+                        dispatcher.forward(request, response);
+                    }
+
+                    statementRealizza.close();
+                } else {
+                    // Rollback della transazione in caso di errore
+                    connection.rollback();
+                    request.setAttribute("error", "Errore durante l'inserimento dello spettacolo.");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("error.jsp");
+                    dispatcher.forward(request, response);
+                }
+
+                statementSpettacolo.close();
             }
 
-            statement.close();
             connection.close();
         } catch (Exception e) {
             e.printStackTrace();
-            error = "Errore nell'inserimento dello spettacolo.";
+            error = "Errore nell'inserimento dello spettacolo e nell'associazione con l'attore.";
+            RequestDispatcher dispatcher = request.getRequestDispatcher("error.jsp");
+            dispatcher.forward(request, response);
         }
 
         request.setAttribute("error", error);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("confermaAzione.jsp");
-        dispatcher.forward(request, response);
+        //RequestDispatcher dispatcher = request.getRequestDispatcher("confermaAzione.jsp");
+        //dispatcher.forward(request, response);
     }
-
 
 }
 
