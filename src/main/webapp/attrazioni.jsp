@@ -142,7 +142,7 @@
         <p>Sei pronto a scovare il tesoro dei pirati? All'arrembaggio!</p>
     </div>
     <div class="attraction">
-        <img src="jsp/homeManagement/images/casaOrrori.jpg" alt="Casa deglo Orrori">
+        <img src="jsp/homeManagement/images/casaOrrori.jpg" alt="Casa degli Orrori">
         <h3>Casa degli orrori</h3>
         <p>Preparati a tremare nella nostra spaventosa casa stregata. Sei abbastanza coraggioso?</p>
     </div>

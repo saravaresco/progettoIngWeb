@@ -12,6 +12,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Parco Divertimenti</title>
+    <script src="https://cdn.botpress.cloud/webchat/v1/inject.js"></script>
+    <script src="https://mediafiles.botpress.cloud/5acbf056-ee9a-4749-a2a0-2b5799f60794/webchat/config.js" defer></script>
     <style>
         body {
             font-family: Arial, sans-serif;
