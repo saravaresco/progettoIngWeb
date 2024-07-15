@@ -123,6 +123,8 @@
                 document.getElementById("insertSection").style.display = 'none'; // Nascondi anche la sezione di inserimento nuovo spettacolo
             });
         });
+
+
     </script>
 </head>
 <body>
@@ -163,8 +165,8 @@
 
     <div id="insertSection" class="hidden-section mt-4">
         <h2>Inserisci un Nuovo Spettacolo</h2>
-        <form action="attore" method="post">
-            <input type="hidden" name="action" value="insert">
+        <form action="Dispatcher" method="get">
+            <input type="hidden" name="controllerAction" value="AttoreController.insert">
             <div class="form-group">
                 <label for="nomeInsert">Nome:</label>
                 <input type="text" class="form-control" id="nomeInsert" name="nome" required>
@@ -183,16 +185,19 @@
             </div>
             <div class="form-group">
                 <label for="orarioInizioInsert">Orario Inizio:</label>
-                <input type="time" class="form-control" id="orarioInizioInsert" name="orarioInizio" required>
+                <input type="time" class="form-control" id="orarioInizioInsert" name="orarioInizio" step="1" required>
             </div>
             <div class="form-group">
                 <label for="durataInsert">Durata:</label>
-                <input type="time" class="form-control" id="durataInsert" name="durata" required>
+                <input type="time" class="form-control" id="durataInsert" name="durata" step="1" required>
             </div>
             <button type="submit" class="btn btn-success">Inserisci</button>
         </form>
     </div>
+
+
 </div>
+
 </body>
 </html>
 

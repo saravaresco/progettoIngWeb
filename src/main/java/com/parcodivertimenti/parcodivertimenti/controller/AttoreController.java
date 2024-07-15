@@ -202,68 +202,14 @@ public class AttoreController extends HttpServlet {
 
 
 
-    /*public void updateSpettacolo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        String spettacolo  = (String) session.getAttribute("spettacolo");
-
-        // Verifica che idBiglietto non sia null
-        if (spettacolo == null) {
-            // Gestire il caso in cui nomeSpettacolo non sia presente nella sessione
-            response.sendRedirect("error.jsp");
-            return;
-        }
-
-        try {
-            // Ottenere i parametri modificati dal form
-            Date data = Date.valueOf(request.getParameter("data"));
-            String luogo = request.getParameter("luogo");
-            Time orarioInizio = Time.valueOf(request.getParameter("orarioInizio"));
-            Time durata = Time.valueOf(request.getParameter("durata"));
-
-            // Query per aggiornare i dati del biglietto nel database
-            String query = "UPDATE spettacolo SET DATA = ?, LUOGO = ?, ORARIO_INIZIO = ?, DURATA = ? WHERE NOME = ?";
-
-            try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
-                 PreparedStatement stmt = conn.prepareStatement(query)) {
-
-                stmt.setDate(1, data);
-                stmt.setString(2, luogo);
-                stmt.setTime(3, orarioInizio);
-                stmt.setTime(4, durata);
-                stmt.setString(5, spettacolo);
-
-
-                // Eseguire l'aggiornamento
-                int rowsUpdated = stmt.executeUpdate();
-
-                if (rowsUpdated > 0) {
-
-
-                    // Redirect alla pagina di successo o messaggio di conferma
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("confermaAzione.jsp");
-                    dispatcher.forward(request, response);
-                } else {
-                    // Gestire il caso in cui il biglietto non sia stato trovato o non aggiornato
-                    response.sendRedirect("error.jsp");
-                }
-
-            } catch (SQLException e) {
-                throw new ServletException("Errore durante l'aggiornamento del biglietto", e);
-            }
-        }catch (NumberFormatException e) {
-            // Gestire il caso in cui idBiglietto non sia un numero valido
-            response.sendRedirect("error.jsp");
-        }
-
-    }
-
-    private void inserisciSpettacolo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void insert(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        //recupera i dati dal form
         String nome = request.getParameter("nome");
         String tipologia = request.getParameter("tipologia");
         String data = request.getParameter("data");
         String luogo = request.getParameter("luogo");
-        String orarioInizio = request.getParameter("orarioInizio");
-        String durata = request.getParameter("durata");
+        String orarioInizio = request.getParameter("orarioInizio") + ":00";
+        String durata = request.getParameter("durata") + ":00";
 
         String error = null;
 
@@ -280,7 +226,12 @@ public class AttoreController extends HttpServlet {
             statement.setTime(5, java.sql.Time.valueOf(orarioInizio));
             statement.setTime(6, java.sql.Time.valueOf(durata));
 
-            statement.executeUpdate();
+            int rowsInserted = statement.executeUpdate();
+            if(rowsInserted > 0){
+                request.setAttribute("success", "Spettacolo inserito con successo!");
+            }else{
+                request.setAttribute("error", "Errore durente l'inserimento dello spettacolo");
+            }
 
             statement.close();
             connection.close();
@@ -290,9 +241,9 @@ public class AttoreController extends HttpServlet {
         }
 
         request.setAttribute("error", error);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("attore.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("confermaAzione.jsp");
         dispatcher.forward(request, response);
-    }*/
+    }
 
 
 }
