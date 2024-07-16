@@ -42,6 +42,7 @@
 <body>
 <h2>Azione completata con successo</h2>
 <p>Ti confermiamo che l'azione da te effettuata &#232; terminata con successo, se dovessi riscontrare delle anomalie non esitare a contattarci!.</p>
+<a href="register.jsp">Ritorna alla tua pagina personale</a>
 <a href="view.jsp">Ritorna alla pagina principale</a>
 </body>
 </html>
