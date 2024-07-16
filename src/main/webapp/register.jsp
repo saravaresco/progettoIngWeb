@@ -197,6 +197,16 @@
             <% } %>
         </div>
     </div>
+
+    <div id="modifyUserInfoSection" class="section">
+        <h2>Modifica i tuoi dati</h2>
+        <form action="Dispatcher" method="get">
+            <input type="hidden" name="controllerAction" value="RegisterVisitorController.modifyUser">
+            <button type="submit" class="btn btn-primary">Modifica Dati</button>
+        </form>
+    </div>
+
+
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -220,6 +230,10 @@
 
     document.getElementById('showPurchaseTicket').addEventListener('click', function () {
         toggleSection('purchaseTicketSection');
+    });
+
+    document.getElementById('modifyInfo').addEventListener('click', function () {
+        toggleSection('modifyUserInfoSection');
     });
 
 

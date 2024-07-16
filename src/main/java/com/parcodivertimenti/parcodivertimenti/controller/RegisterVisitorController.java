@@ -357,6 +357,122 @@ public class RegisterVisitorController extends HttpServlet {
         }
     }
 
+    public void modifyUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("username");
+        String password = (String) session.getAttribute("password");
+
+        if (username == null || password == null) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
+
+        // Eseguire il recupero dei dati del biglietto dal database
+        visitatore visit = retrieveUserByCodice(username, password);
+
+        // Verificare se il biglietto è stato trovato
+        if (visit != null) {
+
+            // Inserire il biglietto come attributo nella richiesta per essere utilizzato nel JSP
+            request.setAttribute("visit", visit);
+
+            // Inviare il controllo alla pagina di modifica biglietto (potrebbe essere un altro JSP)
+            RequestDispatcher dispatcher = request.getRequestDispatcher("modifyUser.jsp");
+            dispatcher.forward(request, response);
+        } else {
+            // Se il biglietto non è stato trovato, gestire l'errore o redirigere a una pagina di errore
+            response.sendRedirect("error.jsp");
+        }
+    }
+
+    // Metodo per simulare il recupero del biglietto dal database
+    public visitatore retrieveUserByCodice(String username, String password) throws ServletException {
+        visitatore visitatore = null;
+        String query = "SELECT * FROM visitatore WHERE USERNAME = ? AND PASSWORD = ?";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    visitatore = new visitatore();
+
+                    visitatore.setNome(rs.getString("NOME"));
+                    visitatore.setCognome(rs.getString("COGNOME"));
+                    visitatore.setCodice_fiscale(rs.getString("CODICE_FISCALE"));
+                    visitatore.setData_nascita(rs.getString("DATA_NASCITA"));
+                    visitatore.setSesso(rs.getString("SESSO"));
+                    visitatore.setUsername(rs.getString("USERNAME"));
+                    visitatore.setPassword(rs.getString("PASSWORD"));
+
+
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new ServletException("Errore durante il recupero dei biglietti dell'utente", e);
+        }
+
+        return visitatore;
+    }
+
+    public void updateUser(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("username");
+        String password = (String) session.getAttribute("password");
+
+        if (username == null || password == null) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
+
+        try {
+            // Ottenere i parametri modificati dal form
+            String nome = request.getParameter("nome");
+            String cognome = request.getParameter("cognome");
+            String dataNascita = request.getParameter("dataNascita");
+            String sesso = request.getParameter("sesso");
+
+
+            // Query per aggiornare i dati del biglietto nel database
+            String query = "UPDATE visitatore SET NOME = ?, COGNOME = ?, DATA_NASCITA = ?, SESSO = ? WHERE USERNAME = ? AND PASSWORD = ?";
+
+            try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+                 PreparedStatement stmt = conn.prepareStatement(query)) {
+
+                stmt.setString(1, nome);
+                stmt.setString(2, cognome);
+                stmt.setString(3, dataNascita);
+                stmt.setString(4, sesso);
+                stmt.setString(5, username);
+                stmt.setString(6, password);
+
+                // Eseguire l'aggiornamento
+                int rowsUpdated = stmt.executeUpdate();
+
+                if (rowsUpdated > 0) {
+                    // Redirect alla pagina di successo o messaggio di conferma
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("confermaAzione.jsp");
+                    dispatcher.forward(request, response);
+                } else {
+                    // Gestire il caso in cui il biglietto non sia stato trovato o non aggiornato
+                    response.sendRedirect("error.jsp");
+                }
+
+            } catch (SQLException e) {
+                throw new ServletException("Errore durante l'aggiornamento del biglietto", e);
+            }
+        }catch (NumberFormatException e) {
+            // Gestire il caso in cui idBiglietto non sia un numero valido
+            response.sendRedirect("error.jsp");
+        }
+
+    }
 
 }
 
