@@ -26,18 +26,24 @@
             color: #333;
         }
         .center-buttons {
-            text-align: center;
+
             margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         button {
             background-color: #28a745;
             color: #fff;
-            padding: 15px 25px;
+            padding: 30px 50px;
             font-size: 18px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            margin: 10px;
+            margin: 20px 0;
+
+            width: 500px;
+            text-align: center;
         }
         button:hover {
             background-color: #218838;
