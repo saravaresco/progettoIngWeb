@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Conferma Azione</title>
+    <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -41,6 +42,15 @@
 </head>
 <body>
 <h2>Azione completata con successo</h2>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var confettiSettings = {
+            target: 'my-canvas'
+        };
+        var confetti = new JSConfetti(confettiSettings);
+        confetti.addConfetti();
+    });
+</script>
 <p>Ti confermiamo che l'azione da te effettuata &#232; terminata con successo, se dovessi riscontrare delle anomalie non esitare a contattarci!.</p>
 <a href="register.jsp">Ritorna alla tua pagina personale</a>
 <a href="view.jsp">Ritorna alla pagina principale</a>
