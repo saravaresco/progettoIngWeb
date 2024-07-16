@@ -9,6 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.parcodivertimenti.parcodivertimenti.model.mo.visitatore;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -311,5 +312,51 @@ public class RegisterVisitorController extends HttpServlet {
         Random random = new Random();
         return 100000000 + random.nextInt(900000000);
     }
+
+    public void showUserInfo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        String username = (String) session.getAttribute("username");
+        String password = (String) session.getAttribute("password");
+
+        if (username == null || password == null) {
+            RequestDispatcher dispatcher = request.getRequestDispatcher("login.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
+
+        String query = "SELECT * FROM visitatore WHERE USERNAME = ? AND PASSWORD = ?";
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, username);
+            stmt.setString(2, password);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    visitatore visitatore = new visitatore();
+                    visitatore.setNome(rs.getString("NOME"));
+                    visitatore.setCognome(rs.getString("COGNOME"));
+                    visitatore.setCodice_fiscale(rs.getString("CODICE_FISCALE"));
+                    visitatore.setData_nascita(rs.getString("DATA_NASCITA"));
+                    visitatore.setSesso(rs.getString("SESSO"));
+                    visitatore.setUsername(rs.getString("USERNAME"));
+                    visitatore.setPassword(rs.getString("PASSWORD"));
+
+                    request.setAttribute("visitatore", visitatore);
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("userInfo.jsp");
+                    dispatcher.forward(request, response);
+                } else {
+                    request.setAttribute("errorMessage", "Utente non trovato");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("error.jsp");
+                    dispatcher.forward(request, response);
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new ServletException("Errore durante il recupero delle informazioni dell'utente", e);
+        }
+    }
+
+
 }
 

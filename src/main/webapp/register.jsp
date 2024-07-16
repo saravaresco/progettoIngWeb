@@ -1,6 +1,7 @@
 <%@ page import="com.parcodivertimenti.parcodivertimenti.model.mo.biglietto" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.parcodivertimenti.parcodivertimenti.controller.RegisterVisitorController" %>
+<%@ page import="com.parcodivertimenti.parcodivertimenti.model.mo.visitatore" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -52,6 +53,19 @@
         .title {
             margin-bottom: 30px;
         }
+        a {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        a:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
@@ -63,6 +77,12 @@
     </form>
     <button class="btn btn-custom" id="showModifyTickets">Modifica Biglietti Acquistati</button>
     <button class="btn btn-custom" id="showPurchaseTicket">Acquista Nuovo Biglietto</button>
+    <form action="Dispatcher" method="get" id="viewInfo">
+        <input type="hidden" name="controllerAction" value="RegisterVisitorController.showUserInfo">
+        <button type="submit" class="btn btn-custom" id="showInfo">Visualizza i tuoi dati</button>
+    </form>
+
+    <button class="btn btn-custom" id="modifyInfo">Modifica i tuoi dati</button>
 
 
     <div id="ticketsSection" class="section">
@@ -159,6 +179,24 @@
             <button type="submit" class="btn btn-primary">Acquista Biglietto</button>
         </form>
     </div>
+
+    <div id="userInfoSection" class="section">
+        <h2>I tuoi dati</h2>
+        <div class="user-info">
+            <% visitatore visitatore = (visitatore) request.getAttribute("visitatore");
+                if (visitatore != null) { %>
+            <p><strong>Nome:</strong> <%= visitatore.getNome() %></p>
+            <p><strong>Cognome:</strong> <%= visitatore.getCognome() %></p>
+            <p><strong>Codice Fiscale:</strong> <%= visitatore.getCodice_fiscale() %></p>
+            <p><strong>Data di nascita:</strong> <%= visitatore.getData_nascita() %></p>
+            <p><strong>Sesso:</strong> <%= visitatore.getSesso() %></p>
+            <p><strong>Username:</strong> <%= visitatore.getUsername() %></p>
+            <p><strong>Password:</strong> <%= visitatore.getPassword() %></p>
+            <% } else { %>
+            <p>Nessun dato disponibile.</p>
+            <% } %>
+        </div>
+    </div>
 </div>
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
@@ -195,5 +233,10 @@
         section.style.display = 'block';
     }
 </script>
+
+<div class="text-center">
+    <a href="view.jsp">Ritorna alla pagina principale</a>
+</div>
+
 </body>
 </html>
