@@ -29,7 +29,7 @@ public class Dispatcher extends HttpServlet {
             String[] splittedAction=controllerAction.split("\\.");
             Class<?> controllerClass=Class.forName("com.parcodivertimenti.parcodivertimenti.controller."+splittedAction[0]);
             Method controllerMethod=controllerClass.getMethod(splittedAction[1],HttpServletRequest.class,HttpServletResponse.class);
-            //LogService.getApplicationLogger().log(Level.INFO,splittedAction[0]+" "+splittedAction[1]);
+            LogService.getApplicationLogger().log(Level.INFO,splittedAction[0]+" "+splittedAction[1]);
             Object controllerInstance = controllerClass.getDeclaredConstructor().newInstance();
             controllerMethod.invoke(controllerInstance,request,response);
 
