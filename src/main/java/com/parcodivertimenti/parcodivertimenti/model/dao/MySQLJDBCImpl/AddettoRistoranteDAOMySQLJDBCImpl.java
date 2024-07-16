@@ -88,7 +88,7 @@ public class AddettoRistoranteDAOMySQLJDBCImpl implements addettoRistoranteDAO{
 
             ResultSet resultSet = ps.executeQuery();
 
-            while(resultSet.next()){
+            if(resultSet.next()){
                 ad = read(resultSet);
             }
             resultSet.close();
@@ -138,23 +138,23 @@ public class AddettoRistoranteDAOMySQLJDBCImpl implements addettoRistoranteDAO{
     addettoRistorante read(ResultSet rs){
         addettoRistorante ad = new addettoRistorante();
         try{
-            ad.setCodice_fiscale(rs.getString("codice_fiscale"));
+            ad.setCodice_fiscale(rs.getString("CODICE_FISCALE"));
         }catch (SQLException sqle){
         }
         try{
-            ad.setPosizione(rs.getString("posizione"));
+            ad.setPosizione(rs.getString("POSIZIONE"));
         }catch (SQLException sqle){
         }
         try{
-            ad.setID_punto_ristoro(rs.getLong("ID_punto_ristoro"));
+            ad.setID_punto_ristoro(rs.getLong("ID_PUNTO_RISTORO"));
         }catch (SQLException sqle){
         }
         try{
-            ad.setUsername(rs.getString("username"));
+            ad.setUsername(rs.getString("USERNAME"));
         }catch (SQLException sqle){
         }
         try{
-            ad.setPassword(rs.getString("password"));
+            ad.setPassword(rs.getString("PASSWORD"));
         }catch (SQLException sqle){
         }
         return ad;

@@ -76,7 +76,7 @@ public class VisitatoreCookieImpl implements visitatoreDAO{
 
         if (cookies != null) {
             for (int i = 0; i < cookies.length && loggedvisitatore == null; i++) {
-                if (cookies[i].getName().equals("loggedDipendente")) {
+                if (cookies[i].getName().equals("loggedVisitatore")) {
                     loggedvisitatore = decode(cookies[i].getValue());
                 }
             }
@@ -112,10 +112,10 @@ public class VisitatoreCookieImpl implements visitatoreDAO{
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    private String encode(visitatore loggedDipendente) {
+    private String encode(visitatore loggedVisitatore) {
 
         String encodedLoggedUser;
-        encodedLoggedUser = loggedDipendente.getCodice_fiscale() + "#" + loggedDipendente.getNome() + "#" + loggedDipendente.getCognome() + "#" + loggedDipendente.getData_nascita() + "#" + loggedDipendente.getSesso();
+        encodedLoggedUser = loggedVisitatore.getCodice_fiscale() + "#" + loggedVisitatore.getNome() + "#" + loggedVisitatore.getCognome() + "#" + loggedVisitatore.getData_nascita() + "#" + loggedVisitatore.getSesso();
         return encodedLoggedUser;
 
     }

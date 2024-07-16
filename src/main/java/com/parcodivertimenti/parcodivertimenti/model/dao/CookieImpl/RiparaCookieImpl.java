@@ -82,14 +82,14 @@ public class RiparaCookieImpl implements riparaDAO {
 
     private ripara decode(String encodedLoggedUser) {
 
-        ripara loggeAddettoGiostre = new ripara();
+        ripara loggedRipara = new ripara();
 
         String[] values = encodedLoggedUser.split("#");
 
-        loggeAddettoGiostre.setCf_manutentore((values[0]));
-        loggeAddettoGiostre.setCodice_attrazione(Long.parseLong(values[2]));
+        loggedRipara.setCf_manutentore((values[0]));
+        loggedRipara.setCodice_attrazione(Long.parseLong(values[2]));
 
-        return loggeAddettoGiostre;
+        return loggedRipara;
 
     }
 }

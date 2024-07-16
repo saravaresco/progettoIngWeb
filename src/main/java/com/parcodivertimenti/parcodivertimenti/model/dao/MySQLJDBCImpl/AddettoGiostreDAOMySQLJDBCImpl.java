@@ -134,23 +134,23 @@ public class AddettoGiostreDAOMySQLJDBCImpl implements addettoGiostreDAO {
     addettoGiostre read(ResultSet rs){
         addettoGiostre ag = new addettoGiostre();
         try{
-            ag.setCodice_fiscale(rs.getString("codice_fiscale"));
+            ag.setCodice_fiscale(rs.getString("CODICE_FISCALE"));
         }catch (SQLException sqle){
         }
         try{
-            ag.setMansione(rs.getString("mansione"));
+            ag.setMansione(rs.getString("MANSIONE"));
         }catch (SQLException sqle){
         }
         try{
-            ag.setCodice_giostra(rs.getLong("codice_giostra"));
+            ag.setCodice_giostra(rs.getLong("CODICE_GIOSTRA"));
         }catch (SQLException sqle){
         }
         try{
-            ag.setUsername(rs.getString("username"));
+            ag.setUsername(rs.getString("USERNAME"));
         }catch (SQLException sqle){
         }
         try{
-            ag.setPassword(rs.getString("password"));
+            ag.setPassword(rs.getString("PASSWORD"));
         }catch (SQLException sqle){
         }
 

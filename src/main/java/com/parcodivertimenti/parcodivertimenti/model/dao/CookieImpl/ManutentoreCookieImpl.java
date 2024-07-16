@@ -70,7 +70,7 @@ public class ManutentoreCookieImpl implements manutentoreDAO{
 
         if (cookies != null) {
             for (int i = 0; i < cookies.length && loggedManutentore == null; i++) {
-                if (cookies[i].getName().equals("loggedDipendente")) {
+                if (cookies[i].getName().equals("loggedManutentore")) {
                     loggedManutentore = decode(cookies[i].getValue());
                 }
             }

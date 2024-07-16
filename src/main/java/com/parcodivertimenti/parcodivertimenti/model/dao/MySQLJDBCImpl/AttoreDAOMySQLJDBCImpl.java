@@ -132,19 +132,19 @@ public class AttoreDAOMySQLJDBCImpl implements attoreDAO {
     attore read(ResultSet rs){
         attore at = new attore();
         try{
-            at.setCodice_fiscale(rs.getString("codice_fiscale"));
+            at.setCodice_fiscale(rs.getString("CODICE_FISCALE"));
         }catch (SQLException sqle){
         }
         try{
-            at.setRuolo(rs.getString("ruolo"));
+            at.setRuolo(rs.getString("RUOLO"));
         }catch (SQLException sqle){
         }
         try{
-            at.setUsername(rs.getString("username"));
+            at.setUsername(rs.getString("USERNAME"));
         }catch (SQLException sqle){
         }
         try{
-            at.setPassword(rs.getString("password"));
+            at.setPassword(rs.getString("PASSWORD"));
         }catch (SQLException sqle){
         }
 

@@ -68,7 +68,7 @@ public class AttoreCookieImpl implements attoreDAO{
 
         if (cookies != null) {
             for (int i = 0; i < cookies.length && loggedAttore == null; i++) {
-                if (cookies[i].getName().equals("loggedAddettoRistorante")) {
+                if (cookies[i].getName().equals("loggedAttore")) {
                     loggedAttore = decode(cookies[i].getValue());
                 }
             }

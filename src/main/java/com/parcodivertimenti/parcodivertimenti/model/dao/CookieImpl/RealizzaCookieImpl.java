@@ -29,7 +29,7 @@ public class RealizzaCookieImpl implements realizzaDAO {
 
         /*creo cookie*/
         Cookie cookie;
-        cookie = new Cookie("loggedRipara", encode(loggedRealizza));
+        cookie = new Cookie("loggedRealizza", encode(loggedRealizza));
         cookie.setPath("/");
         response.addCookie(cookie);
 
@@ -42,17 +42,17 @@ public class RealizzaCookieImpl implements realizzaDAO {
     public void update(realizza loggedRealizza) {
 
         Cookie cookie;
-        cookie = new Cookie("loggedRipara", encode(loggedRealizza));
+        cookie = new Cookie("loggedRealizza", encode(loggedRealizza));
         cookie.setPath("/");
         response.addCookie(cookie);
 
     }
 
     @Override
-    public void delete(realizza loggedRipara) {
+    public void delete(realizza loggedRealizza) {
 
         Cookie cookie;
-        cookie = new Cookie("loggedRipara", "");
+        cookie = new Cookie("loggedRealizza", "");
         cookie.setMaxAge(0);
         cookie.setPath("/");
         response.addCookie(cookie);
@@ -81,14 +81,14 @@ public class RealizzaCookieImpl implements realizzaDAO {
 
     private realizza decode(String encodedLoggedUser) {
 
-        realizza loggeAddettoGiostre = new realizza();
+        realizza loggedRealizza = new realizza();
 
         String[] values = encodedLoggedUser.split("#");
 
-        loggeAddettoGiostre.setCf_attore((values[0]));
-        loggeAddettoGiostre.setNome_spettacolo((values[2]));
+        loggedRealizza.setCf_attore((values[0]));
+        loggedRealizza.setNome_spettacolo((values[2]));
 
-        return loggeAddettoGiostre;
+        return loggedRealizza;
 
     }
 }

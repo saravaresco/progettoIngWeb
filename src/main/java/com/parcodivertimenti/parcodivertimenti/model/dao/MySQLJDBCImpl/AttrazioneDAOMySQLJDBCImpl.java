@@ -155,19 +155,19 @@ public class AttrazioneDAOMySQLJDBCImpl implements attrazioneDAO {
     attrazione read(ResultSet rs){
         attrazione at = new attrazione();
         try{
-            at.setCodice(rs.getLong("codice"));
+            at.setCodice(rs.getLong("CODICE"));
         }catch (SQLException sqle){
         }
         try{
-            at.setNome(rs.getString("nome"));
+            at.setNome(rs.getString("NOME"));
         }catch (SQLException sqle){
         }
         try{
-            at.setTipologia(rs.getString("tipologia"));
+            at.setTipologia(rs.getString("TIPOLOGIA"));
         }catch (SQLException sqle){
         }
         try{
-            at.setData_ultima_manutenzione(rs.getDate("data_ultima_manutenzione"));
+            at.setData_ultima_manutenzione(rs.getDate("DATA_ULTIMA_MANUTENZIONE"));
         }catch (SQLException sqle){
         }
 
