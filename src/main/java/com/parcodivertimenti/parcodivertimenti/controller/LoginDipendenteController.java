@@ -40,8 +40,9 @@ public class LoginDipendenteController {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
-
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             dipendenteDAO dipendenteDAO = new DipendenteDAOMySQLJDBCImpl(conn);
             dipendente dipendente = dipendenteDAO.findLoggedUser(username, password, role);
 
@@ -80,6 +81,8 @@ public class LoginDipendenteController {
 
         } catch (SQLException e) {
             throw new ServletException("Errore di connessione al database", e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
     }

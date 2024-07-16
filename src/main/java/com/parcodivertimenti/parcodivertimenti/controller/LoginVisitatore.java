@@ -93,7 +93,9 @@ public class LoginVisitatore {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD)) {
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
             visitatoreDAO visitatoreDAO = new VisitatoreDAOMySQLJDBCImpl(conn);
             visitatore visitatore = visitatoreDAO.findLoggedUser(username, password);
 
@@ -112,6 +114,8 @@ public class LoginVisitatore {
             }
         } catch (SQLException e) {
             throw new ServletException("Errore di connessione al database", e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
 
