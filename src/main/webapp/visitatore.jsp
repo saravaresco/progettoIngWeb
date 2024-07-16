@@ -14,61 +14,58 @@
         }
         .container {
             width: 100%;
-            max-width: 600px;
+            max-width: 400px;
             margin: 50px auto;
             background-color: #fff;
             padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         h1 {
-            font-size: 28px;
-            margin-bottom: 30px;
+            font-size: 24px;
+            margin-bottom: 20px;
             color: #333;
         }
-        .role-options {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 30px;
+        form {
+            margin-top: 20px;
         }
-        .role-options button {
-            padding: 12px 24px;
-            font-size: 18px;
-            cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            background-color: #4CAF50;
-            color: #fff;
-            transition: background-color 0.3s;
-        }
-        .role-options button:hover {
-            background-color: #45a049;
-        }
-        .login-form {
-            display: none;
-            margin-top: 30px;
-        }
-        .login-form label, .login-form input {
+        label {
             display: block;
-            margin-bottom: 15px;
-            width: 100%;
-            box-sizing: border-box;
+            margin-bottom: 8px;
+            color: #555;
         }
-        .login-form button {
-            padding: 12px 24px;
-            font-size: 18px;
+        input[type="text"], input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 16px;
             cursor: pointer;
             border: none;
             border-radius: 5px;
             background-color: #4CAF50;
             color: #fff;
             transition: background-color 0.3s;
-            width: 100%;
-            box-sizing: border-box;
         }
-        .login-form button:hover {
-            background-color: #45a049;
+        button:hover {
+            background-color:#218838;
+        }
+        p {
+            margin-top: 20px;
+            color: #555;
+        }
+        a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -86,9 +83,8 @@
         <button type="submit">Accedi</button>
     </form>
 
+    <!-- Link per la password dimenticata -->
+    <p><a href="forgotPassword.jsp">Password dimenticata?</a></p>
 </div>
-</script>
 </body>
 </html>
-
-
