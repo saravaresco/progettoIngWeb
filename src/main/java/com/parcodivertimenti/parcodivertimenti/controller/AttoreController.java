@@ -32,7 +32,7 @@ public class AttoreController extends HttpServlet {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/parco_web", "root", "sarA2002");
+            Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
 
             String query = "SELECT * FROM spettacolo WHERE NOME = ?";
             PreparedStatement statement = connection.prepareStatement(query);
@@ -163,7 +163,7 @@ public class AttoreController extends HttpServlet {
             if (success) {
                 // Se l'aggiornamento è riuscito, reindirizza alla pagina di conferma o di dettaglio dello spettacolo
                 //response.sendRedirect("confermaAzione.jsp");  // Sostituisci con l'ID corretto dello spettacolo
-                request.setAttribute("viewUrl", "confermaAzione");
+                request.setAttribute("viewUrl", "spettacoloModificato");
             } else {
                 // Se l'aggiornamento non è riuscito, gestisci l'errore appropriatamente
                 //response.sendRedirect("error.jsp");
@@ -208,8 +208,8 @@ public class AttoreController extends HttpServlet {
         String tipologia = request.getParameter("tipologia");
         String data = request.getParameter("data");
         String luogo = request.getParameter("luogo");
-        String orarioInizio = request.getParameter("orarioInizio") + ":00";
-        String durata = request.getParameter("durata") + ":00";
+        String orarioInizio = request.getParameter("orarioInizio");
+        String durata = request.getParameter("durata");
 
         // Recupera il codice fiscale dell'attore loggato dalla sessione
         HttpSession session = request.getSession();
@@ -221,7 +221,7 @@ public class AttoreController extends HttpServlet {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/parco_web", "root", "sarA2002");
+            Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
 
             // Recupera il codice fiscale dell'attore loggato
             String queryAttore = "SELECT CODICE_FISCALE FROM attore WHERE USERNAME = ? AND PASSWORD = ?";
@@ -267,7 +267,7 @@ public class AttoreController extends HttpServlet {
                         // Conferma la transazione
                         connection.commit();
                         request.setAttribute("success", "Spettacolo inserito con successo e associazione con attore registrata!");
-                        RequestDispatcher dispatcher = request.getRequestDispatcher("confermaAzione.jsp");
+                        RequestDispatcher dispatcher = request.getRequestDispatcher("spettacoloInserito.jsp");
                         dispatcher.forward(request, response);
                     } else {
                         // Rollback della transazione in caso di errore

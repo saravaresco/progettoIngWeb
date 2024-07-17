@@ -60,7 +60,7 @@ public class NewVisitorController extends HttpServlet {
 
             // Set the view URL to redirect to the confirmation page
             //request.setAttribute("viewUrl", "confermaIscrizione");
-            request.setAttribute("viewUrl", "confermaAzione");
+            request.setAttribute("viewUrl", "confermaIscrizione");
 
         } catch (SQLException | ClassNotFoundException e) {
             // Handle any database or class not found errors

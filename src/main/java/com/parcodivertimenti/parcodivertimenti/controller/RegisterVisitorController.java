@@ -228,7 +228,7 @@ public class RegisterVisitorController extends HttpServlet {
 
                 if (rowsUpdated > 0) {
                     // Redirect alla pagina di successo o messaggio di conferma
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("confermaAzione.jsp");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("ticketUpdated.jsp");
                     dispatcher.forward(request, response);
                 } else {
                     // Gestire il caso in cui il biglietto non sia stato trovato o non aggiornato
@@ -457,7 +457,7 @@ public class RegisterVisitorController extends HttpServlet {
 
                 if (rowsUpdated > 0) {
                     // Redirect alla pagina di successo o messaggio di conferma
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("confermaAzione.jsp");
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("userUpdated.jsp");
                     dispatcher.forward(request, response);
                 } else {
                     // Gestire il caso in cui il biglietto non sia stato trovato o non aggiornato

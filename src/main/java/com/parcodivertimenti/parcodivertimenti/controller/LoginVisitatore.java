@@ -87,7 +87,7 @@ public class LoginVisitatore {
 
             if (rowsUpdated > 0) {
                 // Reindirizza alla pagina di conferma o login dopo l'aggiornamento della password
-                RequestDispatcher dispatcher = request.getRequestDispatcher("confermaAzione.jsp");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("passwordUpdated.jsp");
                 dispatcher.forward(request, response);
             } else {
                 // Reindirizza alla pagina di errore se l'email non è stata trovata

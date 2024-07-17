@@ -313,7 +313,7 @@ public class ManutenzioneController extends HttpServlet {
         }
 
         // Inviare il controllo alla pagina di conferma o errore
-        RequestDispatcher dispatcher = request.getRequestDispatcher("confermaAzione.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("aggiuntoIntervento.jsp");
         dispatcher.forward(request, response);
     }
 }

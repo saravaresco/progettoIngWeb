@@ -1,14 +1,14 @@
 <%--
   Created by IntelliJ IDEA.
-  User: 217347
-  Date: 13/07/2024
-  Time: 17:37
+  User: sveva
+  Date: 16/07/24
+  Time: 23:30
   To change this template use File | Settings | File Templates.
 --%>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Biglietto Aggiornato</title>
+    <title>Dati Modiicati</title>
     <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
     <style>
         body {
@@ -48,7 +48,7 @@
     </style>
 </head>
 <body>
-<h2>Biglietto aggiornato con successo</h2>
+<h2>Dati aggiornati con successo</h2>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var confettiSettings = {

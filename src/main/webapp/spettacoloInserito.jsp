@@ -1,14 +1,14 @@
 <%--
   Created by IntelliJ IDEA.
-  User: 217347
-  Date: 13/07/2024
-  Time: 17:37
+  User: sveva
+  Date: 17/07/24
+  Time: 08:31
   To change this template use File | Settings | File Templates.
 --%>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Biglietto Aggiornato</title>
+    <title>Spettacolo Inserito</title>
     <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
     <style>
         body {
@@ -48,7 +48,7 @@
     </style>
 </head>
 <body>
-<h2>Biglietto aggiornato con successo</h2>
+<h2>Spettacolo inserito con successo</h2>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var confettiSettings = {
@@ -59,7 +59,8 @@
     });
 </script>
 <p>Ti confermiamo che l'azione da te effettuata &#232; terminata con successo, se dovessi riscontrare delle anomalie non esitare a contattarci!.</p>
-<a href="register.jsp">Ritorna alla tua pagina personale</a>
+<a href="attore.jsp">Ritorna alla tua pagina personale</a>
 <a href="view.jsp">Ritorna alla pagina principale</a>
 </body>
 </html>
+

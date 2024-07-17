@@ -62,6 +62,13 @@
             width: 100%;
             height: 600px;
         }
+        footer {
+            background-color: #4CAF50;
+            color: #ffffff;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -147,6 +154,8 @@
         addMarker(830, 485, luogo2);
         addMarker(479, 382, luogo3);
     </script>
-<%@include file="/include/footer.inc"%>
+<footer>
+    <p>&copy; 2024 Fantasia Park. Tutti i diritti riservati.</p>
+</footer>
 </body>
 </html>

@@ -11,6 +11,6 @@
     <title>Errore</title>
 </head>
 <body>
-
+    <img src="errore.jpg" alt="Oops... qualcosa è andato storto!"/>
 </body>
 </html>
