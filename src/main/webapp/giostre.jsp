@@ -60,6 +60,15 @@
             color: red;
             font-weight: bold;
         }
+        .btn-warning {
+            color: #fff;
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+        .btn-warning:hover {
+            background-color: #218838;
+            border-color: #218838;
+        }
     </style>
 </head>
 <body>
@@ -93,6 +102,11 @@
         }
     %>
 </div>
+
+<div style="width: 80%; margin: 0 auto; text-align: center; margin-top: 20px;">
+    <button class="btn btn-warning" onclick="window.location.href='view.jsp';">Torna alla Pagina Principale</button>
+</div>
+
 </body>
 </html>
 
