@@ -51,7 +51,7 @@
         confetti.addConfetti();
     });
 </script>
-<p>Grazie per aver acquistato un biglietto! Una conferma e' stata inviata alla tua email.</p>
+<p>Grazie per aver acquistato un biglietto! Una conferma &#232; stata inviata alla tua email.</p>
 <a href="register.jsp">Acquista un altro biglietto</a>
 </body>
 </html>
