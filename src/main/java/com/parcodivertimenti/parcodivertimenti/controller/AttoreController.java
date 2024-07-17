@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -28,7 +30,7 @@ public class AttoreController extends HttpServlet {
 
 
     public void getSpettacolo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        spettacolo spettacolo = null;
+        List<spettacolo> spettacoli = new ArrayList<>();
         String error = null;
         String codiceSpettacolo = request.getParameter("codiceSpettacolo");
 
@@ -42,8 +44,8 @@ public class AttoreController extends HttpServlet {
 
             ResultSet resultSet = statement.executeQuery();
 
-            if (resultSet.next()) {
-                spettacolo = new spettacolo();
+            while (resultSet.next()) {
+                spettacolo spettacolo = new spettacolo();
                 spettacolo.setNome(resultSet.getString("NOME"));
                 spettacolo.setTipologia(resultSet.getString("TIPOLOGIA"));
                 spettacolo.setData(resultSet.getDate("DATA"));
@@ -51,17 +53,19 @@ public class AttoreController extends HttpServlet {
                 spettacolo.setOrario_inizio(resultSet.getTime("ORARIO_INIZIO"));
                 spettacolo.setDurata(resultSet.getTime("DURATA"));
 
-                // Reindirizzamento a spettacoli2.jsp
-                request.setAttribute("spettacolo", spettacolo);
+                spettacoli.add(spettacolo);
+            }
+            if (!spettacoli.isEmpty()) {
+                request.setAttribute("spettacoli", spettacoli);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("spettacoli.jsp");
                 dispatcher.forward(request, response);
             } else {
-                // Nessuno spettacolo trovato, reindirizzamento a pagina di errore
                 error = "Spettacolo non trovato.";
                 request.setAttribute("error", error);
                 RequestDispatcher dispatcher = request.getRequestDispatcher("error.jsp");
                 dispatcher.forward(request, response);
             }
+
 
             resultSet.close();
             statement.close();

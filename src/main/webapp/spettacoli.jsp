@@ -50,8 +50,11 @@
 <div class="container">
     <h1 class="text-center title">Spettacoli realizzati</h1>
     <div id="userTickets">
-        <%if (request.getAttribute("spettacolo") != null) {
-            spettacolo spettacolo = (spettacolo) request.getAttribute("spettacolo"); %>
+        <%
+            List<spettacolo> spettacoli = (List<spettacolo>) request.getAttribute("spettacoli");
+            if (spettacoli != null && !spettacoli.isEmpty()) {
+                for (spettacolo spettacolo : spettacoli) {
+        %>
         <div class="ticket">
             <p><strong>Nome spettacolo:</strong> <%= spettacolo.getNome() %></p>
             <p><strong>Tipologia:</strong> <%= spettacolo.getTipologia() %></p>
@@ -61,8 +64,10 @@
             <p><strong>Durata:</strong> <%= spettacolo.getDurata() %></p>
         </div>
         <%
-        } else { %>
-        <p>Nessuno spettacolo rtrovato.</p>
+            }
+        } else {
+        %>
+        <p>Nessuno spettacolo trovato.</p>
         <% } %>
     </div>
     <a href="attore.jsp" class="btn btn-custom">Torna all'Area Personale</a>
