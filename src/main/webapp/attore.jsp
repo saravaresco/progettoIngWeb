@@ -102,6 +102,15 @@
         h1, h2 {
             color: #343a40;
         }
+        .btn-warning {
+            color: #fff;
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+        .btn-warning:hover {
+            background-color: #218838;
+            border-color: #218838;
+        }
     </style>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -200,6 +209,10 @@
     </div>
 
 
+</div>
+
+<div style="width: 80%; margin: 0 auto; text-align: center; margin-top: 20px;">
+    <button class="btn btn-warning" onclick="window.location.href='view.jsp';">Torna alla Pagina Principale</button>
 </div>
 
 </body>
