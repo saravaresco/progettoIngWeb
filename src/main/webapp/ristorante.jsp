@@ -83,6 +83,11 @@
     <%
         }
     %>
+
+
+</div>
+<div style="width: 80%; margin: 0 auto; text-align: center; margin-top: 20px;">
+    <button onclick="window.location.href='view.jsp';">Torna alla Pagina Principale</button>
 </div>
 </body>
 </html>
