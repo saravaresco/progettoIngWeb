@@ -84,7 +84,6 @@ public class AttoreController extends HttpServlet {
         //Ottenere il nome e data dello spettacolo dall'utente
         String nomeSpettacolo = request.getParameter("spettacolo");
         String dataSpettacoloString = request.getParameter("spettacoloData");
-
         Date dataSpettacolo = null;
 
         try {
