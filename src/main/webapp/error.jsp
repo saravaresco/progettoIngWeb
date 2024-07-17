@@ -9,6 +9,14 @@
 <html>
 <head>
     <title>Errore</title>
+    <style>
+        img{
+            width: 1000px;
+            height: 600px;
+            display: block;
+            margin: auto;
+        }
+    </style>
 </head>
 <body>
     <img src="errore.jpg" alt="Oops... qualcosa è andato storto!"/>
