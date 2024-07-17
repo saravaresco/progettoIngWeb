@@ -78,6 +78,26 @@
         th {
             background-color: #f2f2f2;
         }
+        .text-center {
+            text-align: center;
+            margin-top: 20px; /* Aggiungi margine sopra per separare dal contenuto */
+        }
+
+        .text-center a {
+            display: inline-block;
+            background-color: #4CAF50;
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+            font-size: 16px; /* Dimensione del testo più piccola */
+        }
+
+        .text-center a:hover {
+            background-color: #45a049;
+        }
     </style>
     <script>
         function showField(fieldId) {
@@ -172,6 +192,11 @@
         }
     %>
 </div>
+
+<div class="text-center">
+    <a href="view.jsp">Ritorna alla pagina principale</a>
+</div>
+
 </body>
 </html>
 
