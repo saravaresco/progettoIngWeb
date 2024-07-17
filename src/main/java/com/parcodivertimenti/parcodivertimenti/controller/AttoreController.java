@@ -143,8 +143,17 @@ public class AttoreController extends HttpServlet {
         String tipologia = request.getParameter("tipologia");
         String luogo = request.getParameter("luogo");
         Date data = Date.valueOf(request.getParameter("data"));  // Converti la data nel formato corretto
-        Time orario_inizio = Time.valueOf(request.getParameter("orario_inizio"));  // Converti l'orario nel formato corretto
-        Time durata = Time.valueOf(request.getParameter("durata"));  // Converti la durata nel formato corretto
+
+        String orarioInizioParam = request.getParameter("orario_inizio");
+        String durataParam = request.getParameter("durata");
+
+        // Aggiungere i secondi di default a "00" se non forniti
+        orarioInizioParam = completeTimeWithSeconds(orarioInizioParam);
+        durataParam = completeTimeWithSeconds(durataParam);
+
+        Time orario_inizio = Time.valueOf(orarioInizioParam);
+        Time durata = Time.valueOf(durataParam);
+
 
         // Recuperare lo spettacolo dall'attributo di sessione
         spettacolo spett = (spettacolo) request.getSession().getAttribute("spettacolo");
@@ -173,6 +182,18 @@ public class AttoreController extends HttpServlet {
             throw new ServletException("Errore durante l'aggiornamento dello spettacolo", e);
         }
     }
+
+    // Metodo per completare il formato dell'orario con i secondi di default a "00"
+    private String completeTimeWithSeconds(String time) {
+        if (time.matches("\\d{2}:\\d{2}")) {
+            return time + ":00";
+        } else if (time.matches("\\d{2}:\\d{2}:\\d{2}")) {
+            return time;
+        } else {
+            throw new IllegalArgumentException("Formato dell'orario non valido: " + time);
+        }
+    }
+
 
     // Metodo di esempio per aggiornare lo spettacolo nel database
     private boolean updateSpettacoloInDatabase(spettacolo spett) {
@@ -208,8 +229,13 @@ public class AttoreController extends HttpServlet {
         String tipologia = request.getParameter("tipologia");
         String data = request.getParameter("data");
         String luogo = request.getParameter("luogo");
-        String orarioInizio = request.getParameter("orarioInizio");
-        String durata = request.getParameter("durata");
+
+        String orarioInizio = request.getParameter("orarioInizio") ;
+        String durata = request.getParameter("durata") ;
+
+        // Aggiungere i secondi di default a "00" se non forniti
+        orarioInizio = completeTimeWithSeconds(orarioInizio);
+        durata = completeTimeWithSeconds(durata);
 
         // Recupera il codice fiscale dell'attore loggato dalla sessione
         HttpSession session = request.getSession();
@@ -221,7 +247,7 @@ public class AttoreController extends HttpServlet {
 
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/parco_web", "root", "sarA2002");
 
             // Recupera il codice fiscale dell'attore loggato
             String queryAttore = "SELECT CODICE_FISCALE FROM attore WHERE USERNAME = ? AND PASSWORD = ?";
@@ -301,6 +327,7 @@ public class AttoreController extends HttpServlet {
         //RequestDispatcher dispatcher = request.getRequestDispatcher("confermaAzione.jsp");
         //dispatcher.forward(request, response);
     }
+
 
 }
 
