@@ -6,6 +6,8 @@ import com.parcodivertimenti.parcodivertimenti.model.dao.spettacoloDAO;
 
 import java.io.IOException;
 import java.sql.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -79,11 +81,27 @@ public class AttoreController extends HttpServlet {
 
 
     public void modifySpettacolo(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        //Ottenere il nome dello spettacolo dall'utente
+        //Ottenere il nome e data dello spettacolo dall'utente
         String nomeSpettacolo = request.getParameter("spettacolo");
+        String dataSpettacoloString = request.getParameter("spettacoloData");
+
+        Date dataSpettacolo = null;
+
+        try {
+            // Validazione del formato "yyyy-MM-dd"
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            dateFormat.setLenient(false);  // Impostare lenient a false per rendere la validazione rigorosa
+            dataSpettacolo = new Date(dateFormat.parse(dataSpettacoloString).getTime());
+        } catch (ParseException e) {
+            // Gestione dell'errore se la data non è nel formato corretto
+            request.setAttribute("error", "Formato data non valido. Assicurarsi di inserire la data nel formato corretto (yyyy-MM-dd).");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("error.jsp");
+            dispatcher.forward(request, response);
+            return;
+        }
 
         //recupero dati spettacolo dal database
-        spettacolo spet = retrieveSpettacoloByNome(nomeSpettacolo);
+        spettacolo spet = retrieveSpettacoloByNome(nomeSpettacolo, dataSpettacolo);
 
         // Verificare se il biglietto è stato trovato
         if (spet != null) {
@@ -102,14 +120,15 @@ public class AttoreController extends HttpServlet {
         }
     }
 
-    public spettacolo retrieveSpettacoloByNome(String nomeSpettacolo) throws ServletException{
+    public spettacolo retrieveSpettacoloByNome(String nomeSpettacolo, Date dataSpettacolo) throws ServletException{
         spettacolo spett = null;
-        String query = "SELECT * FROM spettacolo WHERE NOME = ?";
+        String query = "SELECT * FROM spettacolo WHERE NOME = ? AND DATA = ?";
 
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, nomeSpettacolo);
+            stmt.setDate(2, dataSpettacolo);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {

@@ -156,6 +156,10 @@
                 <label for="spettacolo">Inserisci il nome dello spettacolo da modificare:</label>
                 <input type="text" class="form-control" id="spettacolo" name="spettacolo" required>
             </div>
+            <div class="form-group">
+                <label for="spettacoloData">Inserisci la data dello spettacolo da modificare:</label>
+                <input type="date" class="form-control" id="spettacoloData" name="spettacoloData" required>
+            </div>
             <button type="submit" class="btn btn-primary">Modifica Biglietto</button>
         </form>
 
