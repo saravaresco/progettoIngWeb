@@ -198,19 +198,18 @@ public class AttoreController extends HttpServlet {
     // Metodo di esempio per aggiornare lo spettacolo nel database
     private boolean updateSpettacoloInDatabase(spettacolo spett) {
         // Implementazione per aggiornare lo spettacolo nel database
-        // Utilizza JDBC o un ORM per eseguire l'aggiornamento
-        // Esempio (JDBC):
-        String query = "UPDATE spettacolo SET TIPOLOGIA=?, LUOGO=?, DATA=?, ORARIO_INIZIO=?, DURATA=? WHERE NOME=?";
+        String query = "UPDATE spettacolo SET TIPOLOGIA=?, LUOGO=?, ORARIO_INIZIO=?, DURATA=? WHERE NOME=? AND DATA=?";
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
             //stmt.setString(1, spett.getNome());
             stmt.setString(1, spett.getTipologia());
             stmt.setString(2, spett.getLuogo());
-            stmt.setDate(3, (Date) spett.getData());
-            stmt.setTime(4, spett.getOrario_inizio());
-            stmt.setTime(5, spett.getDurata());
-            stmt.setString(6, spett.getNome());
+
+            stmt.setTime(3, spett.getOrario_inizio());
+            stmt.setTime(4, spett.getDurata());
+            stmt.setString(5, spett.getNome());
+            stmt.setDate(6, (Date) spett.getData());
             //stmt.setInt(7, spett.getId());  // Assumi che lo spettacolo abbia un ID
 
             int rowsUpdated = stmt.executeUpdate();

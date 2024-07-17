@@ -63,7 +63,7 @@
 
     <div class="form-group" style="background-color: #f2f2f2; padding: 10px; border-radius: 5px;">
         <label>Data:</label>
-        <input type="date" class="form-control" name="data" value="<%= spett != null ? spett.getData() : "" %>" required />
+        <input type="date" class="form-control" name="data" value="<%= spett != null ? spett.getData() : "" %>" readonly />
     </div>
 
     <div class="form-group" style="background-color: #f2f2f2; padding: 10px; border-radius: 5px;">
