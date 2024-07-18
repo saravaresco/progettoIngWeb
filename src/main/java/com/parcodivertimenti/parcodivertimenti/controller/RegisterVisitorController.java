@@ -20,6 +20,10 @@ import jakarta.servlet.http.HttpSession;
 
 import java.util.Random;
 
+import jakarta.mail.*;
+import jakarta.mail.internet.*;
+import java.util.Properties;
+
 @WebServlet("/register-visitor")
 public class RegisterVisitorController extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -276,8 +280,24 @@ public class RegisterVisitorController extends HttpServlet {
                 stmt.setString(6, tipologia2);
                 stmt.setString(7, mail);
 
+                // Invio della mail di conferma
+                String from = "parcodivertimenti2024@gmail.com";
+                String to = mail; // Indirizzo email dell'utente
+
+                String subject = "Conferma Acquisto Biglietto";
+                String body = "Gentile " + nome + " " + cognome + ",\n\n"
+                        + "Grazie per aver acquistato il biglietto al nostro parco divertimenti.\n"
+                        + "Il suo biglietto è stato acquistato con successo!\n\n"
+                        + "ID Biglietto: " + randomId + "\n"
+                        + "Data Acquisto: " + dataAcquisto + "\n"
+                        + "Tipologia 1: " + tipologia1 + "\n"
+                        + "Tipologia 2: " + tipologia2 + "\n"
+                        + "Prezzo: " + prezzo + "\n\n"
+                        + "Grazie per averci scelto.";
+
                 int rowsInserted = stmt.executeUpdate();
                 if (rowsInserted > 0) {
+                    sendEmail(from, to, subject, body);
                     request.setAttribute("successMessage", "Biglietto acquistato con successo!");
                     RequestDispatcher dispatcher = request.getRequestDispatcher("ticketConfirmation.jsp");
                     dispatcher.forward(request, response);
@@ -286,10 +306,34 @@ public class RegisterVisitorController extends HttpServlet {
                     RequestDispatcher dispatcher = request.getRequestDispatcher("register.jsp");
                     dispatcher.forward(request, response);
                 }
+            } catch (MessagingException e) {
+                throw new RuntimeException(e);
             }
         } catch (SQLException e) {
             throw new ServletException("Errore durante l'inserimento del biglietto nel database", e);
         }
+    }
+
+    private void sendEmail(String from, String to, String subject, String body) throws MessagingException {
+        Properties props = new Properties();
+        props.put("mail.smtp.host", "smtp.gmail.com"); // Utilizza SMTP di Gmail
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+
+        Session session = Session.getInstance(props, new Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(from, "smgcxvgslftmlwjf"); // Inserisci la password dell'account Gmail
+            }
+        });
+
+        Message message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(from));
+        message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
+        message.setSubject(subject);
+        message.setText(body);
+
+        Transport.send(message);
     }
 
     private double calculatePrezzo(String tipologia1, String tipologia2) {
