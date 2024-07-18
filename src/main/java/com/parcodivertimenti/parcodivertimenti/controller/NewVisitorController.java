@@ -1,10 +1,7 @@
 package com.parcodivertimenti.parcodivertimenti.controller;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -35,32 +32,47 @@ public class NewVisitorController extends HttpServlet {
         // JDBC variables for opening and managing connection
         Connection connection = null;
         PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
 
         try {
             // Connessione al database
             Class.forName("com.mysql.jdbc.Driver");
             connection = DriverManager.getConnection(JDBC_URL, JDBC_USER, JDBC_PASSWORD);
 
-            // inserimento dati
-            String sql = "INSERT INTO visitatore (CODICE_FISCALE, NOME, COGNOME, DATA_NASCITA, SESSO, USERNAME, PASSWORD) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, codiceFiscale);
-            preparedStatement.setString(2, nome);
-            preparedStatement.setString(3, cognome);
-            preparedStatement.setString(4, dataNascita);
-            preparedStatement.setString(5, sesso);
-            preparedStatement.setString(6, username);
-            preparedStatement.setString(7, password);
+            // Verifica se lo username esiste già
+            String checkUsernameSql = "SELECT COUNT(*) FROM visitatore WHERE USERNAME = ?";
+            preparedStatement = connection.prepareStatement(checkUsernameSql);
+            preparedStatement.setString(1, username);
+            resultSet = preparedStatement.executeQuery();
+            resultSet.next();
 
-            // Execute the query
-            preparedStatement.executeUpdate();
+            if (resultSet.getInt(1) > 0) {
+                // Username già esistente
+                request.setAttribute("viewUrl", "error");
+            } else {
 
-            // Redirect to a success page or provide a success message
-            //response.sendRedirect("confermaIscrizione.jsp");
 
-            // Set the view URL to redirect to the confirmation page
-            //request.setAttribute("viewUrl", "confermaIscrizione");
-            request.setAttribute("viewUrl", "confermaIscrizione");
+                // inserimento dati
+                String sql = "INSERT INTO visitatore (CODICE_FISCALE, NOME, COGNOME, DATA_NASCITA, SESSO, USERNAME, PASSWORD) VALUES (?, ?, ?, ?, ?, ?, ?)";
+                preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1, codiceFiscale);
+                preparedStatement.setString(2, nome);
+                preparedStatement.setString(3, cognome);
+                preparedStatement.setString(4, dataNascita);
+                preparedStatement.setString(5, sesso);
+                preparedStatement.setString(6, username);
+                preparedStatement.setString(7, password);
+
+                // Execute the query
+                preparedStatement.executeUpdate();
+
+                // Redirect to a success page or provide a success message
+                //response.sendRedirect("confermaIscrizione.jsp");
+
+                // Set the view URL to redirect to the confirmation page
+                //request.setAttribute("viewUrl", "confermaIscrizione");
+                request.setAttribute("viewUrl", "confermaIscrizione");
+            }
 
         } catch (SQLException | ClassNotFoundException e) {
             // Handle any database or class not found errors
