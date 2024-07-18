@@ -6,7 +6,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Modifica Biglietto</title>
+    <title>Modifica Dati personali</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -42,7 +42,7 @@
 </head>
 <body>
 <div class="container">
-    <h1 class="text-center">Modifica Biglietto</h1>
+    <h1 class="text-center">Modifica i tuoi dati</h1>
 
     <% visitatore visitatore = (visitatore) request.getAttribute("visit"); %>
 

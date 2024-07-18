@@ -155,7 +155,7 @@
     <div class="puntiRistoro">
         <h2>Burger Kingdom</h2>
         <img src="jsp/homeManagement/images/burger.jpg" alt="Chiosco gelati">
-        <p>Burger Kingdom vi saprà deliziare con degli ottimi hambuerg in stile americano. Ottimo per chi non vuole perdere nemmeno un'istante del divertimento offerto dal parco</p>
+        <p>Burger Kingdom vi saprà deliziare con degli ottimi hamburger in stile americano. Ottimo per chi non vuole perdere nemmeno un'istante del divertimento offerto dal parco</p>
         <form action="menuHamburger.jsp" method="get">
             <input type="hidden">
             <button type="submit">Consultare il menù</button>
@@ -191,7 +191,7 @@
     <div class="puntiRistoro">
         <h2>Waffle World</h2>
         <img src="jsp/homeManagement/images/waffle.jpg" alt="Waffle">
-        <p>Concediti una dolce pausa gustando uno delizioni Waffle di Waffle World.</p>
+        <p>Concediti una dolce pausa gustando un delizioso Waffle di Waffle World.</p>
         <form action="menuWaffle.jsp" method="get">
             <input type="hidden">
             <button type="submit">Consultare il menù</button>

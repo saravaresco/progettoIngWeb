@@ -140,7 +140,7 @@
       <li class="menu-item">Salamino Piccante €7</li>
       <li class="menu-item">Capricciosa €8</li>
       <li class="menu-item">Quattro formaggi €8</li>
-      <li class="menu-item">Prosciutta crudo €9</li>
+      <li class="menu-item">Prosciutto crudo €9</li>
       <li class="menu-item">Tonno e cipolla €8</li>
       <li class="menu-item">Prosciutto cotto e funghi €8</li>
     </ul>

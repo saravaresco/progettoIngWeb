@@ -81,6 +81,7 @@
     <ul>
         <li><a href="view.jsp"><strong>Home</strong></a></li>
         <li><a href="attrazioni.jsp"><strong>Attrazioni</strong></a></li>
+        <li><a href="puntiRistoro.jsp"><strong>Punti Ristoro</strong></a></li>
         <li><a href="map.jsp"><strong>Mappa</strong></a></li>
         <li><a href="login.jsp"><strong>Login</strong></a></li>
     </ul>
@@ -119,7 +120,7 @@
     <div class="event">
         <h3><%= nome %></h3>
         <p><strong>Tipologia:</strong> <%= tipologia %></p>
-        <p><strong>Data:</strong>Data: <%= data %></p>
+        <p><strong>Data:</strong> <%= data %></p>
         <p><strong>Luogo:</strong> <%= luogo %></p>
         <p><strong>Orario Inizio:</strong> <%= orarioInizio %></p>
         <p><strong>Durata:</strong> <%= durata %> </p>

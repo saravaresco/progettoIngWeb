@@ -107,7 +107,7 @@
     <div class="menu-section">
         <h3>Topping</h3>
         <ul>
-            <li class="menu-item">Sciroppo d'acera</li>
+            <li class="menu-item">Sciroppo d'acero</li>
             <li class="menu-item">Cioccolato </li>
             <li class="menu-item">Crema alla vaniglia</li>
             <li class="menu-item">Salsa al caramello</li>
